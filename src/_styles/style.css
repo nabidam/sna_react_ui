@@ -1,0 +1,150 @@
+@font-face {
+  font-family: 'BYekan';
+  src: url('../_fonts/byekan/BYekan.eot');
+  src: local('BYekan'), url('../_fonts/byekan/BYekan.woff') format('woff'), url('../_fonts/byekan/BYekan.ttf') format('truetype');
+}
+* {
+  margin: 0;
+  padding: 0;
+  /* font-size: 12px; */
+  font-family: "BYekan", "Lato", "Segoe UI", "Roboto", "Oxygen";
+}
+.login-grid {
+  background: url('../_images/login_bgdark.png') no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+html,
+body {
+  background-color: #edf1f6 !important;
+}
+.layout-boxed html,
+.layout-boxed body {
+  height: 100%;
+}
+.list-item-right {
+  text-align: right;
+  direction: rtl;
+}
+
+.level-2-items>span {
+  font-size: 11px;
+}
+
+.MuiToolbar-gutters {
+  padding: 0 !important;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.padding-lr-5 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+.MuiInputLabel-formControl {
+  left: unset !important;
+  right: 0;
+}
+
+.MuiSnackbarContent-message {
+  flex-grow: 1;
+}
+
+.MuiSnackbarContent-action {
+  padding-left: 0 !important;
+}
+
+.upgradePremium-icon {
+  background-image: linear-gradient(315deg, #fc3832, #f2c314);
+  background: -moz-linear-gradient(315deg, #fc3832, #f2c314);
+  background: -webkit-linear-gradient(315deg, #fc3832, #f2c314);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.MuiButton-label {
+  font-size: 14px;
+}
+
+.MuiTooltip-tooltip {
+  font-size: 10px !important;
+}
+
+.MuiListItemText-primary {
+  font-size: 12px !important;
+}
+.selected-word {
+  color: #f2c314;
+}
+
+.app-outer {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  padding: 20px 0;
+  position: relative;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.app-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.tag-cloud {
+  flex: 1;
+}
+
+.tag-cloud>div {
+  transition: 1.4s;
+}
+
+.tag-item-wrapper {
+  cursor: pointer;
+}
+
+.tag-item-wrapper:hover {
+  z-index: 100;
+}
+
+.tag-item-wrapper:hover .tag-item-tooltip {
+  display: block;
+}
+
+.tag-item-tooltip {
+  background: #c01916;
+  color: white;
+  margin-top: 5px;
+  z-index: 100;
+  display: none;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 1;
+  position: absolute;
+  min-width: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
