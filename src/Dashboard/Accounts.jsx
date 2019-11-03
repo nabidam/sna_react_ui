@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import {
   Typography,
@@ -12,8 +12,8 @@ import {
   Divider,
   Button
 } from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import ClearIcon from "@material-ui/icons/Clear";
 
 const styles = theme => ({
@@ -334,125 +334,124 @@ class Accounts extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
-        <div className={classes.wrapper}>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Container maxWidth="md">
-              <Grid container className={classes.root} spacing={4}>
-                <Grid
-                    item
-                    md={12}
-                    sm={12}
-                    xs={12}
-                    center
-                    className={classes.headerContainer}
-                >
-                  <div className={classes.headerBox}>
-                    <Typography variant="h1" className={classes.title}>
-                      حساب‌های شما
-                    </Typography>
-                    <Button color="primary" className={classes.newAnalysisBtn}>
-                      افزودن حساب
-                    </Button>
-                  </div>
-                  <Grid container className={classes.root} spacing={4}>
-                    {this.props.accounts.map(item => (
-                        <Grid item md={6} sm={6} xs={6} center>
-                          <div className={classes.account}>
-                            <Grid
-                                container
-                                className={classes.username}
-                                spacing={1}
-                            >
-                              <Grid
-                                  item
-                                  md={4}
-                                  sm={4}
-                                  xs={4}
-                                  className={classes.tableUsernamePart}
-                              >
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="https://material-ui.com/static/images/avatar/1.jpg"
-                                    className={classes.avatar}
-                                />
-                                {item.social_media == "twitter" ? (
-                                    <span className={classes.twtterIconAvatar}>
+      <div className={classes.wrapper}>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Container maxWidth="md">
+            <Grid container className={classes.root} spacing={4}>
+              <Grid
+                item
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.headerContainer}
+              >
+                <div className={classes.headerBox}>
+                  <Typography variant="h1" className={classes.title}>
+                    حساب‌های شما
+                  </Typography>
+                  <Button color="primary" className={classes.newAnalysisBtn}>
+                    افزودن حساب
+                  </Button>
+                </div>
+                <Grid container className={classes.root} spacing={4}>
+                  {this.props.accounts.map(item => (
+                    <Grid item md={6} sm={6} xs={6}>
+                      <div className={classes.account}>
+                        <Grid
+                          container
+                          className={classes.username}
+                          spacing={1}
+                        >
+                          <Grid
+                            item
+                            md={4}
+                            sm={4}
+                            xs={4}
+                            className={classes.tableUsernamePart}
+                          >
+                            <Avatar
+                              alt="Remy Sharp"
+                              src="https://material-ui.com/static/images/avatar/1.jpg"
+                              className={classes.avatar}
+                            />
+                            {item.social_media == "twitter" ? (
+                              <span className={classes.twtterIconAvatar}>
                                 <i className="fab fa-twitter fa-sm"></i>
                               </span>
-                                ) : (
-                                    <span className={classes.instagramIconAvatar}>
+                            ) : (
+                              <span className={classes.instagramIconAvatar}>
                                 <i className="fab fa-instagram fa-sm"></i>
                               </span>
-                                )}
-                              </Grid>
-                              <Grid
-                                  item
-                                  md={8}
-                                  sm={8}
-                                  xs={8}
-                                  className={classes.tableUsernamePart}
-                              >
-                                <span>{item.name}</span>
-                                <span className={classes.textMute}>
+                            )}
+                          </Grid>
+                          <Grid
+                            item
+                            md={8}
+                            sm={8}
+                            xs={8}
+                            className={classes.tableUsernamePart}
+                          >
+                            <span>{item.name}</span>
+                            <span className={classes.textMute}>
                               @{item.username}
                             </span>
-                              </Grid>
-                            </Grid>
-                            <Divider className={classes.accountsDivider} />
-                            <div className={classes.accountStatusBox}>
-                              <div className={classes.accountStatusNumber}>
-                                {item.followers}
-                              </div>
-                              <div
-                                  className={classNames(
-                                      classes.accountStatusTitle,
-                                      classes.textMute
-                                  )}
-                              >
-                                فالوور
-                              </div>
-                            </div>
-                            <div className={classes.accountStatusBox}>
-                              <div className={classes.accountStatusNumber}>
-                                {item.followings}
-                              </div>
-                              <div
-                                  className={classNames(
-                                      classes.accountStatusTitle,
-                                      classes.textMute
-                                  )}
-                              >
-                                فاووینگ
-                              </div>
-                            </div>
-                            <div className={classes.accountStatusBox}>
-                              <div className={classes.accountStatusNumber}>
-                                {item.posts}
-                              </div>
-                              <div
-                                  className={classNames(
-                                      classes.accountStatusTitle,
-                                      classes.textMute
-                                  )}
-                              >
-                                پست‌ها
-                              </div>
-                            </div>
-                            <div className={classes.accountAction}>
-                              <Button className={classes.deleteBtn}>
-                                <ClearIcon className={classes.clearIcon} />
-                              </Button>
-                            </div>
-                          </div>
+                          </Grid>
                         </Grid>
-                    ))}
-                  </Grid>
+                        <Divider className={classes.accountsDivider} />
+                        <div className={classes.accountStatusBox}>
+                          <div className={classes.accountStatusNumber}>
+                            {item.followers}
+                          </div>
+                          <div
+                            className={classNames(
+                              classes.accountStatusTitle,
+                              classes.textMute
+                            )}
+                          >
+                            فالوور
+                          </div>
+                        </div>
+                        <div className={classes.accountStatusBox}>
+                          <div className={classes.accountStatusNumber}>
+                            {item.followings}
+                          </div>
+                          <div
+                            className={classNames(
+                              classes.accountStatusTitle,
+                              classes.textMute
+                            )}
+                          >
+                            فاووینگ
+                          </div>
+                        </div>
+                        <div className={classes.accountStatusBox}>
+                          <div className={classes.accountStatusNumber}>
+                            {item.posts}
+                          </div>
+                          <div
+                            className={classNames(
+                              classes.accountStatusTitle,
+                              classes.textMute
+                            )}
+                          >
+                            پست‌ها
+                          </div>
+                        </div>
+                        <div className={classes.accountAction}>
+                          <Button className={classes.deleteBtn}>
+                            <ClearIcon className={classes.clearIcon} />
+                          </Button>
+                        </div>
+                      </div>
+                    </Grid>
+                  ))}
                 </Grid>
-                {/* <Grid item md={3} sm={3} xs={3} center>
+              </Grid>
+              {/* <Grid item md={3} sm={3} xs={3} center>
                 <List className={classes.typeOfAnalysis}>
                   <ListItem
                     className={classNames(
@@ -484,7 +483,7 @@ class Accounts extends React.Component {
                   </ListItem>
                 </List>
               </Grid> */}
-                {/* <Grid item md={9} sm={9} xs={9} center>
+              {/* <Grid item md={9} sm={9} xs={9} center>
                 <List className={classes.activeAnalysis}>
                   <Divider fullWidth />
                   {this.props.analysis.map(item => {
@@ -543,99 +542,100 @@ class Accounts extends React.Component {
                   })}
                 </List>
               </Grid> */}
+            </Grid>
+            <Grid container className={classes.root}>
+              <Grid
+                item
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.headerContainer}
+              >
+                <div className={classes.headerBox}>
+                  <Typography variant="h1" className={classes.title}>
+                    مدیریت پست‌ها
+                  </Typography>
+                  <Button color="primary" className={classes.newAnalysisBtn}>
+                    ایجاد پست جدید
+                  </Button>
+                </div>
               </Grid>
-              <Grid container className={classes.root}>
-                <Grid
-                    item
-                    md={12}
-                    sm={12}
-                    xs={12}
-                    center
-                    className={classes.headerContainer}
-                >
-                  <div className={classes.headerBox}>
-                    <Typography variant="h1" className={classes.title}>
-                      مدیریت پست‌ها
-                    </Typography>
-                    <Button color="primary" className={classes.newAnalysisBtn}>
-                      ایجاد پست جدید
-                    </Button>
-                  </div>
-                </Grid>
-                <Grid
-                    item
-                    md={12}
-                    sm={12}
-                    xs={12}
-                    center
-                    className={classes.postsContainer}
-                >
-                  <List className={classes.posts}>
-                    <Divider fullWidth />
-                    {this.props.posts.map(item => {
-                      return (
+              <Grid
+                item
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.postsContainer}
+              >
+                <List className={classes.posts}>
+                  <Divider />
+                  {this.props.posts.map(item => {
+                    return (
+                      <div>
+                        <ListItem
+                          className={classNames(
+                            classes.listItem,
+                            classes.postsItem
+                          )}
+                        >
                           <div>
-                            <ListItem
+                            <img
+                              src="https://placekitten.com/200/200"
+                              alt=""
+                              className={classes.postImage}
+                            />
+                          </div>
+                          <Typography
+                            variant="body1"
+                            className={classes.postText}
+                          >
+                            {item.post}
+                          </Typography>
+                          <div className={classes.postStats}>
+                            <p>{item.date}</p>
+                            <p>{item.time}</p>
+                            <p className={classes.textMute}>زمان ارسال</p>
+                          </div>
+                          <div className={classes.socialMedia}>
+                            <div className={classes.socialIcons}>
+                              <i
                                 className={classNames(
-                                    classes.listItem,
-                                    classes.postsItem
+                                  classes.instagram,
+                                  "fab fa-instagram fa-lg"
                                 )}
-                            >
-                              <div>
-                                <img
-                                    src="https://placekitten.com/200/200"
-                                    alt=""
-                                    className={classes.postImage}
-                                />
-                              </div>
-                              <Typography variant="p" className={classes.postText}>
-                                {item.post}
-                              </Typography>
-                              <div className={classes.postStats}>
-                                <p>{item.date}</p>
-                                <p>{item.time}</p>
-                                <p className={classes.textMute}>زمان ارسال</p>
-                              </div>
-                              <div className={classes.socialMedia}>
-                                <div className={classes.socialIcons}>
-                                  <i
-                                      className={classNames(
-                                          classes.instagram,
-                                          "fab fa-instagram fa-lg"
-                                      )}
-                                  ></i>
-                                  <i
-                                      className={classNames(
-                                          classes.twitter,
-                                          "fab fa-twitter fa-lg"
-                                      )}
-                                  ></i>
-                                </div>
-                                <p className={classes.textMute}>شبکه‌های ارسال</p>
-                              </div>
-                              <div className={classes.hashtagsBox}>
-                                <div className={classes.hashtags}>
-                                  {item.hashtags.map(tag => {
-                                    return (
-                                        <span className={classes.tag}>
+                              ></i>
+                              <i
+                                className={classNames(
+                                  classes.twitter,
+                                  "fab fa-twitter fa-lg"
+                                )}
+                              ></i>
+                            </div>
+                            <p className={classes.textMute}>شبکه‌های ارسال</p>
+                          </div>
+                          <div className={classes.hashtagsBox}>
+                            <div className={classes.hashtags}>
+                              {item.hashtags.map(tag => {
+                                return (
+                                  <span className={classes.tag}>
                                     #{tag.tag}
                                   </span>
-                                    );
-                                  })}
-                                </div>
-                                <p className={classes.textMute}>هشتگ مرتبط</p>
-                              </div>
-                            </ListItem>
-                            <Divider fullWidth />
+                                );
+                              })}
+                            </div>
+                            <p className={classes.textMute}>هشتگ مرتبط</p>
                           </div>
-                      );
-                    })}
-                  </List>
-                </Grid>
+                        </ListItem>
+                        <Divider />
+                      </div>
+                    );
+                  })}
+                </List>
               </Grid>
-            </Container>
-          </main>
-        </div>
+            </Grid>
+          </Container>
+        </main>
+      </div>
     );
   }
 }
@@ -646,7 +646,7 @@ Accounts.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const{lastTrackers, selectedTrackerDashboardItem} = state
+  const { lastTrackers, selectedTrackerDashboardItem } = state;
   return {
     trackers: lastTrackers.trackers,
     selectedTracker: lastTrackers.selectedTracker,
@@ -657,13 +657,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedTracker: id => dispatch(DashboardActions.changeSelectedTracker(id)),
-    selectAnalysisType: type => dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(DashboardActions.changeAnalysisStatus(analysis))
+    changeSelectedTracker: id =>
+      dispatch(DashboardActions.changeSelectedTracker(id)),
+    selectAnalysisType: type =>
+      dispatch(DashboardActions.selectAnalysisType(type)),
+    changeAnalysisStatus: analysis =>
+      dispatch(DashboardActions.changeAnalysisStatus(analysis))
   };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(Accounts));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Accounts));

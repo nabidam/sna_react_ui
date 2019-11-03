@@ -1,20 +1,19 @@
 //const webpack = require("webpack");
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   module: {
-
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader:"babel-loader",
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-react']
+            presets: ["@babel/preset-react"]
           }
         }
       },
@@ -53,9 +52,12 @@ module.exports = {
     // publicPath: "/public",
     filename: "bundle.js"
   },
-  plugins:  [new HtmlWebpackPlugin({
-    template: './src/index.html'
-  }),new ExtractTextPlugin("style.css")],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    }),
+    new ExtractTextPlugin("style.css")
+  ],
   devServer: {
     contentBase: "./dist",
     historyApiFallback: true,
@@ -66,9 +68,11 @@ module.exports = {
   externals: {
     // global app config object
     config: JSON.stringify({
-      login_url: 'http://localhost:8595/rest/user-mng/v1/get-token-by-user-pass',
-      add_tracker_url: 'http://localhost:8595/rest/social-analyzer/v1/tracker-add'
+      login_url:
+        "http://localhost:8595/rest/user-mng/v1/get-token-by-user-pass",
+      add_tracker_url:
+        "http://localhost:8595/rest/social-analyzer/v1/tracker-add"
     })
   },
-  node: {fs: "empty"}
+  node: { fs: "empty" }
 };

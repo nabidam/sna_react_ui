@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import {
   Typography,
@@ -12,8 +12,8 @@ import {
   Button,
   Collapse
 } from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions, AnalysisActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions, AnalysisActions } from "../_actions";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -411,87 +411,85 @@ class Projects extends React.Component {
   //   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
-        <div className={classes.wrapper}>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Container maxWidth="md">
-              <Grid container className={classes.root} spacing={4}>
-                <Grid
-                    item
-                    md={12}
-                    sm={12}
-                    xs={12}
-                    center
-                    className={classes.headerContainer}
-                >
-                  <div className={classes.headerBox}>
-                    <Typography variant="h1" className={classes.title}>
-                      پروژه‌ها
-                    </Typography>
-                    <Button color="primary" className={classes.newProjectBtn}>
-                      ساخت پروژه جدید
-                    </Button>
-                  </div>
-                  <div className={classes.actions}>
-                    <input
-                        type="text"
-                        className={classes.searchInput}
-                        placeholder="نام یک پروژه را جستجو کنید."
-                    />
-                    <Button className={classes.searchIconBtn}>
-                      <i className="fa fa-search fa-lg"></i>
-                    </Button>
-                    <div style={{flexGrow: 1}} />
-                    <Typography
-                        variant="body"
-                        className={classes.numberOfProjects}
-                    >
-                      {this.props.projects.length} پروژه ایجاد شده
-                    </Typography>
-                  </div>
-                </Grid>
+      <div className={classes.wrapper}>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Container maxWidth="md">
+            <Grid container className={classes.root} spacing={4}>
+              <Grid
+                item
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.headerContainer}
+              >
+                <div className={classes.headerBox}>
+                  <Typography variant="h1" className={classes.title}>
+                    پروژه‌ها
+                  </Typography>
+                  <Button color="primary" className={classes.newProjectBtn}>
+                    ساخت پروژه جدید
+                  </Button>
+                </div>
+                <div className={classes.actions}>
+                  <input
+                    type="text"
+                    className={classes.searchInput}
+                    placeholder="نام یک پروژه را جستجو کنید."
+                  />
+                  <Button className={classes.searchIconBtn}>
+                    <i className="fa fa-search fa-lg"></i>
+                  </Button>
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography
+                    variant="body"
+                    className={classes.numberOfProjects}
+                  >
+                    {this.props.projects.length} پروژه ایجاد شده
+                  </Typography>
+                </div>
               </Grid>
-              <Grid container className={classes.root}>
-                <Grid
-                    item
-                    md={12}
-                    sm={12}
-                    xs={12}
-                    center
-                    className={classes.projectsContainer}
-                >
-                  <List className={classes.projects}>
-                    <Divider className={classes.fullWidthDivider} />
-                    {this.props.projects.map(item => {
-                      return (
-                          <div>
-                            <ListItem
-                                className={classNames(
-                                    classes.listItem,
-                                    classes.projectsList
-                                )}
-                                onClick={() => this.handleExpandProject(item.id)}
-                            >
-                              <div className={classes.projectInformation}>
-                                <div className={classes.projectTitle}>
-                                  <Typography
-                                      variant="h1"
-                                      className={classes.projectName}
-                                  >
-                                    {item.name}
-                                  </Typography>
-                                  <span className={classes.projectBadge}>
+            </Grid>
+            <Grid container className={classes.root}>
+              <Grid
+                item
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.projectsContainer}
+              >
+                <List className={classes.projects}>
+                  <Divider className={classes.fullWidthDivider} />
+                  {this.props.projects.map(item => {
+                    return (
+                      <div>
+                        <ListItem
+                          className={classNames(
+                            classes.listItem,
+                            classes.projectsList
+                          )}
+                          onClick={() => this.handleExpandProject(item.id)}
+                        >
+                          <div className={classes.projectInformation}>
+                            <div className={classes.projectTitle}>
+                              <Typography
+                                variant="h1"
+                                className={classes.projectName}
+                              >
+                                {item.name}
+                              </Typography>
+                              <span className={classes.projectBadge}>
                                 {item.queries.length} ردیاب
                               </span>
-                                </div>
-                                <div className={classes.textMute}>
-                                  ساخته شده در {item.date}, ساعت {item.time}
-                                </div>
-                              </div>
-                              {/* <div className={classes.socialMedia}>
+                            </div>
+                            <div className={classes.textMute}>
+                              ساخته شده در {item.date}, ساعت {item.time}
+                            </div>
+                          </div>
+                          {/* <div className={classes.socialMedia}>
                             <div className={classes.socialIcons}>
                               <i
                                 className={classNames(
@@ -508,101 +506,101 @@ class Projects extends React.Component {
                             </div>
                             <p className={classes.textMute}>شبکه‌های ارسال</p>
                           </div> */}
-                              <div className={classes.projectsListAction}>
-                                {item.id == this.state.open_row ? (
-                                    <Button className={classes.expandBtn}>
-                                      <ExpandMoreIcon
-                                          className={classes.activeIcon}
-                                      />
-                                    </Button>
-                                ) : (
-                                    <Button className={classes.expandBtn}>
-                                      <ChevronLeftIcon
-                                          className={classes.activeIcon}
-                                      />
-                                    </Button>
-                                )}
-                                <Typography variant="body" className={classes.edit}>
-                                  ویرایش
-                                </Typography>
-                              </div>
-                            </ListItem>
-                            <Collapse
-                                in={this.state.open_row == item.id ? 1 : 0}
-                                timeout="auto"
-                                unmountOnExit
-                            >
-                              <List component="div" disablePadding>
-                                {item.queries.map(q => {
-                                  return (
-                                      <ListItem className={classes.query}>
-                                        <div className={classes.projectInformation}>
-                                          <div className={classes.projectTitle}>
-                                            <Typography
-                                                variant="h1"
-                                                className={classes.projectName}
-                                            >
-                                              {q.name}
-                                            </Typography>
-                                            <div className={classes.socialIcons}>
-                                              <i
-                                                  className={classNames(
-                                                      classes.instagram,
-                                                      "fab fa-instagram fa-lg"
-                                                  )}
-                                              ></i>
-                                              <i
-                                                  className={classNames(
-                                                      classes.twitter,
-                                                      "fab fa-twitter fa-lg"
-                                                  )}
-                                              ></i>
-                                            </div>
-                                          </div>
-                                          <div className={classes.textMute}>
-                                            ساخته شده در {q.date}, ساعت {q.time}
-                                            <Divider
-                                                className={classes.statsDivider}
-                                            />
-                                            پست‌های ردیابی شده: {q.retrieved_posts}
-                                          </div>
-                                        </div>
-                                        <div className={classes.projectsListAction}>
-                                          {q.active == 1 ? (
-                                              <Button className={classes.pauseBtn}>
-                                                <PauseIcon
-                                                    className={classes.activeIcon}
-                                                />
-                                              </Button>
-                                          ) : (
-                                              <Button className={classes.playBtn}>
-                                                <PlayArrowIcon
-                                                    className={classes.activeIcon}
-                                                />
-                                              </Button>
-                                          )}
-                                          <Typography
-                                              variant="body"
-                                              className={classes.edit}
-                                          >
-                                            ویرایش
-                                          </Typography>
-                                        </div>
-                                      </ListItem>
-                                  );
-                                })}
-                              </List>
-                            </Collapse>
-                            <Divider fullWidth />
+                          <div className={classes.projectsListAction}>
+                            {item.id == this.state.open_row ? (
+                              <Button className={classes.expandBtn}>
+                                <ExpandMoreIcon
+                                  className={classes.activeIcon}
+                                />
+                              </Button>
+                            ) : (
+                              <Button className={classes.expandBtn}>
+                                <ChevronLeftIcon
+                                  className={classes.activeIcon}
+                                />
+                              </Button>
+                            )}
+                            <Typography variant="body" className={classes.edit}>
+                              ویرایش
+                            </Typography>
                           </div>
-                      );
-                    })}
-                  </List>
-                </Grid>
+                        </ListItem>
+                        <Collapse
+                          in={this.state.open_row == item.id ? true : false}
+                          timeout="auto"
+                          unmountOnExit
+                        >
+                          <List component="div" disablePadding>
+                            {item.queries.map(q => {
+                              return (
+                                <ListItem className={classes.query}>
+                                  <div className={classes.projectInformation}>
+                                    <div className={classes.projectTitle}>
+                                      <Typography
+                                        variant="h1"
+                                        className={classes.projectName}
+                                      >
+                                        {q.name}
+                                      </Typography>
+                                      <div className={classes.socialIcons}>
+                                        <i
+                                          className={classNames(
+                                            classes.instagram,
+                                            "fab fa-instagram fa-lg"
+                                          )}
+                                        ></i>
+                                        <i
+                                          className={classNames(
+                                            classes.twitter,
+                                            "fab fa-twitter fa-lg"
+                                          )}
+                                        ></i>
+                                      </div>
+                                    </div>
+                                    <div className={classes.textMute}>
+                                      ساخته شده در {q.date}, ساعت {q.time}
+                                      <Divider
+                                        className={classes.statsDivider}
+                                      />
+                                      پست‌های ردیابی شده: {q.retrieved_posts}
+                                    </div>
+                                  </div>
+                                  <div className={classes.projectsListAction}>
+                                    {q.active == 1 ? (
+                                      <Button className={classes.pauseBtn}>
+                                        <PauseIcon
+                                          className={classes.activeIcon}
+                                        />
+                                      </Button>
+                                    ) : (
+                                      <Button className={classes.playBtn}>
+                                        <PlayArrowIcon
+                                          className={classes.activeIcon}
+                                        />
+                                      </Button>
+                                    )}
+                                    <Typography
+                                      variant="body"
+                                      className={classes.edit}
+                                    >
+                                      ویرایش
+                                    </Typography>
+                                  </div>
+                                </ListItem>
+                              );
+                            })}
+                          </List>
+                        </Collapse>
+                        <Divider className={classes.fullWidthDivider} />
+                      </div>
+                    );
+                  })}
+                </List>
               </Grid>
-            </Container>
-          </main>
-        </div>
+            </Grid>
+          </Container>
+        </main>
+      </div>
     );
   }
 }
@@ -613,7 +611,7 @@ Projects.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {lastTrackers,selectedTrackerDashboardItem} = state;
+  const { lastTrackers, selectedTrackerDashboardItem } = state;
   return {
     trackers: lastTrackers.trackers,
     selectedTracker: lastTrackers.selectedTracker,
@@ -625,13 +623,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedTracker: id => dispatch(DashboardActions.changeSelectedTracker(id)),
-    selectAnalysisType: type => dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(DashboardActions.changeAnalysisStatus(analysis))
+    changeSelectedTracker: id =>
+      dispatch(DashboardActions.changeSelectedTracker(id)),
+    selectAnalysisType: type =>
+      dispatch(DashboardActions.selectAnalysisType(type)),
+    changeAnalysisStatus: analysis =>
+      dispatch(DashboardActions.changeAnalysisStatus(analysis))
   };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(Projects));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Projects));

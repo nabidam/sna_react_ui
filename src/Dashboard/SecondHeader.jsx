@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import {history} from "../_helpers";
-import {connect} from "react-redux";
-import {userActions, DashboardActions} from "../_actions";
+import { history } from "../_helpers";
+import { connect } from "react-redux";
+import { userActions, DashboardActions } from "../_actions";
 import SecondHeaderProfile from "./SecondHeaderProfile";
 import SecondHeaderNotifications from "./SecondHeaderNotifications";
 import Paper from "@material-ui/core/Paper";
-import {Button, Grid} from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import TrafficIcon from "@material-ui/icons/Traffic";
@@ -113,8 +113,8 @@ const styles = theme => ({
 
 class SecondHeader extends React.Component {
   constructor(props) {
-    console.log("second header")
-    console.log(props)
+    console.log("second header");
+    console.log(props);
     super(props);
     this.logout = this.logout.bind(this);
     this.hadleSelectPage = this.hadleSelectPage.bind(this);
@@ -133,192 +133,189 @@ class SecondHeader extends React.Component {
     this.props.logout();
   };
 
-  hadleSelectPage = (page) =>
-  {
+  hadleSelectPage = page => {
     console.log("/dashboard" + (page != "" ? "/" + page : ""));
     this.props.selectPage(page);
     history.push("/dashboard" + (page != "" ? "/" + page : ""));
-
-
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar className={classes.toolBar}>
-            <Paper className={classes.titlePaper}>
-              <Grid container wrap="nowrap" spacing={2}>
-                <Grid item xs zeroMinWidth className={classes.cardText}>
-                  <Typography
-                      variant="h5"
-                      component="p"
-                      className={classes.primaryText}
-                  >
-                    ــدادهـــ ـکاویـــ
-                  </Typography>
-                </Grid>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar className={classes.toolBar}>
+          <Paper className={classes.titlePaper}>
+            <Grid container wrap="nowrap" spacing={2}>
+              <Grid item xs zeroMinWidth className={classes.cardText}>
+                <Typography
+                  variant="h5"
+                  component="p"
+                  className={classes.primaryText}
+                >
+                  ــدادهـــ ـکاویـــ
+                </Typography>
               </Grid>
-            </Paper>
-            <Paper
-                className={classNames(
-                    classes.headerPaper,
-                    this.props.selectedPage == "trackers"
-                        ? classes.selectedHeaderPaper
-                        : ""
-                )}
-                component={Button}
-                onClick={() => this.hadleSelectPage("trackers")}
-                variant="contained"
-            >
-              <Grid container wrap="nowrap">
-                <Grid item xs zeroMinWidth className={classes.headerItem}>
-                  <SearchIcon className={classes.headerItemIcon} />
-                  <Typography
-                      variant="p"
-                      component="p"
-                      className={classes.headerItemText}
-                  >
-                    ردیاب‌ها
-                  </Typography>
-                </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "trackers"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.hadleSelectPage("trackers")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <SearchIcon className={classes.headerItemIcon} />
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  ردیاب‌ها
+                </Typography>
               </Grid>
-            </Paper>
-            <Paper
-                className={classNames(
-                    classes.headerPaper,
-                    this.props.selectedPage == "traffic-analysis"
-                        ? classes.selectedHeaderPaper
-                        : ""
-                )}
-                component={Button}
-                onClick={() => this.hadleSelectPage("traffic-analysis")}
-                variant="contained"
-            >
-              <Grid container wrap="nowrap">
-                <Grid item xs zeroMinWidth className={classes.headerItem}>
-                  <TrafficIcon className={classes.headerItemIcon} />
-                  <Typography
-                      variant="p"
-                      component="p"
-                      className={classes.headerItemText}
-                  >
-                    تحلیل ترافیکی
-                  </Typography>
-                </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "traffic-analysis"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.hadleSelectPage("traffic-analysis")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <TrafficIcon className={classes.headerItemIcon} />
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  تحلیل ترافیکی
+                </Typography>
               </Grid>
-            </Paper>
-            <Paper
-                className={classNames(
-                    classes.headerPaper,
-                    this.props.selectedPage == "projects"
-                        ? classes.selectedHeaderPaper
-                        : ""
-                )}
-                component={Button}
-                onClick={() => this.hadleSelectPage("projects")}
-                variant="contained"
-            >
-              <Grid container wrap="nowrap">
-                <Grid item xs zeroMinWidth className={classes.headerItem}>
-                  <i
-                      className={classNames(
-                          classes.headerItemIcon,
-                          "fas fa-project-diagram fa-xs"
-                      )}
-                  />
-                  <Typography
-                      variant="p"
-                      component="p"
-                      className={classes.headerItemText}
-                  >
-                    پروژه‌ها
-                  </Typography>
-                </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "projects"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.hadleSelectPage("projects")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <i
+                  className={classNames(
+                    classes.headerItemIcon,
+                    "fas fa-project-diagram fa-xs"
+                  )}
+                />
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  پروژه‌ها
+                </Typography>
               </Grid>
-            </Paper>
-            <Paper
-                className={classNames(
-                    classes.headerPaper,
-                    this.props.selectedPage == "trends"
-                        ? classes.selectedHeaderPaper
-                        : ""
-                )}
-                component={Button}
-                onClick={() => this.hadleSelectPage("trends")}
-                variant="contained"
-            >
-              <Grid container wrap="nowrap">
-                <Grid item xs zeroMinWidth className={classes.headerItem}>
-                  <ShowChartIcon className={classes.headerItemIcon} />
-                  <Typography
-                      variant="p"
-                      component="p"
-                      className={classes.headerItemText}
-                  >
-                    ترند‌ها
-                  </Typography>
-                </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "trends"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.hadleSelectPage("trends")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <ShowChartIcon className={classes.headerItemIcon} />
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  ترند‌ها
+                </Typography>
               </Grid>
-            </Paper>
-            <Paper
-                className={classNames(
-                    classes.headerPaper,
-                    this.props.selectedPage == "influencers"
-                        ? classes.selectedHeaderPaper
-                        : ""
-                )}
-                component={Button}
-                onClick={() => this.hadleSelectPage("influencers")}
-                variant="contained"
-            >
-              <Grid container wrap="nowrap">
-                <Grid item xs zeroMinWidth className={classes.headerItem}>
-                  <ShowChartIcon className={classes.headerItemIcon} />
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "influencers"
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.hadleSelectPage("influencers")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <ShowChartIcon className={classes.headerItemIcon} />
 
-                  <Typography
-                      variant="p"
-                      component="p"
-                      className={classes.headerItemText}
-                  >
-                    افراد مؤثر
-                  </Typography>
-                </Grid>
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  افراد مؤثر
+                </Typography>
               </Grid>
-            </Paper>
-            <Paper
-                className={classNames(
-                    classes.headerPaper,
-                    this.props.selectedPage == "accounts"//management,accounts
-                        ? classes.selectedHeaderPaper
-                        : ""
-                )}
-                component={Button}
-                onClick={() => this.hadleSelectPage("accounts")}
-                variant="contained"
-            >
-              <Grid container wrap="nowrap">
-                <Grid item xs zeroMinWidth className={classes.headerItem}>
-                  <i
-                      className={classNames(
-                          classes.headerItemIcon,
-                          "fas fa-users fa-xs"
-                      )}
-                  />
-                  <Typography
-                      variant="p"
-                      component="p"
-                      className={classes.headerItemText}
-                  >
-                    مدیریت شبکه اجتماعی
-                  </Typography>
-                </Grid>
+            </Grid>
+          </Paper>
+          <Paper
+            className={classNames(
+              classes.headerPaper,
+              this.props.selectedPage == "accounts" //management,accounts
+                ? classes.selectedHeaderPaper
+                : ""
+            )}
+            component={Button}
+            onClick={() => this.hadleSelectPage("accounts")}
+            variant="contained"
+          >
+            <Grid container wrap="nowrap">
+              <Grid item xs zeroMinWidth className={classes.headerItem}>
+                <i
+                  className={classNames(
+                    classes.headerItemIcon,
+                    "fas fa-users fa-xs"
+                  )}
+                />
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.headerItemText}
+                >
+                  مدیریت شبکه اجتماعی
+                </Typography>
               </Grid>
-            </Paper>
-            <SecondHeaderNotifications />
-            <SecondHeaderProfile className={classes.profile} />
-            {/* <Tooltip title="خروج" placement="bottom">
+            </Grid>
+          </Paper>
+          <SecondHeaderNotifications />
+          <SecondHeaderProfile className={classes.profile} />
+          {/* <Tooltip title="خروج" placement="bottom">
             <IconButton
               onClick={() => this.logout()}
               className={classes.logoutbtn}
@@ -327,8 +324,8 @@ class SecondHeader extends React.Component {
               <ExitIcon className={classes.textBlack} />
             </IconButton>
           </Tooltip> */}
-          </Toolbar>
-        </AppBar>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
@@ -337,18 +334,18 @@ SecondHeader.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  requestLogout: PropTypes.func.isRequired,
+  // isAuthenticated: PropTypes.bool.isRequired,
+  // requestLogout: PropTypes.func.isRequired,
   isDrawerOpen: PropTypes.bool,
   triggerDrawer: PropTypes.func.isRequired,
   selectPage: PropTypes.func.isRequired,
-  selectedPage: PropTypes.object.isRequired
+  selectedPage: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => {
-  const {triggerDrawer, authentication, selectedTrackerDashboardItem} = state;
-  console.log("second header map state")
-  console.log(state)
+  const { triggerDrawer, authentication, selectedTrackerDashboardItem } = state;
+  console.log("second header map state");
+  console.log(state);
   return {
     auth: authentication,
     isAuthenticated: authentication.loggingIn,
@@ -366,6 +363,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(SecondHeader));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(SecondHeader));

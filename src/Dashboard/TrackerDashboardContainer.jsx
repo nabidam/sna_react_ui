@@ -910,13 +910,13 @@ class TrackerDashboardContainer extends React.Component {
                 <Paper className={classes.topNavbarPaper}>
                   <div className={classes.topNavbarTitleBox}>
                     <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.topNavbarTitleText}
                     >
                       ردیاب:
                     </Typography>
                     <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.topNavbarSelectedTracker}
                     >
                       {this.props.trackers.map((item, index) => {
@@ -1287,23 +1287,23 @@ class TrackerDashboardContainer extends React.Component {
                     <div className={classes.emotionStats}>
                       <div className={classes.negativeEmotion}>
                         <Typography
-                            variant="p"
+                            variant="body1"
                             className={classes.negativePercent}
                         >
                           {this.state.emotionDatas[1].value}%
                         </Typography>
-                        <Typography variant="p" className={classes.negativeText}>
+                        <Typography variant="body1" className={classes.negativeText}>
                           {this.state.emotionDatas[1].name}
                         </Typography>
                       </div>
                       <div className={classes.positiveEmotion}>
                         <Typography
-                            variant="p"
+                            variant="body1"
                             className={classes.positivePercent}
                         >
                           {this.state.emotionDatas[0].value}%
                         </Typography>
-                        <Typography variant="p" className={classes.positiceText}>
+                        <Typography variant="body1" className={classes.positiceText}>
                           {this.state.emotionDatas[0].name}
                         </Typography>
                       </div>

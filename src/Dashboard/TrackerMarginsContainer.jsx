@@ -1246,13 +1246,13 @@ class TrackerMarginsContainer extends React.Component {
                 <Paper className={classes.topNavbarPaper}>
                   <div className={classes.topNavbarTitleBox}>
                     <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.topNavbarTitleText}
                     >
                       ردیاب:
                     </Typography>
                     <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.topNavbarSelectedTracker}
                     >
                       {this.props.trackers.map((item, index) => {

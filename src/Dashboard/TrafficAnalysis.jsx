@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import {
   Typography,
@@ -12,8 +12,8 @@ import {
   Divider,
   Button
 } from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 
@@ -200,136 +200,136 @@ class TrafficAnalysis extends React.Component {
   //   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
-        <div className={classes.wrapper}>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Container maxWidth="md">
-              <Grid container className={classes.root} spacing={4}>
-                <Grid item md={12} sm={12} xs={12} center>
-                  <div className={classes.headerBox}>
-                    <Typography variant="h1" className={classes.title}>
-                      تحلیل ترافیکی
-                    </Typography>
-                    <Button color="primary" className={classes.newAnalysisBtn}>
-                      ساخت تحلیل جدید
-                    </Button>
-                  </div>
-                  <div className={classes.actions}>
-                    <input
-                        type="text"
-                        className={classes.searchInput}
-                        placeholder="نام یک تحلیل را جستجو کنید."
-                    />
-                    <Button className={classes.searchIconBtn}>
-                      <i className="fa fa-search fa-lg"></i>
-                    </Button>
-                    <div style={{flexGrow: 1}} />
-                    <Typography
-                        variant="body"
-                        className={classes.numberOfAnalysis}
-                    >
-                      ۳ تحلیل ایجاد شده
-                    </Typography>
-                  </div>
-                </Grid>
-                <Grid item md={3} sm={3} xs={3} center>
-                  <List className={classes.typeOfAnalysis}>
-                    <ListItem
-                        className={classNames(
-                            classes.listItem,
-                            this.props.selectedAnalysisType == 1
-                                ? classes.selectedAnalysisType
-                                : ""
-                        )}
-                        onClick={() => this.props.selectAnalysisType(1)}
-                    >
-                      <ListItemText
-                          primary="تحلیل‌های فعال"
-                          className="list-item-right"
-                      />
-                    </ListItem>
-                    <ListItem
-                        className={classNames(
-                            classes.listItem,
-                            this.props.selectedAnalysisType == 0
-                                ? classes.selectedAnalysisType
-                                : ""
-                        )}
-                        onClick={() => this.props.selectAnalysisType(0)}
-                    >
-                      <ListItemText
-                          primary="تحلیل‌های متوقف شده"
-                          className="list-item-right"
-                      />
-                    </ListItem>
-                  </List>
-                </Grid>
-                <Grid item md={9} sm={9} xs={9} center>
-                  <List className={classes.activeAnalysis}>
-                    <Divider fullWidth />
-                    {this.props.analysis.map(item => {
-                      if (item.active == this.props.selectedAnalysisType) {
-                        return (
-                            <div>
-                              <ListItem
-                                  className={classNames(
-                                      classes.listItem,
-                                      classes.listAnalysisItem
-                                  )}
-                                  onClick={() =>
-                                      this.props.changeAnalysisStatus(item.id)
-                                  }
-                              >
-                                {console.log(this.props.analysis)}
-                                <div className={classes.analysisListText}>
-                                  <Typography
-                                      variant="h1"
-                                      className={classes.analysisName}
-                                  >
-                                    {item.name}
-                                  </Typography>
-                                  <Typography
-                                      variant="body"
-                                      className={classes.textMute}
-                                  >
-                                    ساخته شده در: {item.date}, ساعت: {item.time}
-                                  </Typography>
-                                </div>
-
-                                <div className={classes.analysisListActions}>
-                                  {item.active == 1 ? (
-                                      <Button className={classes.pauseBtn}>
-                                        <PauseIcon className={classes.activeIcon} />
-                                      </Button>
-                                  ) : (
-                                      <Button className={classes.playBtn}>
-                                        <PlayArrowIcon
-                                            className={classes.activeIcon}
-                                        />
-                                      </Button>
-                                  )}
-                                  <Typography
-                                      variant="body"
-                                      className={classes.edit}
-                                  >
-                                    ویرایش
-                                  </Typography>
-                                </div>
-                              </ListItem>
-                              <Divider fullWidth />
-                            </div>
-                        );
-                      }
-                    })}
-                  </List>
-                </Grid>
+      <div className={classes.wrapper}>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Container maxWidth="md">
+            <Grid container className={classes.root} spacing={4}>
+              <Grid item md={12} sm={12} xs={12}>
+                <div className={classes.headerBox}>
+                  <Typography variant="h1" className={classes.title}>
+                    تحلیل ترافیکی
+                  </Typography>
+                  <Button color="primary" className={classes.newAnalysisBtn}>
+                    ساخت تحلیل جدید
+                  </Button>
+                </div>
+                <div className={classes.actions}>
+                  <input
+                    type="text"
+                    className={classes.searchInput}
+                    placeholder="نام یک تحلیل را جستجو کنید."
+                  />
+                  <Button className={classes.searchIconBtn}>
+                    <i className="fa fa-search fa-lg"></i>
+                  </Button>
+                  <div style={{ flexGrow: 1 }} />
+                  <Typography
+                    variant="body"
+                    className={classes.numberOfAnalysis}
+                  >
+                    ۳ تحلیل ایجاد شده
+                  </Typography>
+                </div>
               </Grid>
-            </Container>
-          </main>
-        </div>
+              <Grid item md={3} sm={3} xs={3}>
+                <List className={classes.typeOfAnalysis}>
+                  <ListItem
+                    className={classNames(
+                      classes.listItem,
+                      this.props.selectedAnalysisType == 1
+                        ? classes.selectedAnalysisType
+                        : ""
+                    )}
+                    onClick={() => this.props.selectAnalysisType(1)}
+                  >
+                    <ListItemText
+                      primary="تحلیل‌های فعال"
+                      className="list-item-right"
+                    />
+                  </ListItem>
+                  <ListItem
+                    className={classNames(
+                      classes.listItem,
+                      this.props.selectedAnalysisType == 0
+                        ? classes.selectedAnalysisType
+                        : ""
+                    )}
+                    onClick={() => this.props.selectAnalysisType(0)}
+                  >
+                    <ListItemText
+                      primary="تحلیل‌های متوقف شده"
+                      className="list-item-right"
+                    />
+                  </ListItem>
+                </List>
+              </Grid>
+              <Grid item md={9} sm={9} xs={9}>
+                <List className={classes.activeAnalysis}>
+                  <Divider />
+                  {this.props.analysis.map(item => {
+                    if (item.active == this.props.selectedAnalysisType) {
+                      return (
+                        <div>
+                          <ListItem
+                            className={classNames(
+                              classes.listItem,
+                              classes.listAnalysisItem
+                            )}
+                            onClick={() =>
+                              this.props.changeAnalysisStatus(item.id)
+                            }
+                          >
+                            {console.log(this.props.analysis)}
+                            <div className={classes.analysisListText}>
+                              <Typography
+                                variant="h1"
+                                className={classes.analysisName}
+                              >
+                                {item.name}
+                              </Typography>
+                              <Typography
+                                variant="body"
+                                className={classes.textMute}
+                              >
+                                ساخته شده در: {item.date}, ساعت: {item.time}
+                              </Typography>
+                            </div>
+
+                            <div className={classes.analysisListActions}>
+                              {item.active == 1 ? (
+                                <Button className={classes.pauseBtn}>
+                                  <PauseIcon className={classes.activeIcon} />
+                                </Button>
+                              ) : (
+                                <Button className={classes.playBtn}>
+                                  <PlayArrowIcon
+                                    className={classes.activeIcon}
+                                  />
+                                </Button>
+                              )}
+                              <Typography
+                                variant="body"
+                                className={classes.edit}
+                              >
+                                ویرایش
+                              </Typography>
+                            </div>
+                          </ListItem>
+                          <Divider />
+                        </div>
+                      );
+                    }
+                  })}
+                </List>
+              </Grid>
+            </Grid>
+          </Container>
+        </main>
+      </div>
     );
   }
 }
@@ -341,7 +341,7 @@ TrafficAnalysis.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {lastTrackers, selectedTrackerDashboardItem} = state
+  const { lastTrackers, selectedTrackerDashboardItem } = state;
   return {
     trackers: lastTrackers.trackers,
     selectedTracker: lastTrackers.selectedTracker,
@@ -352,13 +352,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedTracker: id => dispatch(DashboardActions.changeSelectedTracker(id)),
-    selectAnalysisType: type => dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(DashboardActions.changeAnalysisStatus(analysis))
+    changeSelectedTracker: id =>
+      dispatch(DashboardActions.changeSelectedTracker(id)),
+    selectAnalysisType: type =>
+      dispatch(DashboardActions.selectAnalysisType(type)),
+    changeAnalysisStatus: analysis =>
+      dispatch(DashboardActions.changeAnalysisStatus(analysis))
   };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(TrafficAnalysis));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(TrafficAnalysis));

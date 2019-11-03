@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {withStyles} from "@material-ui/core/styles";
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import {
   Typography,
   Container,
@@ -8,8 +8,8 @@ import {
   Button,
   TextField
 } from "@material-ui/core";
-import {DashboardActions} from "../_actions";
-import {connect} from "react-redux";
+import { DashboardActions } from "../_actions";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
@@ -67,47 +67,46 @@ class AddTracker extends Component {
     this.state = {
       name: "",
       terms: "",
-      hashtags:"",
+      hashtags: "",
       isNameEntered: true,
       isTermsEntered: true,
       isHashtagsEntered: true
     };
 
-    this.handleChangeName= this.handleChangeName.bind(this);
+    this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeTerms = this.handleChangeTerms.bind(this);
     this.handleChangeHashtags = this.handleChangeHashtags.bind(this);
     this.handleAddTracker = this.handleAddTracker.bind(this);
   }
 
   handleChangeName = event => {
-    this.setState({name: event.target.value});
+    this.setState({ name: event.target.value });
     if (event.target.value == "") {
-      this.setState({isNameEntered: false});
+      this.setState({ isNameEntered: false });
     } else {
-      this.setState({isNameEntered: true});
+      this.setState({ isNameEntered: true });
     }
   };
 
   handleChangeTerms = event => {
-    this.setState({terms: event.target.value});
+    this.setState({ terms: event.target.value });
     if (event.target.value == "") {
-      this.setState({isTermsEntered: false});
+      this.setState({ isTermsEntered: false });
     } else {
-      this.setState({isTermsEntered: true});
+      this.setState({ isTermsEntered: true });
     }
   };
-  handleChangeHashtags= event => {
-    this.setState({terms: event.target.value});
+  handleChangeHashtags = event => {
+    this.setState({ terms: event.target.value });
     if (event.target.value == "") {
-      this.setState({isHashtagsEntered: false});
+      this.setState({ isHashtagsEntered: false });
     } else {
-      this.setState({isHashtagsEntered: true});
+      this.setState({ isHashtagsEntered: true });
     }
   };
 
   handleAddTracker = () => {
-
-    console.log('---------------------handleAddTracker---------------------')
+    console.log("---------------------handleAddTracker---------------------");
     if (this.state.name != "") {
       if (this.state.terms != "") {
         var data = {
@@ -115,98 +114,97 @@ class AddTracker extends Component {
           terms: this.state.terms,
           hashtags: this.state.hashtags
         };
-        this.setState({name: "", terms: ""});
+        this.setState({ name: "", terms: "" });
         this.props.addTracker(data);
-       // history.push("/");
+        // history.push("/");
         this.props.changeSnackbarStatus({
           open: true,
           msg: "با موفقیت ثبت شد."
         });
       } else {
-        this.setState({isNameEntered: false});
+        this.setState({ isNameEntered: false });
       }
     } else {
       if (this.state.name != "") {
-        this.setState({isNameEntered: false});
+        this.setState({ isNameEntered: false });
       }
-      this.setState({isTermsEntered: false});
+      this.setState({ isTermsEntered: false });
     }
   };
 
   render() {
-    const {classes} = this.props;
-    console.log("console.log('---------------------addTracker---------------------')");
+    const { classes } = this.props;
+    console.log(
+      "console.log('---------------------addTracker---------------------')"
+    );
     console.log(this.props);
     return (
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Container maxWidth="lg">
-            <Grid container className={classes.root}>
-              <Grid item md={12} sm={12} xs={12}>
-                <Paper className={classes.paper}>
-                  <Grid container spacing={2}>
-                    <Grid item md={12} sm={12} xs={12}>
-                      <Typography variant="h6">ایجاد پرسش جدید</Typography>
-                    </Grid>
-                    <Grid item md={12} sm={12} xs={12}>
-                      <Typography variant="body1">
-                        برای ایجاد پرسش جدید، فرم زیر را تکمیل کنید.
-                      </Typography>
-                    </Grid>
-                    <Grid item md={6} sm={6} xs={12}>
-                      <TextField
-                          id="outlined-name"
-                          label="نام پرسش"
-                          className={classes.textField}
-                          value={this.state.name}
-                          onChange={this.handleChangeName}
-                          error={!this.state.isNameEntered}
-                          required
-                          margin="normal"
-                          fullWidth
-                      />
-                    </Grid>
-                    <Grid item md={6} sm={6} xs={12}>
-                      <TextField
-                          id="outlined-name"
-                          label="terms"
-                          className={classes.textField}
-                          value={this.state.terms}
-                          onChange={this.handleChangeTerms}
-                          error={!this.state.isTermsEntered}
-                          required
-                          margin="normal"
-                          fullWidth
-                      />
-                    </Grid>
-                    <Grid item md={6} sm={6} xs={12}>
-                      <TextField
-                          id="outlined-name"
-                          label="hashtags"
-                          className={classes.textField}
-                          value={this.state.username}
-                          onChange={this.handleChangeHashtags}
-                          error={!this.state.isHashtagsEntered}
-                          required
-                          margin="normal"
-                          fullWidth
-                      />
-                    </Grid>
-                    <Grid item md={6} sm={6} xs={12}>
-                      <Button
-                          variant="contained"
-                          className={classes.submitButton}
-                          onClick={() => this.handleAddTracker()}
-                      >
-                        ثبت
-                      </Button>
-                    </Grid>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Container maxWidth="lg">
+          <Grid container className={classes.root}>
+            <Grid item md={12} sm={12} xs={12}>
+              <Paper className={classes.paper}>
+                <Grid container spacing={2}>
+                  <Grid item md={12} sm={12} xs={12}>
+                    <Typography variant="h6">ایجاد پرسش جدید</Typography>
                   </Grid>
-                </Paper>
-              </Grid>
+                  <Grid item md={12} sm={12} xs={12}>
+                    <Typography variant="body1">
+                      برای ایجاد پرسش جدید، فرم زیر را تکمیل کنید.
+                    </Typography>
+                  </Grid>
+                  <Grid item md={6} sm={6} xs={12}>
+                    <TextField
+                      id="outlined-name"
+                      label="نام پرسش"
+                      className={classes.textField}
+                      value={this.state.name}
+                      onChange={this.handleChangeName}
+                      error={!this.state.isNameEntered}
+                      required
+                      margin="normal"
+                    />
+                  </Grid>
+                  <Grid item md={6} sm={6} xs={12}>
+                    <TextField
+                      id="outlined-name"
+                      label="terms"
+                      className={classes.textField}
+                      value={this.state.terms}
+                      onChange={this.handleChangeTerms}
+                      error={!this.state.isTermsEntered}
+                      required
+                      margin="normal"
+                    />
+                  </Grid>
+                  <Grid item md={6} sm={6} xs={12}>
+                    <TextField
+                      id="outlined-name"
+                      label="hashtags"
+                      className={classes.textField}
+                      value={this.state.username}
+                      onChange={this.handleChangeHashtags}
+                      error={!this.state.isHashtagsEntered}
+                      required
+                      margin="normal"
+                    />
+                  </Grid>
+                  <Grid item md={6} sm={6} xs={12}>
+                    <Button
+                      variant="contained"
+                      className={classes.submitButton}
+                      onClick={() => this.handleAddTracker()}
+                    >
+                      ثبت
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Paper>
             </Grid>
-          </Container>
-        </main>
+          </Grid>
+        </Container>
+      </main>
     );
   }
 }
@@ -223,6 +221,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    null,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(AddTracker));
+  null,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(AddTracker));

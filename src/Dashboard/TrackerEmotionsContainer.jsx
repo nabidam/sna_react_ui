@@ -1286,13 +1286,13 @@ class TrackerEmotionsContainer extends React.Component {
                 <Paper className={classes.topNavbarPaper}>
                   <div className={classes.topNavbarTitleBox}>
                     <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.topNavbarTitleText}
                     >
                       ردیاب:
                     </Typography>
                     <Typography
-                        variant="p"
+                        variant="body1"
                         className={classes.topNavbarSelectedTracker}
                     >
                       {this.props.trackers.map((item, index) => {
@@ -1409,7 +1409,7 @@ class TrackerEmotionsContainer extends React.Component {
                     <div className={classes.emotionStats}>
                       <div className={classes.negativeEmotionBox}>
                         <Typography
-                            variant="p"
+                            variant="body1"
                             className={
                               this.props.selectedEmotion == "negative"
                                   ? classes.selectedNegativePercent
@@ -1418,7 +1418,7 @@ class TrackerEmotionsContainer extends React.Component {
                         >
                           {this.state.emotionDatas[1].value}%
                         </Typography>
-                        <Typography variant="p" className={
+                        <Typography variant="body1" className={
                           this.props.selectedEmotion == "positive"
                               ? classes.selectedPositivePercent
                               : classes.positivePercent
@@ -1428,12 +1428,12 @@ class TrackerEmotionsContainer extends React.Component {
                       </div>
                       <div className={classes.positiveEmotionBox}>
                         <Typography
-                            variant="p"
+                            variant="body1"
                             className={classes.positiceText}
                         >
                           {this.state.emotionDatas[0].value}%
                         </Typography>
-                        <Typography variant="p" className={classes.positiceText}>
+                        <Typography variant="body1" className={classes.positiceText}>
                           {this.state.emotionDatas[0].name}
                         </Typography>
                       </div>
