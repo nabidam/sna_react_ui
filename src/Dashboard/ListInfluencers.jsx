@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
-import {Grid, Avatar} from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { withStyles } from "@material-ui/core/styles";
+import { Grid, Avatar } from "@material-ui/core";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -132,7 +132,7 @@ class ListInfluencers extends React.Component {
   constructor(props) {
     super(props);
     console.log("ListInfluencers");
-    console.log(props)
+    console.log(props);
     this.state = {
       rowHover: 0
     };
@@ -153,194 +153,194 @@ class ListInfluencers extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
-        <div>
-          <Grid item md={12} className={classes.tableGrid}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
+      <div>
+        <Grid item md={12} className={classes.tableGrid}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align="right"
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  کاربری
+                </TableCell>
+                <TableCell
+                  align="right"
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  پست‌ها
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  مجموع لایک‌ها
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  متوسط لایک‌ها
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  مجموع کامنت‌ها
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  متوسط کامنت‌ها
+                </TableCell>
+                <TableCell
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  میانگین انگیزش
+                </TableCell>
+                <TableCell
+                  className={classes.tableHeader}
+                  style={{ width: "15%" }}
+                >
+                  حس متن
+                </TableCell>
+                <TableCell
+                  className={classes.tableHeader}
+                  style={{ width: "15%" }}
+                >
+                  حس کامنت
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.props.influencers.map(row => (
+                <TableRow
+                  key={row.id}
+                  className={classes.tableRow}
+                  onMouseEnter={() => this.handleHoverRow(row.id)}
+                  onMouseLeave={() => this.handleUnHoverRow()}
+                >
                   <TableCell
-                      align="right"
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
+                    style={{ width: "30%" }}
+                    className={classes.flex}
+                    // padding="none"
+                    align="right"
                   >
-                    کاربری
-                  </TableCell>
-                  <TableCell
-                      align="right"
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
-                  >
-                    پست‌ها
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
-                  >
-                    مجموع لایک‌ها
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
-                  >
-                    متوسط لایک‌ها
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
-                  >
-                    مجموع کامنت‌ها
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
-                  >
-                    متوسط کامنت‌ها
-                  </TableCell>
-                  <TableCell
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
-                  >
-                    میانگین انگیزش
-                  </TableCell>
-                  <TableCell
-                      className={classes.tableHeader}
-                      style={{width: "15%"}}
-                  >
-                    حس متن
-                  </TableCell>
-                  <TableCell
-                      className={classes.tableHeader}
-                      style={{width: "15%"}}
-                  >
-                    حس کامنت
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.props.influencers.map(row => (
-                    <TableRow
-                        key={row.id}
-                        className={classes.tableRow}
-                        onMouseEnter={() => this.handleHoverRow(row.id)}
-                        onMouseLeave={() => this.handleUnHoverRow()}
-                    >
-                      <TableCell
-                          style={{width: "30%"}}
-                          className={classes.flex}
-                          // padding="none"
-                          align="right"
+                    <Grid container className={classes.root} spacing={1}>
+                      <Grid
+                        item
+                        md={4}
+                        sm={4}
+                        xs={4}
+                        className={classes.tableUsernamePart}
                       >
-                        <Grid container className={classes.root} spacing={1}>
-                          <Grid
-                              item
-                              md={4}
-                              sm={4}
-                              xs={4}
-                              className={classes.tableUsernamePart}
-                          >
-                            <Avatar
-                                alt="Remy Sharp"
-                                src="https://material-ui.com/static/images/avatar/1.jpg"
-                                className={classes.avatar}
-                            />
-                            <span className={classes.twitterIconAvatar}>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src="https://material-ui.com/static/images/avatar/1.jpg"
+                          className={classes.avatar}
+                        />
+                        <span className={classes.twitterIconAvatar}>
                           <i className="fab fa-twitter fa-sm"></i>
                         </span>
-                          </Grid>
-                          <Grid
-                              item
-                              md={8}
-                              sm={8}
-                              xs={8}
-                              className={classes.tableUsernamePart}
-                          >
-                            <span>{row.name}</span>
-                            <span className={classes.textMute}>
+                      </Grid>
+                      <Grid
+                        item
+                        md={8}
+                        sm={8}
+                        xs={8}
+                        className={classes.tableUsernamePart}
+                      >
+                        <span>{row.name}</span>
+                        <span className={classes.textMute}>
                           @{row.username}
                         </span>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell
-                          align="center"
-                          style={{width: "2%"}}
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                      >
-                        {row.posts}
-                      </TableCell>
-                      <TableCell
-                          align="center"
-                          style={{width: "2%"}}
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                      >
-                        {row.overall_likes}
-                      </TableCell>
-                      <TableCell
-                          align="center"
-                          style={{width: "2%"}}
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                      >
-                        {row.average_likes}
-                      </TableCell>
-                      <TableCell
-                          align="center"
-                          style={{width: "2%"}}
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                      >
-                        {row.overall_comments}
-                      </TableCell>
-                      <TableCell
-                          align="center"
-                          style={{width: "2%"}}
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                      >
-                        {row.average_comments}
-                      </TableCell>
-                      <TableCell
-                          align="center"
-                          style={{width: "2%"}}
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                      >
-                        {row.motivation}
-                      </TableCell>
-                      <TableCell align="center" style={{width: "20%"}}>
-                        {row.content_emotion == -1 ? (
-                            <div className={classes.negativeEmotion}></div>
-                        ) : (
-                            <div className={classes.positiveEmotion}></div>
-                        )}
-                      </TableCell>
-                      <TableCell align="center" style={{width: "20%"}}>
-                        {row.comment_emotion == -1 ? (
-                            <div className={classes.negativeEmotion}></div>
-                        ) : (
-                            <div className={classes.positiveEmotion}></div>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Grid>
-        </div>
+                      </Grid>
+                    </Grid>
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ width: "2%" }}
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                  >
+                    {row.posts}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ width: "2%" }}
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                  >
+                    {row.overall_likes}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ width: "2%" }}
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                  >
+                    {row.average_likes}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ width: "2%" }}
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                  >
+                    {row.overall_comments}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ width: "2%" }}
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                  >
+                    {row.average_comments}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ width: "2%" }}
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                  >
+                    {row.motivation}
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "20%" }}>
+                    {row.content_emotion == -1 ? (
+                      <div className={classes.negativeEmotion}></div>
+                    ) : (
+                      <div className={classes.positiveEmotion}></div>
+                    )}
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "20%" }}>
+                    {row.comment_emotion == -1 ? (
+                      <div className={classes.negativeEmotion}></div>
+                    ) : (
+                      <div className={classes.positiveEmotion}></div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Grid>
+      </div>
     );
   }
 }
@@ -351,13 +351,14 @@ ListInfluencers.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {lastTrackers, selectedTrackerDashboardItem}= state;
+  const { selectedTrackerDashboardItem } = state;
   console.log("ListInfluencers mapstate");
-  console.log(state)
+  console.log(state);
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
-    selectedTrackerDashboardItem:selectedTrackerDashboardItem.selectedTrackerDashboardItem,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
+    selectedTrackerDashboardItem:
+      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
     influencers: selectedTrackerDashboardItem.influencers
   };
 };
@@ -371,6 +372,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(ListInfluencers));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(ListInfluencers));

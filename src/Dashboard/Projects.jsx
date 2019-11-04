@@ -445,7 +445,7 @@ class Projects extends React.Component {
                   </Button>
                   <div style={{ flexGrow: 1 }} />
                   <Typography
-                    variant="body"
+                    variant="body1"
                     className={classes.numberOfProjects}
                   >
                     {this.props.projects.length} پروژه ایجاد شده
@@ -463,9 +463,9 @@ class Projects extends React.Component {
               >
                 <List className={classes.projects}>
                   <Divider className={classes.fullWidthDivider} />
-                  {this.props.projects.map(item => {
+                  {this.props.projects.map((item, index) => {
                     return (
-                      <div>
+                      <div key={index}>
                         <ListItem
                           className={classNames(
                             classes.listItem,
@@ -520,7 +520,10 @@ class Projects extends React.Component {
                                 />
                               </Button>
                             )}
-                            <Typography variant="body" className={classes.edit}>
+                            <Typography
+                              variant="body1"
+                              className={classes.edit}
+                            >
                               ویرایش
                             </Typography>
                           </div>
@@ -531,9 +534,9 @@ class Projects extends React.Component {
                           unmountOnExit
                         >
                           <List component="div" disablePadding>
-                            {item.queries.map(q => {
+                            {item.queries.map((q, i) => {
                               return (
-                                <ListItem className={classes.query}>
+                                <ListItem className={classes.query} key={i}>
                                   <div className={classes.projectInformation}>
                                     <div className={classes.projectTitle}>
                                       <Typography
@@ -580,7 +583,7 @@ class Projects extends React.Component {
                                       </Button>
                                     )}
                                     <Typography
-                                      variant="body"
+                                      variant="body1"
                                       className={classes.edit}
                                     >
                                       ویرایش
@@ -611,10 +614,10 @@ Projects.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { lastTrackers, selectedTrackerDashboardItem } = state;
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
     accounts: selectedTrackerDashboardItem.accounts,
     posts: selectedTrackerDashboardItem.myPosts,
     projects: selectedTrackerDashboardItem.projects

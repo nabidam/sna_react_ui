@@ -24,6 +24,7 @@
     "react": "^16.8.6",
     "react-data-export": "^0.5.0",
     "react-dom": "^16.8.6",
+    "react-modern-calendar-datepicker": "^1.0.1",
     "react-pdf": "^4.0.5",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",

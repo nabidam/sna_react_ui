@@ -95,7 +95,8 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    textAlign: "right"
+    textAlign: "right",
+    alignItems: "center"
   },
   primaryText: {
     fontSize: 18,

@@ -228,7 +228,7 @@ class TrafficAnalysis extends React.Component {
                   </Button>
                   <div style={{ flexGrow: 1 }} />
                   <Typography
-                    variant="body"
+                    variant="body1"
                     className={classes.numberOfAnalysis}
                   >
                     ۳ تحلیل ایجاد شده
@@ -244,7 +244,7 @@ class TrafficAnalysis extends React.Component {
                         ? classes.selectedAnalysisType
                         : ""
                     )}
-                    onClick={() => this.props.selectAnalysisType(1)}
+                    onClick={() => this.props.selectTrafficAnalysisType(1)}
                   >
                     <ListItemText
                       primary="تحلیل‌های فعال"
@@ -258,7 +258,7 @@ class TrafficAnalysis extends React.Component {
                         ? classes.selectedAnalysisType
                         : ""
                     )}
-                    onClick={() => this.props.selectAnalysisType(0)}
+                    onClick={() => this.props.selectTrafficAnalysisType(0)}
                   >
                     <ListItemText
                       primary="تحلیل‌های متوقف شده"
@@ -270,17 +270,17 @@ class TrafficAnalysis extends React.Component {
               <Grid item md={9} sm={9} xs={9}>
                 <List className={classes.activeAnalysis}>
                   <Divider />
-                  {this.props.analysis.map(item => {
+                  {this.props.analysis.map((item, index) => {
                     if (item.active == this.props.selectedAnalysisType) {
                       return (
-                        <div>
+                        <div key={index}>
                           <ListItem
                             className={classNames(
                               classes.listItem,
                               classes.listAnalysisItem
                             )}
                             onClick={() =>
-                              this.props.changeAnalysisStatus(item.id)
+                              this.props.changeTrafficAnalysisStatus(item.id)
                             }
                           >
                             {console.log(this.props.analysis)}
@@ -292,7 +292,7 @@ class TrafficAnalysis extends React.Component {
                                 {item.name}
                               </Typography>
                               <Typography
-                                variant="body"
+                                variant="body1"
                                 className={classes.textMute}
                               >
                                 ساخته شده در: {item.date}, ساعت: {item.time}
@@ -312,7 +312,7 @@ class TrafficAnalysis extends React.Component {
                                 </Button>
                               )}
                               <Typography
-                                variant="body"
+                                variant="body1"
                                 className={classes.edit}
                               >
                                 ویرایش
@@ -337,14 +337,14 @@ class TrafficAnalysis extends React.Component {
 TrafficAnalysis.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  selectAnalysisType: PropTypes.func.isRequired
+  selectTrafficAnalysisType: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
-  const { lastTrackers, selectedTrackerDashboardItem } = state;
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
     analysis: selectedTrackerDashboardItem.analysis,
     selectedAnalysisType: selectedTrackerDashboardItem.selectedAnalysisType
   };
@@ -354,10 +354,10 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSelectedTracker: id =>
       dispatch(DashboardActions.changeSelectedTracker(id)),
-    selectAnalysisType: type =>
-      dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis =>
-      dispatch(DashboardActions.changeAnalysisStatus(analysis))
+    selectTrafficAnalysisType: type =>
+      dispatch(DashboardActions.selectTrafficAnalysisType(type)),
+    changeTrafficAnalysisStatus: analysis =>
+      dispatch(DashboardActions.changeTrafficAnalysisStatus(analysis))
   };
 };
 

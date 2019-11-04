@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-import {Grid, Avatar} from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { Grid, Avatar } from "@material-ui/core";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import BootstrapTooltip from "./BSTooltip";
-
 
 const styles = theme => ({
   root: {
@@ -68,7 +67,8 @@ const styles = theme => ({
       height: 16,
       background: "#03d588",
       border: "solid 5px rgba(255, 255, 255, 0.85)",
-      borderRadius: "50%"   }
+      borderRadius: "50%"
+    }
   },
   selectedPositiveEmotion: {
     position: "absolute",
@@ -211,8 +211,8 @@ const styles = theme => ({
 class GridPosts extends React.Component {
   constructor(props) {
     super(props);
-    console.log("grid posts")
-    console.log(props)
+    console.log("grid posts");
+    console.log(props);
     this.state = {
       rowHover: 0
     };
@@ -234,161 +234,162 @@ class GridPosts extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
-        <div>
-          <Grid item md={12} className={classes.tableGrid}>
-            <Grid container className={classes.root} spacing={2}>
-              {this.props.posts.map((row, index) => {
-                if (index < 4)
-                  return (
-                      <Grid item md={6} key={row.id}>
-                        <div
-                            className={classes.post}
-                            onMouseEnter={() => this.handleHoverRow(row.id)}
-                            onMouseLeave={() => this.handleUnHoverRow()}
-                        >
-                          <div className={classes.topBox}>
-                            <div className={classes.usernameBox}>
-                              <Grid container className={classes.root} spacing={1}>
-                                <Grid
-                                    item
-                                    md={4}
-                                    sm={4}
-                                    xs={4}
-                                    className={classes.tableUsernamePart}
-                                >
-                                  <Avatar
-                                      alt="Remy Sharp"
-                                      src="https://material-ui.com/static/images/avatar/1.jpg"
-                                      className={classes.avatar}
-                                  />
-                                  <span className={classes.twitterIconAvatar}>
+      <div>
+        <Grid item md={12} className={classes.tableGrid}>
+          <Grid container className={classes.root} spacing={2}>
+            {this.props.posts.map((row, index) => {
+              if (index < 4)
+                return (
+                  <Grid item md={6} key={row.id}>
+                    <div
+                      className={classes.post}
+                      onMouseEnter={() => this.handleHoverRow(row.id)}
+                      onMouseLeave={() => this.handleUnHoverRow()}
+                    >
+                      <div className={classes.topBox}>
+                        <div className={classes.usernameBox}>
+                          <Grid container className={classes.root} spacing={1}>
+                            <Grid
+                              item
+                              md={4}
+                              sm={4}
+                              xs={4}
+                              className={classes.tableUsernamePart}
+                            >
+                              <Avatar
+                                alt="Remy Sharp"
+                                src="https://material-ui.com/static/images/avatar/1.jpg"
+                                className={classes.avatar}
+                              />
+                              <span className={classes.twitterIconAvatar}>
                                 <i className="fab fa-twitter fa-sm"></i>
                               </span>
-                                </Grid>
-                                <Grid
-                                    item
-                                    md={8}
-                                    sm={8}
-                                    xs={8}
-                                    className={classes.tableUsernamePart}
-                                >
-                                  <span>{row.name}</span>
-                                  <span className={classes.textMute}>
+                            </Grid>
+                            <Grid
+                              item
+                              md={8}
+                              sm={8}
+                              xs={8}
+                              className={classes.tableUsernamePart}
+                            >
+                              <span>{row.name}</span>
+                              <span className={classes.textMute}>
                                 @{row.username}
                               </span>
-                                </Grid>
-                              </Grid>
-                            </div>
-                            {this.state.rowHover != row.id ? (
-                                ""
-                            ) : (
-                                <div className={classes.twitterLink}>
-                                  <BootstrapTooltip
-                                      title="مشاهده در توییتر"
-                                      placement="top"
-                                  >
-                                    <a className={classes.twitterLinkBtn}>
-                                      <i className="fab fa-twitter fa-md"></i>
-                                    </a>
-                                  </BootstrapTooltip>
-                                </div>
-                            )}
+                            </Grid>
+                          </Grid>
+                        </div>
+                        {this.state.rowHover != row.id ? (
+                          ""
+                        ) : (
+                          <div className={classes.twitterLink}>
+                            <BootstrapTooltip
+                              title="مشاهده در توییتر"
+                              placement="top"
+                            >
+                              <a className={classes.twitterLinkBtn}>
+                                <i className="fab fa-twitter fa-md"></i>
+                              </a>
+                            </BootstrapTooltip>
                           </div>
-                          <div className={classes.postContent}>{row.post}</div>
-                          <div className={classes.postStats}>
-                            <div className={classes.postLCs}>
-                              <div className={classes.postLikes}>
+                        )}
+                      </div>
+                      <div className={classes.postContent}>{row.post}</div>
+                      <div className={classes.postStats}>
+                        <div className={classes.postLCs}>
+                          <div className={classes.postLikes}>
                             <span className={classes.statsNumber}>
                               {row.likes}
                             </span>
-                                <span className={classes.textMute}>
+                            <span className={classes.textMute}>
                               تعداد لایک‌
                             </span>
-                              </div>
-                              <div className={classes.postComments}>
+                          </div>
+                          <div className={classes.postComments}>
                             <span className={classes.statsNumber}>
                               {row.comments}
                             </span>
-                                <span className={classes.textMute}>
+                            <span className={classes.textMute}>
                               تعداد کامنت
                             </span>
-                              </div>
-                            </div>
-                            <div className={classes.postExtra}>
-                              <div
-                                  className={classNames(
-                                      classes.postDate,
-                                      classes.textMute,
-                                      classes.ltr
-                                  )}
-                              >
-                                {row.date}, {row.time}
-                              </div>
-                              <div
-                                  className={classNames(
-                                      classes.postEmotion,
-                                      classes.textMute
-                                  )}
-                                  align="left"
-                              >
-                                حس متن
-                                {row.emotion == "negative" ? (
-                                    <div
-                                        className={
-                                          this.props.selectedEmotion == "negative"
-                                              ? classes.selectedNegativeEmotion
-                                              : classes.negativeEmotion
-                                        }
-                                    ></div>
-                                ) : (
-                                    <div  className={
-                                      this.props.selectedEmotion == "positive"
-                                          ? classes.selectedPositiveEmotion
-                                          : classes.positiveEmotion
-                                    }
-                                    ></div>
-                                )}
-                              </div>
-                            </div>
                           </div>
                         </div>
-                      </Grid>
-                  );
-              })}
-            </Grid>
+                        <div className={classes.postExtra}>
+                          <div
+                            className={classNames(
+                              classes.postDate,
+                              classes.textMute,
+                              classes.ltr
+                            )}
+                          >
+                            {row.date}, {row.time}
+                          </div>
+                          <div
+                            className={classNames(
+                              classes.postEmotion,
+                              classes.textMute
+                            )}
+                            align="left"
+                          >
+                            حس متن
+                            {row.emotion == "negative" ? (
+                              <div
+                                className={
+                                  this.props.selectedEmotion == "negative"
+                                    ? classes.selectedNegativeEmotion
+                                    : classes.negativeEmotion
+                                }
+                              ></div>
+                            ) : (
+                              <div
+                                className={
+                                  this.props.selectedEmotion == "positive"
+                                    ? classes.selectedPositiveEmotion
+                                    : classes.positiveEmotion
+                                }
+                              ></div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Grid>
+                );
+            })}
           </Grid>
-          <Grid item md={12} className={classes.pagination} align="center">
-            <div className={classes.paginationBox}>
-              <div className={classes.paginationLinks}>
-                <div
-                    className={classNames(
-                        classes.paginationLink,
-                        classes.activePaginationLink
-                    )}
-                >
-                  1
-                </div>
-                <div className={classNames(classes.paginationLink)}>2</div>
-                <div className={classNames(classes.paginationLink)}>3</div>
-                <div className={classNames(classes.paginationLink)}>4</div>
-                <div className={classNames(classes.paginationLink)}>5</div>
-                <div className={classNames(classes.paginationLink)}>
-                  <i className="fa fa-angle-left"></i>
-                </div>
-                <div className={classNames(classes.paginationLink)}>
-                  <i className="fa fa-angle-double-left"></i>
-                </div>
+        </Grid>
+        <Grid item md={12} className={classes.pagination} align="center">
+          <div className={classes.paginationBox}>
+            <div className={classes.paginationLinks}>
+              <div
+                className={classNames(
+                  classes.paginationLink,
+                  classes.activePaginationLink
+                )}
+              >
+                1
               </div>
-              <div className={classes.paginationText}>
-                نمایش <span className={classes.textNormal}>1</span> از{" "}
-                <span className={classes.textNormal}>20</span> برای{" "}
-                <span className={classes.textNormal}>3343</span> پست
+              <div className={classNames(classes.paginationLink)}>2</div>
+              <div className={classNames(classes.paginationLink)}>3</div>
+              <div className={classNames(classes.paginationLink)}>4</div>
+              <div className={classNames(classes.paginationLink)}>5</div>
+              <div className={classNames(classes.paginationLink)}>
+                <i className="fa fa-angle-left"></i>
+              </div>
+              <div className={classNames(classes.paginationLink)}>
+                <i className="fa fa-angle-double-left"></i>
               </div>
             </div>
-          </Grid>
-        </div>
+            <div className={classes.paginationText}>
+              نمایش <span className={classes.textNormal}>1</span> از{" "}
+              <span className={classes.textNormal}>20</span> برای{" "}
+              <span className={classes.textNormal}>3343</span> پست
+            </div>
+          </div>
+        </Grid>
+      </div>
     );
   }
 }
@@ -399,11 +400,12 @@ GridPosts.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {lastTrackers, selectedTrackerDashboardItem}= state;
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
-    selectedTrackerDashboardItem:selectedTrackerDashboardItem.selectedTrackerDashboardItem,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
+    selectedTrackerDashboardItem:
+      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
     posts: selectedTrackerDashboardItem.posts,
     selectedEmotion: selectedTrackerDashboardItem.selectedEmotion
   };
@@ -417,10 +419,10 @@ const mapDispatchToProps = dispatch => {
     selectEmotion: emotion => {
       dispatch(DashboardActions.selectEmotion(emotion));
     }
-  }
+  };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(GridPosts));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(GridPosts));

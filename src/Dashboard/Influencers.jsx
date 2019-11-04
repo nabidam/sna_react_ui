@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import {
   Typography,
@@ -13,8 +13,8 @@ import {
   Divider,
   Button
 } from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import BootstrapTooltip from "./BSTooltip";
 import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
@@ -235,7 +235,7 @@ const styles = theme => ({
     color: "#000",
     position: "relative",
     boxShadow:
-        "0 2px 10px 0 rgba(0, 0, 0, 0.03), 0 2px 5px 0 rgba(0, 0, 0, 0.12)"
+      "0 2px 10px 0 rgba(0, 0, 0, 0.03), 0 2px 5px 0 rgba(0, 0, 0, 0.12)"
   },
   chartTopActions: {
     display: "flex",
@@ -693,490 +693,496 @@ class Influencers extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
-        <div className={classes.wrapper}>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Container className={classes.topNavbar} maxWidth="100%">
-              <Grid container className={classes.root}>
-                <Grid item md={12} sm={12} xs={12}>
-                  <Paper className={classes.topNavbarPaper}>
-                    <div className={classes.topNavbarTitleBox}>
-                      <Typography
-                          variant="h1"
-                          className={classes.topNavbarTitleText}
-                      >
-                        افراد مؤثر شبکه‌های اجتماعی
-                      </Typography>
-                    </div>
-                    <div className={classes.topNavbarMeta}>
-                      <Button className={classes.instagramIconBtn}>
-                        <i className="fab fa-instagram"></i>
-                      </Button>
-                      <Button className={classes.twitterIconBtn}>
-                        <i className="fab fa-twitter"></i>
-                      </Button>
-                    </div>
-                  </Paper>
-                </Grid>
+      <div className={classes.wrapper}>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Container className={classes.topNavbar} maxWidth="xl">
+            <Grid container className={classes.root}>
+              <Grid item md={12} sm={12} xs={12}>
+                <Paper className={classes.topNavbarPaper}>
+                  <div className={classes.topNavbarTitleBox}>
+                    <Typography
+                      variant="h1"
+                      className={classes.topNavbarTitleText}
+                    >
+                      افراد مؤثر شبکه‌های اجتماعی
+                    </Typography>
+                  </div>
+                  <div className={classes.topNavbarMeta}>
+                    <Button className={classes.instagramIconBtn}>
+                      <i className="fab fa-instagram"></i>
+                    </Button>
+                    <Button className={classes.twitterIconBtn}>
+                      <i className="fab fa-twitter"></i>
+                    </Button>
+                  </div>
+                </Paper>
               </Grid>
-            </Container>
-            <Container maxWidth="md">
-              <Grid
-                  container
-                  className={classNames(classes.root, classes.groupsContainer)}
-                  spacing={2}
-              >
-                <Grid item md={9} sm={12} xs={12}>
-                  <Paper className={classes.chartPaper}>
-                    <div className={classes.paperHeader}>
-                      <Typography variant="h6" className={classes.headerText}>
-                        موضوع‌ها
-                      </Typography>
-                      <div className={classes.paperHeaderGuideIcon}>
-                        <BootstrapTooltip
-                            placement="top"
-                            title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                        >
-                          <i className="far fa-lightbulb fa-lg"></i>
-                        </BootstrapTooltip>
-                      </div>
+            </Grid>
+          </Container>
+          <Container maxWidth="md">
+            <Grid
+              container
+              className={classNames(classes.root, classes.groupsContainer)}
+              spacing={2}
+            >
+              <Grid item md={9} sm={12} xs={12}>
+                <Paper className={classes.chartPaper}>
+                  <div className={classes.paperHeader}>
+                    <Typography variant="h6" className={classes.headerText}>
+                      موضوع‌ها
+                    </Typography>
+                    <div className={classes.paperHeaderGuideIcon}>
+                      <BootstrapTooltip
+                        placement="top"
+                        title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                      >
+                        <i className="far fa-lightbulb fa-lg"></i>
+                      </BootstrapTooltip>
                     </div>
-                    <Divider variant="fullWidth" className={classes.dividerM} />
-                    <Grid container className={classes.root}>
-                      <Grid item md={12} sm={12} xs={12}>
-                        <Table className={classes.table} stickyHeader>
-                          <TableHead>
-                            <TableRow>
+                  </div>
+                  <Divider variant="fullWidth" className={classes.dividerM} />
+                  <Grid container className={classes.root}>
+                    <Grid item md={12} sm={12} xs={12}>
+                      <Table className={classes.table}>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              align="right"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "20%" }}
+                            >
+                              نام دسته
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              پست‌ها
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              مجموع لایک
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              متوسط لایک
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              مجموع کامنت
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              متوسط کامنت
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              حساب‌های مؤثر
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              حس متن
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableHeader
+                              )}
+                              style={{ width: "10%" }}
+                            >
+                              حس کامنت
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {this.props.groups.map(row => (
+                            <TableRow
+                              key={row.id}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.tableRow,
+                                this.props.selectedGroup == row.id
+                                  ? classes.selectedGroup
+                                  : ""
+                              )}
+                              onMouseEnter={() => this.handleHoverRow(row.id)}
+                              onMouseLeave={() => this.handleUnHoverRow()}
+                              onClick={id => this.props.selectGroup(row.id)}
+                            >
                               <TableCell
-                                  align="right"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "20%"}}
+                                style={{ width: "20%" }}
+                                className={classNames(
+                                  classes.tableCellLowPadding,
+                                  classes.flex
+                                )}
+                                // padding="none"
+                                align="right"
                               >
-                                نام دسته
+                                {row.name}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
+                                className={classNames(
+                                  classes.tableCellLowPadding,
+                                  this.state.rowHover != row.id &&
+                                    this.props.selectedGroup != row.id
+                                    ? classes.textMute
+                                    : ""
+                                )}
                               >
-                                پست‌ها
+                                {row.posts}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
+                                className={classNames(
+                                  classes.tableCellLowPadding,
+                                  this.state.rowHover != row.id &&
+                                    this.props.selectedGroup != row.id
+                                    ? classes.textMute
+                                    : ""
+                                )}
                               >
-                                مجموع لایک
+                                {row.overall_likes}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
+                                className={classNames(
+                                  classes.tableCellLowPadding,
+                                  this.state.rowHover != row.id &&
+                                    this.props.selectedGroup != row.id
+                                    ? classes.textMute
+                                    : ""
+                                )}
                               >
-                                متوسط لایک
+                                {row.average_likes}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
+                                className={classNames(
+                                  classes.tableCellLowPadding,
+                                  this.state.rowHover != row.id &&
+                                    this.props.selectedGroup != row.id
+                                    ? classes.textMute
+                                    : ""
+                                )}
                               >
-                                مجموع کامنت
+                                {row.overall_comments}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
+                                className={classNames(
+                                  classes.tableCellLowPadding,
+                                  this.state.rowHover != row.id &&
+                                    this.props.selectedGroup != row.id
+                                    ? classes.textMute
+                                    : ""
+                                )}
                               >
-                                متوسط کامنت
+                                {row.average_comments}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
+                                className={classNames(
+                                  classes.tableCellLowPadding,
+                                  this.state.rowHover != row.id &&
+                                    this.props.selectedGroup != row.id
+                                    ? classes.textMute
+                                    : ""
+                                )}
                               >
-                                حساب‌های مؤثر
+                                {row.effective_accounts}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
                               >
-                                حس متن
+                                {row.content_emotion == -1 ? (
+                                  <div
+                                    className={classNames(
+                                      classes.tableCellLowPadding,
+                                      this.props.selectedEmotion == "negative"
+                                        ? classes.selectedNegativeEmotion
+                                        : classes.negativeEmotion
+                                    )}
+                                  ></div>
+                                ) : (
+                                  <div
+                                    className={classNames(
+                                      classes.tableCellLowPadding,
+                                      this.props.selectedEmotion == "positive"
+                                        ? classes.selectedPositiveEmotion
+                                        : classes.positiveEmotion
+                                    )}
+                                  ></div>
+                                )}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableHeader
-                                  )}
-                                  style={{width: "10%"}}
+                                align="center"
+                                style={{ width: "10%" }}
                               >
-                                حس کامنت
+                                {row.comment_emotion == -1 ? (
+                                  <div
+                                    className={classNames(
+                                      classes.tableCellLowPadding,
+                                      this.props.selectedEmotion == "negative"
+                                        ? classes.selectedNegativeEmotion
+                                        : classes.negativeEmotion
+                                    )}
+                                  ></div>
+                                ) : (
+                                  <div
+                                    className={classNames(
+                                      classes.tableCellLowPadding,
+                                      this.props.selectedEmotion == "positive"
+                                        ? classes.selectedPositiveEmotion
+                                        : classes.positiveEmotion
+                                    )}
+                                  ></div>
+                                )}
                               </TableCell>
                             </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {this.props.groups.map(row => (
-                                <TableRow
-                                    key={row.id}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        classes.tableRow,
-                                        this.props.selectedGroup == row.id
-                                            ? classes.selectedGroup
-                                            : ""
-                                    )}
-                                    onMouseEnter={() => this.handleHoverRow(row.id)}
-                                    onMouseLeave={() => this.handleUnHoverRow()}
-                                    onClick={id => this.props.selectGroup(row.id)}
-                                >
-                                  <TableCell
-                                      style={{width: "20%"}}
-                                      className={classNames(
-                                          classes.tableCellLowPadding,
-                                          classes.flex
-                                      )}
-                                      // padding="none"
-                                      align="right"
-                                  >
-                                    {row.name}
-                                  </TableCell>
-                                  <TableCell
-                                      align="center"
-                                      style={{width: "10%"}}
-                                      className={classNames(
-                                          classes.tableCellLowPadding,
-                                          this.state.rowHover != row.id &&
-                                          this.props.selectedGroup != row.id
-                                              ? classes.textMute
-                                              : ""
-                                      )}
-                                  >
-                                    {row.posts}
-                                  </TableCell>
-                                  <TableCell
-                                      align="center"
-                                      style={{width: "10%"}}
-                                      className={classNames(
-                                          classes.tableCellLowPadding,
-                                          this.state.rowHover != row.id &&
-                                          this.props.selectedGroup != row.id
-                                              ? classes.textMute
-                                              : ""
-                                      )}
-                                  >
-                                    {row.overall_likes}
-                                  </TableCell>
-                                  <TableCell
-                                      align="center"
-                                      style={{width: "10%"}}
-                                      className={classNames(
-                                          classes.tableCellLowPadding,
-                                          this.state.rowHover != row.id &&
-                                          this.props.selectedGroup != row.id
-                                              ? classes.textMute
-                                              : ""
-                                      )}
-                                  >
-                                    {row.average_likes}
-                                  </TableCell>
-                                  <TableCell
-                                      align="center"
-                                      style={{width: "10%"}}
-                                      className={classNames(
-                                          classes.tableCellLowPadding,
-                                          this.state.rowHover != row.id &&
-                                          this.props.selectedGroup != row.id
-                                              ? classes.textMute
-                                              : ""
-                                      )}
-                                  >
-                                    {row.overall_comments}
-                                  </TableCell>
-                                  <TableCell
-                                      align="center"
-                                      style={{width: "10%"}}
-                                      className={classNames(
-                                          classes.tableCellLowPadding,
-                                          this.state.rowHover != row.id &&
-                                          this.props.selectedGroup != row.id
-                                              ? classes.textMute
-                                              : ""
-                                      )}
-                                  >
-                                    {row.average_comments}
-                                  </TableCell>
-                                  <TableCell
-                                      align="center"
-                                      style={{width: "10%"}}
-                                      className={classNames(
-                                          classes.tableCellLowPadding,
-                                          this.state.rowHover != row.id &&
-                                          this.props.selectedGroup != row.id
-                                              ? classes.textMute
-                                              : ""
-                                      )}
-                                  >
-                                    {row.effective_accounts}
-                                  </TableCell>
-                                  <TableCell align="center" style={{width: "10%"}}>
-                                    {row.content_emotion == -1 ? (
-                                        <div
-                                            className={classNames(
-                                                classes.tableCellLowPadding,
-                                                this.props.selectedEmotion == "negative"
-                                                    ? classes.selectedNegativeEmotion
-                                                    : classes.negativeEmotion
-                                            )}
-                                        ></div>
-                                    ) : (
-                                        <div
-                                            className={classNames(
-                                                classes.tableCellLowPadding,
-                                                this.props.selectedEmotion == "positive"
-                                                    ? classes.selectedPositiveEmotion
-                                                    : classes.positiveEmotion
-                                            )}
-                                        ></div>
-                                    )}
-                                  </TableCell>
-                                  <TableCell align="center" style={{width: "10%"}}>
-                                    {row.comment_emotion == -1 ? (
-                                        <div
-                                            className={classNames(
-                                                classes.tableCellLowPadding,
-                                                this.props.selectedEmotion == "negative"
-                                                    ? classes.selectedNegativeEmotion
-                                                    : classes.negativeEmotion
-                                            )}
-                                        ></div>
-                                    ) : (
-                                        <div
-                                            className={classNames(
-                                                classes.tableCellLowPadding,
-                                                this.props.selectedEmotion == "positive"
-                                                    ? classes.selectedPositiveEmotion
-                                                    : classes.positiveEmotion
-                                            )}
-                                        ></div>
-                                    )}
-                                  </TableCell>
-                                </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </Grid>
+                          ))}
+                        </TableBody>
+                      </Table>
                     </Grid>
-                  </Paper>
-                </Grid>
-                <Grid item md={3} sm={12} xs={12}>
-                  <Paper
-                      className={classNames(
-                          classes.relatedsPaper,
-                          classes.chartPaper
-                      )}
-                  >
-                    <div className={classes.paperHeader}>
-                      <Typography variant="h6" className={classes.title}>
-                        لفظ‌های مرتبط با{" "}
-                        <span className={classes.selectedKeyword}>
+                  </Grid>
+                </Paper>
+              </Grid>
+              <Grid item md={3} sm={12} xs={12}>
+                <Paper
+                  className={classNames(
+                    classes.relatedsPaper,
+                    classes.chartPaper
+                  )}
+                >
+                  <div className={classes.paperHeader}>
+                    <Typography variant="h6" className={classes.title}>
+                      لفظ‌های مرتبط با{" "}
+                      <span className={classes.selectedKeyword}>
                         {this.props.groups.map(item => {
                           if (item.id == this.props.selectedGroup) {
                             return "" + item.name;
                           }
                         })}
                       </span>
-                      </Typography>
-                      <div className={classes.paperHeaderGuideIcon}>
-                        <BootstrapTooltip
-                            placement="top"
-                            title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                        >
-                          <i className="far fa-lightbulb fa-lg"></i>
-                        </BootstrapTooltip>
-                      </div>
-                    </div>
-                    <Divider variant="fullWidth" className={classes.dividerM} />
-                    <div className={classes.fieldsContent}>
-                      <List
-                          component="div"
-                          disablePadding
-                          // className={classes.relateds}
+                    </Typography>
+                    <div className={classes.paperHeaderGuideIcon}>
+                      <BootstrapTooltip
+                        placement="top"
+                        title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                       >
-                        {this.props.influencers.map((row, index) => {
-                          return (
-                              <ListItem
-                                  className={classNames(
-                                      classes.relateds,
-                                      classes.listItem
-                                  )}
-                                  key={index}
+                        <i className="far fa-lightbulb fa-lg"></i>
+                      </BootstrapTooltip>
+                    </div>
+                  </div>
+                  <Divider variant="fullWidth" className={classes.dividerM} />
+                  <div className={classes.fieldsContent}>
+                    <List
+                      component="div"
+                      disablePadding
+                      // className={classes.relateds}
+                    >
+                      {this.props.influencers.map((row, index) => {
+                        return (
+                          <ListItem
+                            className={classNames(
+                              classes.relateds,
+                              classes.listItem
+                            )}
+                            key={index}
+                          >
+                            <Grid
+                              container
+                              className={classes.root}
+                              spacing={1}
+                            >
+                              <Grid
+                                item
+                                md={3}
+                                sm={3}
+                                xs={3}
+                                className={classes.tableUsernamePart}
                               >
-                                <Grid
-                                    container
-                                    className={classes.root}
-                                    spacing={1}
-                                >
-                                  <Grid
-                                      item
-                                      md={3}
-                                      sm={3}
-                                      xs={3}
-                                      className={classes.tableUsernamePart}
-                                  >
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src="https://material-ui.com/static/images/avatar/1.jpg"
-                                        className={classes.avatar}
-                                    />
-                                    <span className={classes.twtterIconAvatar}>
+                                <Avatar
+                                  alt="Remy Sharp"
+                                  src="https://material-ui.com/static/images/avatar/1.jpg"
+                                  className={classes.avatar}
+                                />
+                                <span className={classes.twtterIconAvatar}>
                                   <i className="fab fa-twitter fa-sm"></i>
                                 </span>
-                                  </Grid>
-                                  <Grid
-                                      item
-                                      md={9}
-                                      sm={9}
-                                      xs={9}
-                                      className={classes.tableUsernamePart}
-                                  >
-                                    <span>{row.name}</span>
-                                    <span className={classes.textMute}>
+                              </Grid>
+                              <Grid
+                                item
+                                md={9}
+                                sm={9}
+                                xs={9}
+                                className={classes.tableUsernamePart}
+                              >
+                                <span>{row.name}</span>
+                                <span className={classes.textMute}>
                                   @{row.username}
                                 </span>
-                                  </Grid>
-                                </Grid>
-                              </ListItem>
-                          );
-                        })}
-                      </List>
-                    </div>
-                  </Paper>
-                </Grid>
+                              </Grid>
+                            </Grid>
+                          </ListItem>
+                        );
+                      })}
+                    </List>
+                  </div>
+                </Paper>
               </Grid>
-              <Grid container className={classes.root}>
-                <Grid item md={12} sm={12} xs={12}>
-                  <Paper
-                      className={classNames(
-                          classes.paper,
-                          classes.columnPaper,
-                          classes.postsPaper
-                      )}
-                  >
-                    <div className={classes.paperHeader}>
-                      <Typography variant="h6" className={classes.headerText}>
-                        پست‌های مرتبط با{" "}
-                        <span className={classes.selectedKeyword}>
+            </Grid>
+            <Grid container className={classes.root}>
+              <Grid item md={12} sm={12} xs={12}>
+                <Paper
+                  className={classNames(
+                    classes.paper,
+                    classes.columnPaper,
+                    classes.postsPaper
+                  )}
+                >
+                  <div className={classes.paperHeader}>
+                    <Typography variant="h6" className={classes.headerText}>
+                      پست‌های مرتبط با{" "}
+                      <span className={classes.selectedKeyword}>
                         {this.props.groups.map(item => {
                           if (item.id == this.props.selectedGroup) {
                             return "" + item.name;
                           }
                         })}
                       </span>
-                      </Typography>
-                      <div className={classes.paperHeaderGuideIcon}>
-                        <BootstrapTooltip
-                            placement="top"
-                            title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                        >
-                          <i className="far fa-lightbulb fa-lg"></i>
-                        </BootstrapTooltip>
-                      </div>
+                    </Typography>
+                    <div className={classes.paperHeaderGuideIcon}>
+                      <BootstrapTooltip
+                        placement="top"
+                        title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                      >
+                        <i className="far fa-lightbulb fa-lg"></i>
+                      </BootstrapTooltip>
                     </div>
-                    <Divider variant="fullWidth" className={classes.dividerM} />
-                    <Grid container className={classes.root}>
-                      <Grid item md={12} className={classes.actions}>
-                        <input
-                            type="text"
-                            className={classes.searchInput}
-                            placeholder="هشتگ و کلمات کلیدی"
-                        />
-                        <Button className={classes.searchIconBtn}>
-                          <i className="fa fa-search fa-lg"></i>
-                        </Button>
-
-                        <Divider
-                            orientation="vertical"
-                            className={classes.searchDivider}
-                        />
-                        <div className={classes.sortBtnContainer}>
-                          <Button color="primary" className={classes.sortBtn}>
-                            مرتب‌سازی
-                            <div className={classes.sortIcon}>
-                              <i className="fas fa-chevron-down" />
-                            </div>
-                          </Button>
-                        </div>
-                        <div color="primary" className={classes.selectTableView}>
-                          <Button
-                              className={classNames(
-                                  classes.selectTableViewIcon,
-                                  "" +
-                                  (this.state.selectedView == "row"
-                                      ? classes.selectedView
-                                      : "")
-                              )}
-                              onClick={() => this.handleSelectView("row")}
-                          >
-                            <ViewStreamOutlinedIcon />
-                          </Button>
-                          <Button
-                              className={classNames(
-                                  classes.selectTableViewIcon,
-                                  "" +
-                                  (this.state.selectedView == "grid"
-                                      ? classes.selectedView
-                                      : "")
-                              )}
-                              onClick={() => this.handleSelectView("grid")}
-                          >
-                            <ViewModuleOutlinedIcon />
-                          </Button>
-                        </div>
-                      </Grid>
-                      <Divider
-                          variant="fullWidth"
-                          className={classes.dividerFW}
+                  </div>
+                  <Divider variant="fullWidth" className={classes.dividerM} />
+                  <Grid container className={classes.root}>
+                    <Grid item md={12} className={classes.actions}>
+                      <input
+                        type="text"
+                        className={classes.searchInput}
+                        placeholder="هشتگ و کلمات کلیدی"
                       />
-                      {this.state.selectedView == "row" ? (
-                          <ListPosts />
-                      ) : (
-                          <GridPosts />
-                      )}
+                      <Button className={classes.searchIconBtn}>
+                        <i className="fa fa-search fa-lg"></i>
+                      </Button>
+
+                      <Divider
+                        orientation="vertical"
+                        className={classes.searchDivider}
+                      />
+                      <div className={classes.sortBtnContainer}>
+                        <Button color="primary" className={classes.sortBtn}>
+                          مرتب‌سازی
+                          <div className={classes.sortIcon}>
+                            <i className="fas fa-chevron-down" />
+                          </div>
+                        </Button>
+                      </div>
+                      <div color="primary" className={classes.selectTableView}>
+                        <Button
+                          className={classNames(
+                            classes.selectTableViewIcon,
+                            "" +
+                              (this.state.selectedView == "row"
+                                ? classes.selectedView
+                                : "")
+                          )}
+                          onClick={() => this.handleSelectView("row")}
+                        >
+                          <ViewStreamOutlinedIcon />
+                        </Button>
+                        <Button
+                          className={classNames(
+                            classes.selectTableViewIcon,
+                            "" +
+                              (this.state.selectedView == "grid"
+                                ? classes.selectedView
+                                : "")
+                          )}
+                          onClick={() => this.handleSelectView("grid")}
+                        >
+                          <ViewModuleOutlinedIcon />
+                        </Button>
+                      </div>
                     </Grid>
-                  </Paper>
-                </Grid>
+                    <Divider
+                      variant="fullWidth"
+                      className={classes.dividerFW}
+                    />
+                    {this.state.selectedView == "row" ? (
+                      <ListPosts />
+                    ) : (
+                      <GridPosts />
+                    )}
+                  </Grid>
+                </Paper>
               </Grid>
-            </Container>
-          </main>
-        </div>
+            </Grid>
+          </Container>
+        </main>
+      </div>
     );
   }
 }
@@ -1187,10 +1193,10 @@ Influencers.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {lastTrackers, selectedTrackerDashboardItem}= state
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
     groups: selectedTrackerDashboardItem.groups,
     keywords: selectedTrackerDashboardItem.keywords,
     selectedGroup: selectedTrackerDashboardItem.selectedGroup,
@@ -1200,14 +1206,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedTracker: id => dispatch(DashboardActions.changeSelectedTracker(id)),
-    selectAnalysisType: type => dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(DashboardActions.changeAnalysisStatus(analysis)),
+    changeSelectedTracker: id =>
+      dispatch(DashboardActions.changeSelectedTracker(id)),
+    selectAnalysisType: type =>
+      dispatch(DashboardActions.selectAnalysisType(type)),
+    changeAnalysisStatus: analysis =>
+      dispatch(DashboardActions.changeAnalysisStatus(analysis)),
     selectGroup: id => dispatch(DashboardActions.selectGroup(id))
   };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(Influencers));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Influencers));

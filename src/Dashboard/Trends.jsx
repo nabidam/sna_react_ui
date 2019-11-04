@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import {
   Typography,
@@ -14,8 +14,8 @@ import {
   Button,
   Popover
 } from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import BootstrapTooltip from "./BSTooltip";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -240,7 +240,7 @@ const styles = theme => ({
     color: "#000",
     position: "relative",
     boxShadow:
-        "0 2px 10px 0 rgba(0, 0, 0, 0.03), 0 2px 5px 0 rgba(0, 0, 0, 0.12)"
+      "0 2px 10px 0 rgba(0, 0, 0, 0.03), 0 2px 5px 0 rgba(0, 0, 0, 0.12)"
   },
   chartTopActions: {
     display: "flex",
@@ -841,516 +841,528 @@ class Trends extends React.Component {
   //   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
-        <div className={classes.wrapper}>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Container className={classes.topNavbar} maxWidth="100%">
-              <Grid container className={classes.root}>
-                <Grid item md={12} sm={12} xs={12}>
-                  <Paper className={classes.topNavbarPaper}>
-                    <div className={classes.topNavbarTitleBox}>
-                      <Typography
-                          variant="h1"
-                          className={classes.topNavbarTitleText}
+      <div className={classes.wrapper}>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Container className={classes.topNavbar} maxWidth="xl">
+            <Grid container className={classes.root}>
+              <Grid item md={12} sm={12} xs={12}>
+                <Paper className={classes.topNavbarPaper}>
+                  <div className={classes.topNavbarTitleBox}>
+                    <Typography
+                      variant="h1"
+                      className={classes.topNavbarTitleText}
+                    >
+                      ترند شبکه‌های اجتماعی
+                    </Typography>
+                  </div>
+                  <div className={classes.topNavbarMeta}>
+                    <div className={classes.metaIcon}>
+                      <Button
+                        className={
+                          this.state.instagram
+                            ? classes.instagramIconBtn
+                            : classes.defaultIconBtn
+                        }
+                        onClick={() => this.handleInstagramClick()}
                       >
-                        ترند شبکه‌های اجتماعی
-                      </Typography>
-                    </div>
-                    <div className={classes.topNavbarMeta}>
-                      <div className={classes.metaIcon}>
-                        <Button
-                            className={
-                              this.state.instagram
-                                  ? classes.instagramIconBtn
-                                  : classes.defaultIconBtn
-                            }
-                            onClick={() => this.handleInstagramClick()}
-                        >
-                          <i className="fab fa-instagram"></i>
-                        </Button>
-                        {this.state.instagram ? (
-                            <span className={classes.checkIconTiny}>
-                          <CheckIcon style={{fontSize: "0.9rem"}} />
-                        </span>
-                        ) : (
-                            ""
-                        )}
-                      </div>
-                      <div className={classes.metaIcon}>
-                        <Button
-                            className={
-                              this.state.twitter
-                                  ? classes.twitterIconBtn
-                                  : classes.defaultIconBtn
-                            }
-                            onClick={() => this.handleTwitterClick()}
-                        >
-                          <i className="fab fa-twitter"></i>
-                        </Button>
-                        {this.state.twitter ? (
-                            <span className={classes.checkIconTiny}>
-                          <CheckIcon style={{fontSize: "0.9rem"}} />
-                        </span>
-                        ) : (
-                            ""
-                        )}
-                      </div>
-
-                      <Divider
-                          orientation="vertical"
-                          className={classes.metaDivider}
-                      />
-                      <Button color="primary" className={classes.selectDateRange}>
-                        ۱۹ مرداد
-                        <div className={classes.selectDateRangeIcon}>
-                          <i className="fas fa-chevron-down" />
-                        </div>
+                        <i className="fab fa-instagram"></i>
                       </Button>
-                    </div>
-                  </Paper>
-                </Grid>
-              </Grid>
-            </Container>
-            <Container maxWidth="md">
-              <Grid container className={classes.root}>
-                <Grid item md={12} sm={12} xs={12}>
-                  <Paper
-                      className={classNames(
-                          classes.paper,
-                          classes.columnPaper,
-                          classes.trendsPaper
+                      {this.state.instagram ? (
+                        <span className={classes.checkIconTiny}>
+                          <CheckIcon style={{ fontSize: "0.9rem" }} />
+                        </span>
+                      ) : (
+                        ""
                       )}
-                  >
-                    <div className={classes.paperHeader}>
-                      <Typography variant="h6" className={classes.headerText}>
-                        ترند توییتر در ۱۹ مرداد
-                      </Typography>
-                      <div className={classes.paperHeaderGuideIcon}>
-                        <BootstrapTooltip
-                            placement="top"
-                            title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                        >
-                          <i className="far fa-lightbulb fa-lg"></i>
-                        </BootstrapTooltip>
-                      </div>
                     </div>
-                    <Grid container className={classes.root}>
-                      <Divider
-                          variant="fullWidth"
-                          className={classes.dividerFW}
-                      />
-                      <Grid item md={12} className={classes.tableGrid}>
-                        <Table className={classes.table}>
-                          <TableHead>
-                            <TableRow>
+                    <div className={classes.metaIcon}>
+                      <Button
+                        className={
+                          this.state.twitter
+                            ? classes.twitterIconBtn
+                            : classes.defaultIconBtn
+                        }
+                        onClick={() => this.handleTwitterClick()}
+                      >
+                        <i className="fab fa-twitter"></i>
+                      </Button>
+                      {this.state.twitter ? (
+                        <span className={classes.checkIconTiny}>
+                          <CheckIcon style={{ fontSize: "0.9rem" }} />
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+
+                    <Divider
+                      orientation="vertical"
+                      className={classes.metaDivider}
+                    />
+                    <Button color="primary" className={classes.selectDateRange}>
+                      ۱۹ مرداد
+                      <div className={classes.selectDateRangeIcon}>
+                        <i className="fas fa-chevron-down" />
+                      </div>
+                    </Button>
+                  </div>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+          <Container maxWidth="md">
+            <Grid container className={classes.root}>
+              <Grid item md={12} sm={12} xs={12}>
+                <Paper
+                  className={classNames(
+                    classes.paper,
+                    classes.columnPaper,
+                    classes.trendsPaper
+                  )}
+                >
+                  <div className={classes.paperHeader}>
+                    <Typography variant="h6" className={classes.headerText}>
+                      ترند توییتر در ۱۹ مرداد
+                    </Typography>
+                    <div className={classes.paperHeaderGuideIcon}>
+                      <BootstrapTooltip
+                        placement="top"
+                        title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                      >
+                        <i className="far fa-lightbulb fa-lg"></i>
+                      </BootstrapTooltip>
+                    </div>
+                  </div>
+                  <Grid container className={classes.root}>
+                    <Divider
+                      variant="fullWidth"
+                      className={classes.dividerFW}
+                    />
+                    <Grid item md={12} className={classes.tableGrid}>
+                      <Table className={classes.table}>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              align="right"
+                              className={classNames(
+                                classes.tableHeader,
+                                classes.cellLowPadding
+                              )}
+                              style={{ paddingRight: 0 }}
+                            >
+                              #
+                            </TableCell>
+                            <TableCell
+                              align="right"
+                              className={classNames(classes.tableHeader)}
+                              style={{ paddingRight: 4 }}
+                            >
+                              ترند
+                            </TableCell>
+                            <TableCell
+                              align="right"
+                              className={classNames(classes.tableHeader)}
+                              style={{ paddingRight: 4 }}
+                            >
+                              پست‌ها
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(classes.tableHeader)}
+                              style={{ paddingRight: 4 }}
+                            >
+                              حساب‌ها
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(classes.tableHeader)}
+                              style={{ paddingRight: 4 }}
+                            >
+                              مجموع لایک
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(classes.tableHeader)}
+                              style={{ paddingRight: 4 }}
+                            >
+                              مجموع کامنت
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(classes.tableHeader)}
+                              style={{ padding: "0px 25px" }}
+                            >
+                              افراد آغازگر
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(classes.tableHeader)}
+                              style={{ padding: "0px 25px" }}
+                            >
+                              افراد مؤثر
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(classes.tableHeader)}
+                            >
+                              حس متن
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classNames(classes.tableHeader)}
+                            >
+                              حس کامنت
+                            </TableCell>
+                            <TableCell
+                              align="right"
+                              className={classNames(classes.tableHeader)}
+                            >
+                              الفاظ مرتبط
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {this.props.trends.map((row, index) => (
+                            <TableRow key={row.id} className={classes.tableRow}>
                               <TableCell
-                                  align="right"
-                                  className={classNames(
-                                      classes.tableHeader,
-                                      classes.cellLowPadding
-                                  )}
-                                  style={{paddingRight: 0}}
+                                className={classNames(
+                                  classes.flex,
+                                  classes.cellLowPadding
+                                )}
+                                // padding="none"
+                                align="center"
+                                style={{ paddingRight: 0 }}
                               >
-                                #
+                                {index + 1}
                               </TableCell>
                               <TableCell
-                                  align="right"
-                                  className={classNames(classes.tableHeader)}
-                                  style={{paddingRight: 4}}
+                                className={classNames(
+                                  classes.flex,
+                                  classes.cellLowPadding
+                                )}
+                                align="center"
                               >
-                                ترند
+                                {row.name}
                               </TableCell>
                               <TableCell
-                                  align="right"
-                                  className={classNames(classes.tableHeader)}
-                                  style={{paddingRight: 4}}
+                                className={classNames(
+                                  classes.flex,
+                                  classes.cellLowPadding,
+                                  classes.textMute
+                                )}
+                                align="center"
                               >
-                                پست‌ها
+                                {row.posts}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(classes.tableHeader)}
-                                  style={{paddingRight: 4}}
+                                className={classNames(
+                                  classes.flex,
+                                  classes.cellLowPadding,
+                                  classes.textMute
+                                )}
+                                align="center"
                               >
-                                حساب‌ها
+                                {row.accounts}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(classes.tableHeader)}
-                                  style={{paddingRight: 4}}
+                                className={classNames(
+                                  classes.flex,
+                                  classes.cellLowPadding,
+                                  classes.textMute
+                                )}
+                                align="center"
                               >
-                                مجموع لایک
+                                {row.likes}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(classes.tableHeader)}
-                                  style={{paddingRight: 4}}
+                                className={classNames(
+                                  classes.flex,
+                                  classes.cellLowPadding,
+                                  classes.textMute
+                                )}
+                                align="center"
                               >
-                                مجموع کامنت
+                                {row.comments}
                               </TableCell>
                               <TableCell
-                                  align="center"
-                                  className={classNames(classes.tableHeader)}
-                                  style={{padding: "0px 25px"}}
+                                className={classNames(classes.flex)}
+                                align="center"
+                                style={{ padding: "0px 25px" }}
                               >
-                                افراد آغازگر
-                              </TableCell>
-                              <TableCell
-                                  align="center"
-                                  className={classNames(classes.tableHeader)}
-                                  style={{padding: "0px 25px"}}
-                              >
-                                افراد مؤثر
-                              </TableCell>
-                              <TableCell
-                                  align="center"
-                                  className={classNames(classes.tableHeader)}
-                              >
-                                حس متن
-                              </TableCell>
-                              <TableCell
-                                  align="center"
-                                  className={classNames(classes.tableHeader)}
-                              >
-                                حس کامنت
-                              </TableCell>
-                              <TableCell
-                                  align="right"
-                                  className={classNames(classes.tableHeader)}
-                              >
-                                الفاظ مرتبط
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {this.props.trends.map((row, index) => (
-                                <TableRow key={row.id} className={classes.tableRow}>
-                                  <TableCell
-                                      className={classNames(
-                                          classes.flex,
-                                          classes.cellLowPadding
-                                      )}
-                                      // padding="none"
-                                      align="center"
-                                      style={{paddingRight: 0}}
-                                  >
-                                    {index + 1}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(
-                                          classes.flex,
-                                          classes.cellLowPadding
-                                      )}
-                                      align="center"
-                                  >
-                                    {row.name}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(
-                                          classes.flex,
-                                          classes.cellLowPadding,
-                                          classes.textMute
-                                      )}
-                                      align="center"
-                                  >
-                                    {row.posts}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(
-                                          classes.flex,
-                                          classes.cellLowPadding,
-                                          classes.textMute
-                                      )}
-                                      align="center"
-                                  >
-                                    {row.accounts}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(
-                                          classes.flex,
-                                          classes.cellLowPadding,
-                                          classes.textMute
-                                      )}
-                                      align="center"
-                                  >
-                                    {row.likes}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(
-                                          classes.flex,
-                                          classes.cellLowPadding,
-                                          classes.textMute
-                                      )}
-                                      align="center"
-                                  >
-                                    {row.comments}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(classes.flex)}
-                                      align="center"
-                                      style={{padding: "0px 25px"}}
-                                  >
-                                    <div
-                                        className={classes.imageGroup}
-                                        onClick={
-                                          (row.id,
-                                              event =>
-                                                  this.handleInitiatorClick(row.id, event))
-                                        }
-                                    >
-                                      <img
-                                          src="https://picsum.photos/id/159/100/100"
-                                          className={classes.rightImage}
-                                      />
-                                      <img
-                                          src="https://picsum.photos/id/158/100/100"
-                                          className={classes.midImage}
-                                      />
-                                      <img
-                                          src="https://picsum.photos/id/157/100/100"
-                                          className={classes.leftImage}
-                                      />
-                                    </div>
-                                    <Popover
-                                        open={this.state.openInitiator > 0}
-                                        onClose={() => this.handleCloseInitiators()}
-                                        id={this.state.openInitiator}
-                                        anchorEl={this.state.openInitiatorAnchorEl}
-                                        elevation="3"
-                                        anchorOrigin={{
-                                          vertical: "bottom",
-                                          horizontal: "center"
-                                        }}
-                                        transformOrigin={{
-                                          vertical: "top",
-                                          horizontal: "center"
-                                        }}
-                                    >
-                                      <List>
-                                        {row.initiators.map(item => {
-                                          return (
-                                              <ListItem className={classes.listItem}>
-                                                <Grid
-                                                    container
-                                                    className={classes.root}
-                                                    spacing={1}
-                                                >
-                                                  <Grid
-                                                      item
-                                                      md={4}
-                                                      sm={4}
-                                                      xs={4}
-                                                      className={
-                                                        classes.tableUsernamePart
-                                                      }
-                                                  >
-                                                    <Avatar
-                                                        alt="Remy Sharp"
-                                                        src="https://material-ui.com/static/images/avatar/1.jpg"
-                                                        className={classes.avatar}
-                                                    />
-                                                    <span
-                                                        className={
-                                                          classes.twtterIconAvatar
-                                                        }
-                                                    >
+                                <div
+                                  className={classes.imageGroup}
+                                  onClick={
+                                    (row.id,
+                                    event =>
+                                      this.handleInitiatorClick(row.id, event))
+                                  }
+                                >
+                                  <img
+                                    src="https://picsum.photos/id/159/100/100"
+                                    className={classes.rightImage}
+                                    alt=""
+                                  />
+                                  <img
+                                    src="https://picsum.photos/id/158/100/100"
+                                    className={classes.midImage}
+                                    alt=""
+                                  />
+                                  <img
+                                    src="https://picsum.photos/id/157/100/100"
+                                    className={classes.leftImage}
+                                    alt=""
+                                  />
+                                </div>
+                                <Popover
+                                  open={this.state.openInitiator > 0}
+                                  onClose={() => this.handleCloseInitiators()}
+                                  id={this.state.openInitiator}
+                                  anchorEl={this.state.openInitiatorAnchorEl}
+                                  elevation={3}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "center"
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "center"
+                                  }}
+                                >
+                                  <List>
+                                    {row.initiators.map((item, index) => {
+                                      return (
+                                        <ListItem
+                                          className={classes.listItem}
+                                          key={index}
+                                        >
+                                          <Grid
+                                            container
+                                            className={classes.root}
+                                            spacing={1}
+                                          >
+                                            <Grid
+                                              item
+                                              md={4}
+                                              sm={4}
+                                              xs={4}
+                                              className={
+                                                classes.tableUsernamePart
+                                              }
+                                            >
+                                              <Avatar
+                                                alt="Remy Sharp"
+                                                src="https://material-ui.com/static/images/avatar/1.jpg"
+                                                className={classes.avatar}
+                                              />
+                                              <span
+                                                className={
+                                                  classes.twitterIconAvatar
+                                                }
+                                              >
                                                 <i className="fab fa-twitter fa-sm"></i>
                                               </span>
-                                                  </Grid>
-                                                  <Grid
-                                                      item
-                                                      md={8}
-                                                      sm={8}
-                                                      xs={8}
-                                                      className={
-                                                        classes.tableUsernamePart
-                                                      }
-                                                  >
-                                                    <span>{item.name}</span>
-                                                    <span
-                                                        className={classes.textMute}
-                                                    >
+                                            </Grid>
+                                            <Grid
+                                              item
+                                              md={8}
+                                              sm={8}
+                                              xs={8}
+                                              className={
+                                                classes.tableUsernamePart
+                                              }
+                                            >
+                                              <span>{item.name}</span>
+                                              <span
+                                                className={classes.textMute}
+                                              >
                                                 @{item.username}
                                               </span>
-                                                  </Grid>
-                                                </Grid>
-                                              </ListItem>
-                                          );
-                                        })}
-                                      </List>
-                                    </Popover>
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(classes.flex)}
-                                      align="center"
-                                      style={{padding: "0px 25px"}}
-                                  >
-                                    <div
-                                        className={classes.imageGroup}
-                                        onClick={
-                                          (row.id,
-                                              event =>
-                                                  this.handleInfluencerClick(row.id, event))
-                                        }
-                                    >
-                                      <img
-                                          src="https://picsum.photos/id/156/100/100"
-                                          className={classes.rightImage}
-                                      />
-                                      <img
-                                          src="https://picsum.photos/id/155/100/100"
-                                          className={classes.midImage}
-                                      />
-                                      <img
-                                          src="https://picsum.photos/id/154/100/100"
-                                          className={classes.leftImage}
-                                      />
-                                    </div>
-                                    <Popover
-                                        open={this.state.openInfluencer > 0}
-                                        onClose={() => this.handleCloseInfluencers()}
-                                        id={this.state.openInfluencer}
-                                        anchorEl={this.state.openInfluencerAnchorEl}
-                                        elevation="3"
-                                        anchorOrigin={{
-                                          vertical: "bottom",
-                                          horizontal: "center"
-                                        }}
-                                        transformOrigin={{
-                                          vertical: "top",
-                                          horizontal: "center"
-                                        }}
-                                    >
-                                      <List>
-                                        {row.influencers.map(item => {
-                                          return (
-                                              <ListItem className={classes.listItem}>
-                                                <Grid
-                                                    container
-                                                    className={classes.root}
-                                                    spacing={1}
-                                                >
-                                                  <Grid
-                                                      item
-                                                      md={4}
-                                                      sm={4}
-                                                      xs={4}
-                                                      className={
-                                                        classes.tableUsernamePart
-                                                      }
-                                                  >
-                                                    <Avatar
-                                                        alt="Remy Sharp"
-                                                        src="https://material-ui.com/static/images/avatar/1.jpg"
-                                                        className={classes.avatar}
-                                                    />
-                                                    <span
-                                                        className={
-                                                          classes.twtterIconAvatar
-                                                        }
-                                                    >
+                                            </Grid>
+                                          </Grid>
+                                        </ListItem>
+                                      );
+                                    })}
+                                  </List>
+                                </Popover>
+                              </TableCell>
+                              <TableCell
+                                className={classNames(classes.flex)}
+                                align="center"
+                                style={{ padding: "0px 25px" }}
+                              >
+                                <div
+                                  className={classes.imageGroup}
+                                  onClick={
+                                    (row.id,
+                                    event =>
+                                      this.handleInfluencerClick(row.id, event))
+                                  }
+                                >
+                                  <img
+                                    src="https://picsum.photos/id/156/100/100"
+                                    className={classes.rightImage}
+                                  />
+                                  <img
+                                    src="https://picsum.photos/id/155/100/100"
+                                    className={classes.midImage}
+                                  />
+                                  <img
+                                    src="https://picsum.photos/id/154/100/100"
+                                    className={classes.leftImage}
+                                  />
+                                </div>
+                                <Popover
+                                  open={this.state.openInfluencer > 0}
+                                  onClose={() => this.handleCloseInfluencers()}
+                                  id={this.state.openInfluencer}
+                                  anchorEl={this.state.openInfluencerAnchorEl}
+                                  elevation={3}
+                                  anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "center"
+                                  }}
+                                  transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "center"
+                                  }}
+                                >
+                                  <List>
+                                    {row.influencers.map((item, index) => {
+                                      return (
+                                        <ListItem
+                                          className={classes.listItem}
+                                          key={index}
+                                        >
+                                          <Grid
+                                            container
+                                            className={classes.root}
+                                            spacing={1}
+                                          >
+                                            <Grid
+                                              item
+                                              md={4}
+                                              sm={4}
+                                              xs={4}
+                                              className={
+                                                classes.tableUsernamePart
+                                              }
+                                            >
+                                              <Avatar
+                                                alt="Remy Sharp"
+                                                src="https://material-ui.com/static/images/avatar/1.jpg"
+                                                className={classes.avatar}
+                                              />
+                                              <span
+                                                className={
+                                                  classes.twitterIconAvatar
+                                                }
+                                              >
                                                 <i className="fab fa-twitter fa-sm"></i>
                                               </span>
-                                                  </Grid>
-                                                  <Grid
-                                                      item
-                                                      md={8}
-                                                      sm={8}
-                                                      xs={8}
-                                                      className={
-                                                        classes.tableUsernamePart
-                                                      }
-                                                  >
-                                                    <span>{item.name}</span>
-                                                    <span
-                                                        className={classes.textMute}
-                                                    >
+                                            </Grid>
+                                            <Grid
+                                              item
+                                              md={8}
+                                              sm={8}
+                                              xs={8}
+                                              className={
+                                                classes.tableUsernamePart
+                                              }
+                                            >
+                                              <span>{item.name}</span>
+                                              <span
+                                                className={classes.textMute}
+                                              >
                                                 @{item.username}
                                               </span>
-                                                  </Grid>
-                                                </Grid>
-                                              </ListItem>
-                                          );
-                                        })}
-                                      </List>
-                                    </Popover>
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(classes.flex)}
-                                      align="center"
-                                  >
-                                    {row.content_emotion == -1 ? (
-                                        <div
-                                            className={
-                                              this.props.selectedEmotion == "negative"
-                                                  ? classes.selectedNegativeEmotion
-                                                  : classes.negativeEmotion
-                                            }
-                                        ></div>
-                                    ) : (
-                                        <div
-                                            className={
-                                              this.props.selectedEmotion == "positive"
-                                                  ? classes.selectedPositiveEmotion
-                                                  : classes.positiveEmotion
-                                            }
-                                        ></div>
-                                    )}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(classes.flex)}
-                                      align="center"
-                                  >
-                                    {row.comment_emotion == -1 ? (
-                                        <div
-                                            className={
-                                              this.props.selectedEmotion == "negative"
-                                                  ? classes.selectedNegativeEmotion
-                                                  : classes.negativeEmotion
-                                            }
-                                        ></div>
-                                    ) : (
-                                        <div
-                                            className={
-                                              this.props.selectedEmotion == "positive"
-                                                  ? classes.selectedPositiveEmotion
-                                                  : classes.positiveEmotion
-                                            }
-                                        ></div>
-                                    )}
-                                  </TableCell>
-                                  <TableCell
-                                      className={classNames(
-                                          classes.flex,
-                                          classes.cellLowPadding
-                                      )}
-                                      align="right"
-                                  >
-                                    <div className={classes.relatedWords}>
-                                      {row.related_words.map(word => {
-                                        return (
-                                            <span className={classes.relatedWord}>
+                                            </Grid>
+                                          </Grid>
+                                        </ListItem>
+                                      );
+                                    })}
+                                  </List>
+                                </Popover>
+                              </TableCell>
+                              <TableCell
+                                className={classNames(classes.flex)}
+                                align="center"
+                              >
+                                {row.content_emotion == -1 ? (
+                                  <div
+                                    className={
+                                      this.props.selectedEmotion == "negative"
+                                        ? classes.selectedNegativeEmotion
+                                        : classes.negativeEmotion
+                                    }
+                                  ></div>
+                                ) : (
+                                  <div
+                                    className={
+                                      this.props.selectedEmotion == "positive"
+                                        ? classes.selectedPositiveEmotion
+                                        : classes.positiveEmotion
+                                    }
+                                  ></div>
+                                )}
+                              </TableCell>
+                              <TableCell
+                                className={classNames(classes.flex)}
+                                align="center"
+                              >
+                                {row.comment_emotion == -1 ? (
+                                  <div
+                                    className={
+                                      this.props.selectedEmotion == "negative"
+                                        ? classes.selectedNegativeEmotion
+                                        : classes.negativeEmotion
+                                    }
+                                  ></div>
+                                ) : (
+                                  <div
+                                    className={
+                                      this.props.selectedEmotion == "positive"
+                                        ? classes.selectedPositiveEmotion
+                                        : classes.positiveEmotion
+                                    }
+                                  ></div>
+                                )}
+                              </TableCell>
+                              <TableCell
+                                className={classNames(
+                                  classes.flex,
+                                  classes.cellLowPadding
+                                )}
+                                align="right"
+                              >
+                                <div className={classes.relatedWords}>
+                                  {row.related_words.map((word, index) => {
+                                    return (
+                                      <span
+                                        className={classes.relatedWord}
+                                        key={index}
+                                      >
                                         {word}
                                       </span>
-                                        );
-                                      })}
-                                    </div>
-                                  </TableCell>
-                                </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </Grid>
+                                    );
+                                  })}
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
                     </Grid>
-                  </Paper>
-                </Grid>
+                  </Grid>
+                </Paper>
               </Grid>
-            </Container>
-          </main>
-        </div>
+            </Grid>
+          </Container>
+        </main>
+      </div>
     );
   }
 }
@@ -1361,10 +1373,10 @@ Trends.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {lastTrackers,selectedTrackerDashboardItem}= state;
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
     groups: selectedTrackerDashboardItem.groups,
     keywords: selectedTrackerDashboardItem.keywords,
     selectedGroup: selectedTrackerDashboardItem.selectedGroup,
@@ -1375,14 +1387,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedTracker: id => dispatch(DashboardActions.changeSelectedTracker(id)),
-    selectAnalysisType: type => dispatch(AnalysisActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis => dispatch(AnalysisActions.changeAnalysisStatus(analysis)),
+    changeSelectedTracker: id =>
+      dispatch(DashboardActions.changeSelectedTracker(id)),
+    selectAnalysisType: type =>
+      dispatch(AnalysisActions.selectAnalysisType(type)),
+    changeAnalysisStatus: analysis =>
+      dispatch(AnalysisActions.changeAnalysisStatus(analysis)),
     selectGroup: id => dispatch(AnalysisActions.selectGroup(id))
   };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(Trends));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Trends));

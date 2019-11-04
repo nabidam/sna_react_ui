@@ -13,9 +13,10 @@ import {
   Button
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { DashboardActions } from "../_actions";
+import { DashboardActions, trackersActions } from "../_actions";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
+import { history } from "../_helpers";
 
 const styles = theme => ({
   wrapper: {
@@ -211,6 +212,20 @@ const styles = theme => ({
     flexDirection: "row",
     textAlign: "right",
     marginBottom: 15
+  },
+
+  welcomeBox: {
+    width: "50%",
+    margin: "0px auto"
+  },
+  welcomeTitle: {
+    fontSize: 24,
+    margin: "10px 0px"
+  },
+  welcomeText: {
+    fontSize: 12,
+    margin: "10px 0px 30px 0px",
+    lineHeight: 2.33
   }
 });
 
@@ -221,6 +236,24 @@ class Trackers extends React.Component {
     console.log(props);
     this.state = {};
   }
+
+  handleClickAddTrackers = () => {
+    this.props.goToAddTracker();
+    this.props.selectPage("trackers/add");
+    history.push("/dashboard/trackers/add");
+  };
+
+  handleClickEdit = id => {
+    this.props.editableTracker(id);
+    this.props.selectPage("trackers/edit");
+    history.push("/dashboard/trackers/edit");
+  };
+
+  // componentDidMount = () => {
+  //   if (this.props.comeFrom == "boarding") {
+  //     this.props.selectPage("trackers/add");
+  //   }
+  // };
 
   //   componentDidMount = () => {
   //     console.log(
@@ -266,132 +299,161 @@ class Trackers extends React.Component {
                   </Typography>
                 </div>
               </Grid>
-              <Grid item md={3} sm={3} xs={3}>
-                <List className={classes.typeOfTracker}>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedTrackersType == 1
-                        ? classes.selectedTrackersType
-                        : ""
-                    )}
-                    onClick={() => {
-                      this.props.selectTrackersType(1);
-                    }}
-                  >
-                    <ListItemText
-                      primary="ردیاب‌های فعال"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                  <ListItem
-                    className={classNames(
-                      classes.listItem,
-                      this.props.selectedTrackersType == 0
-                        ? classes.selectedTrackersType
-                        : ""
-                    )}
-                    onClick={() => {
-                      this.props.selectTrackersType(0);
-                    }}
-                  >
-                    <ListItemText
-                      primary="ردیاب‌های متوقف شده"
-                      className="list-item-right"
-                    />
-                  </ListItem>
-                </List>
-              </Grid>
-              <Grid item md={9} sm={9} xs={9}>
-                <List className={classes.activeTracker}>
-                  <Divider />
-                  {this.props.trackers.map((item, index) => {
-                    if (item.active == this.props.selectedTrackersType) {
-                      return (
-                        <div key={index}>
-                          <ListItem
-                            className={classNames(
-                              classes.listItem,
-                              classes.listTrackerItem
-                            )}
-                          >
-                            <div className={classes.trackersListText}>
-                              <div className={classes.trackerTitle}>
-                                <Typography
-                                  variant="h1"
-                                  className={classes.trackersName}
-                                  onClick={() =>
-                                    this.props.selectTracker(item.id)
-                                  }
-                                >
-                                  {item.name}
-                                </Typography>
-                                <div className={classes.socialIcons}>
-                                  {item.social.instagram != null ? (
-                                    <i
-                                      className={classNames(
-                                        classes.instagram,
-                                        "fab fa-instagram fa-lg"
-                                      )}
-                                    ></i>
-                                  ) : (
-                                    ""
-                                  )}
-                                  {item.social.twitter != null ? (
-                                    <i
-                                      className={classNames(
-                                        classes.twitter,
-                                        "fab fa-twitter fa-lg"
-                                      )}
-                                    ></i>
-                                  ) : (
-                                    ""
-                                  )}
+              {this.props.trackers.length ? (
+                <Grid item md={3} sm={3} xs={3}>
+                  <List className={classes.typeOfTracker}>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        this.props.selectedTrackersType == 1
+                          ? classes.selectedTrackersType
+                          : ""
+                      )}
+                      onClick={() => {
+                        this.props.selectTrackersType(1);
+                      }}
+                    >
+                      <ListItemText
+                        primary="ردیاب‌های فعال"
+                        className="list-item-right"
+                      />
+                    </ListItem>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        this.props.selectedTrackersType == 0
+                          ? classes.selectedTrackersType
+                          : ""
+                      )}
+                      onClick={() => {
+                        this.props.selectTrackersType(0);
+                      }}
+                    >
+                      <ListItemText
+                        primary="ردیاب‌های متوقف شده"
+                        className="list-item-right"
+                      />
+                    </ListItem>
+                  </List>
+                </Grid>
+              ) : (
+                ""
+              )}
+              {this.props.trackers.length ? (
+                <Grid item md={9} sm={9} xs={9}>
+                  <List className={classes.activeTracker}>
+                    <Divider />
+                    {this.props.trackers.map((item, index) => {
+                      if (item.active == this.props.selectedTrackersType) {
+                        return (
+                          <div key={index}>
+                            <ListItem
+                              className={classNames(
+                                classes.listItem,
+                                classes.listTrackerItem
+                              )}
+                            >
+                              <div className={classes.trackersListText}>
+                                <div className={classes.trackerTitle}>
+                                  <Typography
+                                    variant="h1"
+                                    className={classes.trackersName}
+                                    onClick={() =>
+                                      this.props.selectTracker(item.id)
+                                    }
+                                  >
+                                    {item.name}
+                                  </Typography>
+                                  <div className={classes.socialIcons}>
+                                    {item.social.instagram != null ? (
+                                      <i
+                                        className={classNames(
+                                          classes.instagram,
+                                          "fab fa-instagram fa-lg"
+                                        )}
+                                      ></i>
+                                    ) : (
+                                      ""
+                                    )}
+                                    {item.social.twitter != null ? (
+                                      <i
+                                        className={classNames(
+                                          classes.twitter,
+                                          "fab fa-twitter fa-lg"
+                                        )}
+                                      ></i>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                                <div className={classes.textMute}>
+                                  ساخته شده در {item.date}, ساعت {item.time}
+                                  <Divider className={classes.statsDivider} />
+                                  پست‌های ردیابی شده: {item.retrieved_posts}
                                 </div>
                               </div>
-                              <div className={classes.textMute}>
-                                ساخته شده در {item.date}, ساعت {item.time}
-                                <Divider className={classes.statsDivider} />
-                                پست‌های ردیابی شده: {item.retrieved_posts}
+                              <div className={classes.trackersListActions}>
+                                {item.active == 1 ? (
+                                  <Button
+                                    className={classes.pauseBtn}
+                                    onClick={() =>
+                                      this.props.changeTrackerStatus(item.id)
+                                    }
+                                  >
+                                    <PauseIcon className={classes.activeIcon} />
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    className={classes.playBtn}
+                                    onClick={() =>
+                                      this.props.changeTrackerStatus(item.id)
+                                    }
+                                  >
+                                    <PlayArrowIcon
+                                      className={classes.activeIcon}
+                                    />
+                                  </Button>
+                                )}
+                                <Typography
+                                  variant="body1"
+                                  className={classes.edit}
+                                >
+                                  ویرایش
+                                </Typography>
                               </div>
-                            </div>
-                            <div className={classes.trackersListActions}>
-                              {item.active == 1 ? (
-                                <Button
-                                  className={classes.pauseBtn}
-                                  onClick={() =>
-                                    this.props.changeTrackerStatus(item.id)
-                                  }
-                                >
-                                  <PauseIcon className={classes.activeIcon} />
-                                </Button>
-                              ) : (
-                                <Button
-                                  className={classes.playBtn}
-                                  onClick={() =>
-                                    this.props.changeTrackerStatus(item.id)
-                                  }
-                                >
-                                  <PlayArrowIcon
-                                    className={classes.activeIcon}
-                                  />
-                                </Button>
-                              )}
-                              <Typography
-                                variant="body1"
-                                className={classes.edit}
-                              >
-                                ویرایش
-                              </Typography>
-                            </div>
-                          </ListItem>
-                          <Divider />
-                        </div>
-                      );
-                    }
-                  })}
-                </List>
-              </Grid>
+                            </ListItem>
+                            <Divider />
+                          </div>
+                        );
+                      }
+                    })}
+                  </List>
+                </Grid>
+              ) : (
+                <Grid item md={12} sm={12} xs={12}>
+                  <div className={classes.welcomeBox}>
+                    <Typography
+                      variant="body1"
+                      className={classes.welcomeTitle}
+                    >
+                      هنوز ردیابی ندارید!
+                    </Typography>
+                    <Typography variant="body1" className={classes.welcomeText}>
+                      برای تحلیل و ردیابی موضوعات مورد نظر خود در شبکه‌های
+                      اجتماعی می‌توانید <b>ردیاب</b> ایجاد کنید و به صورت ۲۴
+                      ساعت موضوعات را ردیابی کنید.
+                    </Typography>
+                    <Button
+                      color="primary"
+                      className={classes.newTrackerBtn}
+                      onClick={() => this.handleClickAddTrackers()}
+                    >
+                      ساخت ردیاب جدید
+                    </Button>
+                  </div>
+                </Grid>
+              )}
             </Grid>
           </Container>
         </main>
@@ -409,13 +471,13 @@ Trackers.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { lastTrackers, selectedTrackerDashboardItem } = state;
+  const { selectedTrackerDashboardItem } = state;
   console.log("trackers map state");
   console.log(state);
   return {
     trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
-    selectedTrackersType: lastTrackers.selectedTrackersType
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
+    selectedTrackersType: selectedTrackerDashboardItem.selectedTrackersType
   };
 };
 
@@ -425,7 +487,10 @@ const mapDispatchToProps = dispatch => {
     selectTrackersType: type =>
       dispatch(DashboardActions.selectTrackersType(type)),
     changeTrackerStatus: tracker =>
-      dispatch(DashboardActions.changeTrackerStatus(tracker))
+      dispatch(DashboardActions.changeTrackerStatus(tracker)),
+    selectPage: page => dispatch(trackersActions.electPage(page)),
+    editableTracker: id => dispatch(trackersActions.editableTracker(id)),
+    goToAddTracker: () => dispatch(trackersActions.goToAddTracker())
   };
 };
 

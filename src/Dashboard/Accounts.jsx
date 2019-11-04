@@ -358,8 +358,8 @@ class Accounts extends React.Component {
                   </Button>
                 </div>
                 <Grid container className={classes.root} spacing={4}>
-                  {this.props.accounts.map(item => (
-                    <Grid item md={6} sm={6} xs={6}>
+                  {this.props.accounts.map((item, index) => (
+                    <Grid item md={6} sm={6} xs={6} key={index}>
                       <div className={classes.account}>
                         <Grid
                           container
@@ -569,9 +569,9 @@ class Accounts extends React.Component {
               >
                 <List className={classes.posts}>
                   <Divider />
-                  {this.props.posts.map(item => {
+                  {this.props.posts.map((item, index) => {
                     return (
-                      <div>
+                      <div key={index}>
                         <ListItem
                           className={classNames(
                             classes.listItem,
@@ -615,9 +615,9 @@ class Accounts extends React.Component {
                           </div>
                           <div className={classes.hashtagsBox}>
                             <div className={classes.hashtags}>
-                              {item.hashtags.map(tag => {
+                              {item.hashtags.map((tag, index) => {
                                 return (
-                                  <span className={classes.tag}>
+                                  <span className={classes.tag} key={index}>
                                     #{tag.tag}
                                   </span>
                                 );
@@ -646,10 +646,10 @@ Accounts.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { lastTrackers, selectedTrackerDashboardItem } = state;
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
     accounts: selectedTrackerDashboardItem.accounts,
     posts: selectedTrackerDashboardItem.myPosts
   };
