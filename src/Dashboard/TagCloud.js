@@ -1,25 +1,37 @@
-"use strict";
-var __rest = (this && this.__rest) || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-    t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function")
-    for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-        t[p[i]] = s[p[i]];
-    }
-  return t;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-  return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
+
+var __rest =
+  (this && this.__rest) ||
+  function(s, e) {
+    var t = {};
+    for (var p in s)
+      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+        if (
+          e.indexOf(p[i]) < 0 &&
+          Object.prototype.propertyIsEnumerable.call(s, p[i])
+        )
+          t[p[i]] = s[p[i]];
+      }
+    return t;
+  };
+var __importDefault =
+  (this && this.__importDefault) ||
+  function(mod) {
+    return mod && mod.__esModule ? mod : { default: mod };
+  };
+var __importStar =
+  (this && this.__importStar) ||
+  function(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null)
+      for (var k in mod)
+        if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+  };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:jsx-no-multiline-js */
 const d3_cloud_1 = __importDefault(require("d3-cloud"));
@@ -33,7 +45,7 @@ class TagCloud extends React.Component {
       children: undefined,
       height: 0,
       width: 0,
-      wrappedChildren: [],
+      wrappedChildren: []
     };
     this.mounted = false;
     this.resizeTimer = undefined;
@@ -42,18 +54,18 @@ class TagCloud extends React.Component {
     this.fontWeight = this.getStyleValue.bind(this, "fontWeight");
     this.fontStyle = this.getStyleValue.bind(this, "fontStyle");
     this.padding = this.getStyleValue.bind(this, "padding");
-    this.rotate = (word) => {
-      const value = word.child.props.rotate ||
-          this.props.rotate ||
-          TagCloud.defaultProps.rotate;
+    this.rotate = word => {
+      const value =
+        word.child.props.rotate ||
+        this.props.rotate ||
+        TagCloud.defaultProps.rotate;
       if (typeof value === "function") {
         return value(word.child.props);
-      }
-      else {
+      } else {
         return value;
       }
     };
-    this.text = (word) => {
+    this.text = word => {
       let text = word.child.props.text;
       if (!text) {
         const children = word.child.props.children;
@@ -61,14 +73,14 @@ class TagCloud extends React.Component {
       }
       return text;
     };
-    this.onResize = (contentRect) => {
+    this.onResize = contentRect => {
       const { width, height } = contentRect.bounds;
       if (this.state.width !== width || this.state.height !== height) {
         // Handle the initial size observer immediately
         if (!this.state.width && !this.state.height) {
           this.setState({
             height,
-            width,
+            width
           });
           return;
         }
@@ -82,7 +94,7 @@ class TagCloud extends React.Component {
             this.setState({
               children: undefined,
               height,
-              width,
+              width
             });
           }
         }, 100);
@@ -99,18 +111,19 @@ class TagCloud extends React.Component {
     const { children, spiral, random, style } = props;
     const { width, height } = state;
     const spiralAny = spiral;
-    return new Promise((resolve) => {
-      const words = React.Children.map(children, (child) => ({ child }));
-      let res = d3_cloud_1.default()
-      .size([width, height])
-      .words(words)
-      .text(this.text)
-      .font(this.fontFamily)
-      .fontStyle(this.fontStyle)
-      .fontWeight(this.fontWeight)
-      .fontSize(this.fontSize)
-      .rotate(this.rotate)
-      .padding(this.padding);
+    return new Promise(resolve => {
+      const words = React.Children.map(children, child => ({ child }));
+      let res = d3_cloud_1
+        .default()
+        .size([width, height])
+        .words(words)
+        .text(this.text)
+        .font(this.fontFamily)
+        .fontStyle(this.fontStyle)
+        .fontWeight(this.fontWeight)
+        .fontSize(this.fontSize)
+        .rotate(this.rotate)
+        .padding(this.padding);
       if (spiralAny) {
         res = res.spiral(spiralAny);
       }
@@ -118,35 +131,62 @@ class TagCloud extends React.Component {
         res = res.random(random);
       }
       res
-      .on("end", (items) => {
-        const newChildren = items.map((item, index) => {
-          let x = item.x;
-          x += item.x0;
-          x += width / 2;
-          let y = item.y;
-          y += item.y0;
-          y += height / 2;
-          const transform = `translate(-${x}px,${y}px) rotate(${item.rotate}deg)`;
-          const newStyle = Object.assign(Object.assign({ position: "absolute" }, item.child.props.style), { MozTransform: transform, MsTransform: transform, OTransform: transform, WebkitTransform: transform, fontFamily: item.font, fontSize: item.size, fontStyle: item.style, fontWeight: item.weight, textAlign: "center", transform, transformOrigin: "center bottom", whiteSpace: "nowrap", width: item.width });
-          if (!newStyle.color &&
+        .on("end", items => {
+          const newChildren = items.map((item, index) => {
+            let x = item.x;
+            x += item.x0;
+            x += width / 2;
+            let y = item.y;
+            y += item.y0;
+            y += height / 2;
+            const transform = `translate(-${x}px,${y}px) rotate(${item.rotate}deg)`;
+            const newStyle = Object.assign(
+              Object.assign({ position: "absolute" }, item.child.props.style),
+              {
+                MozTransform: transform,
+                MsTransform: transform,
+                OTransform: transform,
+                WebkitTransform: transform,
+                fontFamily: item.font,
+                fontSize: item.size,
+                fontStyle: item.style,
+                fontWeight: item.weight,
+                textAlign: "center",
+                transform,
+                transformOrigin: "center bottom",
+                whiteSpace: "nowrap",
+                width: item.width
+              }
+            );
+            if (
+              !newStyle.color &&
               style.color &&
-              typeof style.color === "function") {
-            newStyle.color = style.color(item.child, index);
-          }
-          return React.cloneElement(item.child, Object.assign(Object.assign({}, item.child.props), { key: item.text, style: newStyle }), item.child.props.children);
-        });
-        resolve(newChildren);
-      })
-      .start();
+              typeof style.color === "function"
+            ) {
+              newStyle.color = style.color(item.child, index);
+            }
+            return React.cloneElement(
+              item.child,
+              Object.assign(Object.assign({}, item.child.props), {
+                key: item.text,
+                style: newStyle
+              }),
+              item.child.props.children
+            );
+          });
+          resolve(newChildren);
+        })
+        .start();
     });
   }
   getStyleValue(propName, word) {
     const childValue = word.child.props.style
-        ? word.child.props.style[propName]
-        : undefined;
-    let value = childValue ||
-        this.props.style[propName] ||
-        TagCloud.defaultProps.style[propName];
+      ? word.child.props.style[propName]
+      : undefined;
+    let value =
+      childValue ||
+      this.props.style[propName] ||
+      TagCloud.defaultProps.style[propName];
     if (typeof value === "function") {
       value = value(word.child.props);
     }
@@ -156,32 +196,54 @@ class TagCloud extends React.Component {
     return value;
   }
   render() {
-    const _a = this.props, { style, children, // eslint-disable-line
-          rotate, // eslint-disable-line
-          spiral, // eslint-disable-line
-          random } = _a, // eslint-disable-line
-        props = __rest(_a, ["style", "children", "rotate", "spiral", "random"]);
-    const { fontFamily, // eslint-disable-line
-          fontSize, // eslint-disable-line
-          fontWeight, // eslint-disable-line
-          fontStyle, // eslint-disable-line
-          color, // eslint-disable-line
-          padding } = style, // eslint-disable-line
-        otherStyle = __rest(style, ["fontFamily", "fontSize", "fontWeight", "fontStyle", "color", "padding"]);
+    const _a = this.props,
+      {
+        style,
+        children, // eslint-disable-line
+        rotate, // eslint-disable-line
+        spiral, // eslint-disable-line
+        random
+      } = _a, // eslint-disable-line
+      props = __rest(_a, ["style", "children", "rotate", "spiral", "random"]);
+    const {
+        fontFamily, // eslint-disable-line
+        fontSize, // eslint-disable-line
+        fontWeight, // eslint-disable-line
+        fontStyle, // eslint-disable-line
+        color, // eslint-disable-line
+        padding
+      } = style, // eslint-disable-line
+      otherStyle = __rest(style, [
+        "fontFamily",
+        "fontSize",
+        "fontWeight",
+        "fontStyle",
+        "color",
+        "padding"
+      ]);
     const { wrappedChildren } = this.state;
-    return (React.createElement(react_measure_1.default, { bounds: true, onResize: this.onResize }, ({ measureRef }) => (React.createElement("div", Object.assign({ ref: measureRef }, props, { style: otherStyle }), wrappedChildren))));
+    return React.createElement(
+      react_measure_1.default,
+      { bounds: true, onResize: this.onResize },
+      ({ measureRef }) =>
+        React.createElement(
+          "div",
+          Object.assign({ ref: measureRef }, props, { style: otherStyle }),
+          wrappedChildren
+        )
+    );
   }
   componentDidUpdate() {
     const { width, height } = this.state;
     const { children } = this.props;
     if (width && height && children !== this.state.children) {
-      this.calculateLayout(this.props, this.state).then((wrappedChildren) => {
+      this.calculateLayout(this.props, this.state).then(wrappedChildren => {
         if (!this.mounted) {
           return;
         }
         this.setState({
           children,
-          wrappedChildren,
+          wrappedChildren
         });
       });
     }
@@ -193,7 +255,7 @@ TagCloud.propTypes = {
   rotate: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
   spiral: PropTypes.oneOfType([
     PropTypes.oneOf(["archimedean", "rectangular"]),
-    PropTypes.func,
+    PropTypes.func
   ]),
   style: PropTypes.shape({
     color: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
@@ -203,10 +265,10 @@ TagCloud.propTypes = {
     fontWeight: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.number,
-      PropTypes.string,
+      PropTypes.string
     ]),
-    padding: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
-  }),
+    padding: PropTypes.oneOfType([PropTypes.func, PropTypes.number])
+  })
 };
 TagCloud.defaultProps = {
   random: Math.random,
@@ -217,7 +279,7 @@ TagCloud.defaultProps = {
     fontSize: 20,
     fontStyle: "normal",
     fontWeight: "normal",
-    padding: 1,
-  },
+    padding: 1
+  }
 };
 exports.default = TagCloud;
