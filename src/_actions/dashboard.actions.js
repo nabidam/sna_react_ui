@@ -87,14 +87,14 @@ function selectGroup(id) {
 
 function selectKeyword(word) {
   return {
-    type: DashboardActions.SELECT_KEYWORD,
+    type: DashboardConstants.SELECT_KEYWORD,
     word
   };
 }
 
 function backToTrackers() {
   return {
-    type: DashboardActions.BACK_TO_TRACKERS
+    type: DashboardConstants.BACK_TO_TRACKERS
   };
 }
 

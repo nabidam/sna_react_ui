@@ -387,8 +387,11 @@ const styles = theme => ({
     height: 37,
     borderRadius: 19,
     justifyContent: "right",
-    border: "1px solid #979797"
-
+    border: "1px solid #979797",
+    "&:hover": {
+      borderColor: "#4753ff",
+      color: "#4753ff"
+    }
     // "&:hover": {
     //   backgroundColor: "#0500cb"
     // }

@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -9,8 +9,8 @@ import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import {Button} from "@material-ui/core";
-import {connect} from "react-redux";
+import { Button } from "@material-ui/core";
+import { connect } from "react-redux";
 import Collapse from "@material-ui/core/Collapse";
 import InputBase from "@material-ui/core/InputBase";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -21,8 +21,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import BookIcon from "@material-ui/icons/BookOutlined";
-import {DashboardActions} from "../_actions";
-import {history} from "../_helpers";
+import { DashboardActions } from "../_actions";
+import { history } from "../_helpers";
 import BootstrapTooltip from "./BSTooltip";
 
 const drawerWidth = 260;
@@ -86,8 +86,9 @@ const styles = theme => ({
       content: `""`,
       position: "absolute",
       left: 24,
-      width: 6,
-      height: 6,
+      width: 16,
+      height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
       background: "#4753ff",
       borderRadius: "50%"
     }
@@ -256,6 +257,11 @@ const styles = theme => ({
     borderRadius: 3,
     color: "#08080d",
     marginRight: 11
+  },
+
+  selectedBadge: {
+    color: "#fff",
+    backgroundColor: "#3340ff"
   }
 });
 
@@ -277,14 +283,20 @@ class TrackersSidebar extends Component {
     console.log("trackerSidebar");
     console.log(props);
 
-    this.handleChangeSearchTrackerString = this.handleChangeSearchTrackerString.bind(this);
-    this.handleClearSearchTrackerString = this.handleClearSearchTrackerString.bind(this);
+    this.handleChangeSearchTrackerString = this.handleChangeSearchTrackerString.bind(
+      this
+    );
+    this.handleClearSearchTrackerString = this.handleClearSearchTrackerString.bind(
+      this
+    );
     this.handleClickSelectTracker = this.handleClickSelectTracker.bind(this);
     this.handleCloseSelectTracker = this.handleCloseSelectTracker.bind(this);
     this.handleClickMenu = this.handleClickMenu.bind(this);
     this.handleSelectTrackerMenu = this.handleSelectTrackerMenu.bind(this);
     this.handleNewTrackerDialog = this.handleNewTrackerDialog.bind(this);
-    this.handleChangeTrackerUsername = this.handleChangeTrackerUsername.bind(this);
+    this.handleChangeTrackerUsername = this.handleChangeTrackerUsername.bind(
+      this
+    );
     this.handleAddTracker = this.handleAddTracker.bind(this);
     this.handleClickListItem = this.handleClickListItem.bind(this);
     this.handleBack = this.handleBack.bind(this);
@@ -332,7 +344,7 @@ class TrackersSidebar extends Component {
   };
 
   handleClickMenu = () => {
-    this.setState({menuOpen: !this.state.menuOpen});
+    this.setState({ menuOpen: !this.state.menuOpen });
   };
 
   handleSelectTrackerMenu = item => {
@@ -350,11 +362,11 @@ class TrackersSidebar extends Component {
   };
 
   handleChangeTrackerUsername = event => {
-    this.setState({trackerUsername: event.target.value});
+    this.setState({ trackerUsername: event.target.value });
     if (event.target.value == "") {
-      this.setState({isUsernameEntered: false});
+      this.setState({ isUsernameEntered: false });
     } else {
-      this.setState({isUsernameEntered: true});
+      this.setState({ isUsernameEntered: true });
     }
   };
 
@@ -365,320 +377,317 @@ class TrackersSidebar extends Component {
   handleAddTracker = () => {
     if (this.state.trackerUsername != "") {
       this.handleNewTrackerDialog();
-      this.setState({trackerUsername: ""});
+      this.setState({ trackerUsername: "" });
       this.props.addTracker(this.state.trackerUsername);
     } else {
-      this.setState({isUsernameEntered: false});
+      this.setState({ isUsernameEntered: false });
     }
   };
 
   render() {
-    const {classes, theme} = this.props;
+    const { classes, theme } = this.props;
     return (
-        <Drawer
-            className={classes.drawer}
-            variant="permanent"
-            classes={{
-              paper: classes.drawerPaper
-            }}
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.toolbar} />
+        <List
+          className={classNames(classes.list, classes.backBtn)}
+          component="nav"
         >
-          <div className={classes.toolbar} />
-          <List
-              className={classNames(classes.list, classes.backBtn)}
-              component="nav"
+          <ListItem
+            className={classNames(classes.listItem, classes.backBtnItem)}
+            onClick={() => this.props.backToTrackers()}
           >
-            <ListItem
-                className={classNames(classes.listItem, classes.backBtnItem)}
-                onClick={() => this.props.backToTrackers()}
+            <div className={classes.backBtnIcon}>
+              <i className="fas fa-arrow-right" />
+            </div>
+            <ListItemText className="list-item-right">
+              بازگشت به لیست ردیاب‌ها
+            </ListItemText>
+          </ListItem>
+        </List>
+        <List className={classes.list} component="nav">
+          <ListItem
+            className={classNames(
+              classes.listItem,
+              classes.listItemSelectTracker
+            )}
+          >
+            <Button
+              color="primary"
+              aria-describedby={this.state.selectTrackerId}
+              className={classes.selectTracker}
+              onClick={event => this.handleClickSelectTracker(event)}
             >
-              <div className={classes.backBtnIcon}>
-                <i className="fas fa-arrow-right" />
+              {this.props.selectedTracker
+                ? this.props.trackers.filter(
+                    t => t.id === this.props.selectedTracker
+                  )[0].name
+                : "انتخاب ردیاب"}
+              <div className={classes.selectTrackerIcon}>
+                <i className="fas fa-chevron-down" />
               </div>
-              <ListItemText className="list-item-right">
-                بازگشت به لیست ردیاب‌ها
-              </ListItemText>
-            </ListItem>
-          </List>
-          <List className={classes.list} component="nav">
-            <ListItem
+            </Button>
+            <Backdrop
+              className={classes.backdrop}
+              open={this.state.isSelectTrackerOpen}
+              invisible={false}
+            />
+            <Popover
+              open={this.state.isSelectTrackerOpen}
+              id={this.state.selectTrackerId}
+              onClose={() => this.handleCloseSelectTracker()}
+              anchorEl={this.state.selectTrackerAnchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+            >
+              <div className="popover">
+                <Paper className={classes.rootSQ}>
+                  <IconButton
+                    className={classes.iconButtonSQ}
+                    aria-label="search"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                  <InputBase
+                    value={this.state.searchTrackerString}
+                    onChange={this.handleChangeSearchTrackerString}
+                    className={classes.inputSQ}
+                    placeholder="جستجو در ردیاب‌ها"
+                    inputProps={{ "aria-label": "search queries" }}
+                  />
+                  <IconButton
+                    color="primary"
+                    className={classNames(
+                      classes.iconButtonSQ,
+                      this.state.searchTrackerString != ""
+                        ? classes.showClearBtn
+                        : classes.hideClearBtn
+                    )}
+                    onClick={this.handleClearSearchTrackerString}
+                    aria-label="clear"
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Paper>
+                <List component="nav" className={classes.selectTrackerList}>
+                  {this.state.searchTrackerString != ""
+                    ? this.state.searchedTrackers.map((item, index) => {
+                        return (
+                          <ListItem
+                            className={classNames(classes.listItemx)}
+                            key={item.id}
+                            button
+                            onClick={() => this.handleSelectTrackerMenu(item)}
+                          >
+                            <ListItemText className="list-item-right">
+                              {item.name}
+                            </ListItemText>
+                            <ListItemText className={classes.listItemTextMeta}>
+                              {item.date}
+                            </ListItemText>
+                            <ListItemIcon className={classes.iconChevronList}>
+                              <ChevronLeft />
+                            </ListItemIcon>
+                          </ListItem>
+                        );
+                      })
+                    : this.props.trackers.map((item, index) => {
+                        return (
+                          <ListItem
+                            className={classNames(classes.listItemx)}
+                            key={item.id}
+                            button
+                            onClick={() => this.handleSelectTrackerMenu(item)}
+                          >
+                            <ListItemText className="list-item-right">
+                              {item.name}
+                            </ListItemText>
+                            <ListItemText className={classes.listItemTextMeta}>
+                              {item.date}
+                            </ListItemText>
+                            <ListItemIcon className={classes.iconChevronList}>
+                              <ChevronLeft />
+                            </ListItemIcon>
+                          </ListItem>
+                        );
+                      })}
+                </List>
+              </div>
+            </Popover>
+          </ListItem>
+          <Collapse
+            in={this.props.selectedTracker}
+            timeout="auto"
+            unmountOnExit
+          >
+            <List component="div" disablePadding>
+              <ListItem
                 className={classNames(
-                    classes.listItem,
-                    classes.listItemSelectTracker
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "dashboard"
+                      ? classes.selectedNested
+                      : "")
                 )}
-            >
-              <Button
-                  color="primary"
-                  aria-describedby={this.state.selectTrackerId}
-                  className={classes.selectTracker}
-                  onClick={event => this.handleClickSelectTracker(event)}
+                onClick={() => this.handleClickListItem("dashboard")}
               >
-                { this.props.selectedTracker
-                                    ? this.props.trackers.filter((t) => t.id === this.props.selectedTracker)[0].name
-                                    : "انتخاب ردیاب"}
-                <div className={classes.selectTrackerIcon}>
-                  <i className="fas fa-chevron-down" />
-                </div>
-              </Button>
-              <Backdrop
-                  className={classes.backdrop}
-                  open={this.state.isSelectTrackerOpen}
-                  invisible={false}
-              />
-              <Popover
-                  open={this.state.isSelectTrackerOpen}
-                  id={this.state.selectTrackerId}
-                  onClose={() => this.handleCloseSelectTracker()}
-                  anchorEl={this.state.selectTrackerAnchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
+                <ListItemText
+                  primary="میز کار"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+              <ListItem
+                className={classNames(
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "posts"
+                      ? classes.selectedNested
+                      : "")
+                )}
+                onClick={() => this.handleClickListItem("posts")}
               >
-                <div className="popover">
-                  <Paper className={classes.rootSQ}>
-                    <IconButton
-                        className={classes.iconButtonSQ}
-                        aria-label="search"
-                    >
-                      <SearchIcon />
-                    </IconButton>
-                    <InputBase
-                        value={this.state.searchTrackerString}
-                        onChange={this.handleChangeSearchTrackerString}
-                        className={classes.inputSQ}
-                        placeholder="جستجو در ردیاب‌ها"
-                        inputProps={{"aria-label": "search queries"}}
-                    />
-                    <IconButton
-                        color="primary"
-                        className={classNames(
-                            classes.iconButtonSQ,
-                            this.state.searchTrackerString != ""
-                                ? classes.showClearBtn
-                                : classes.hideClearBtn
-                        )}
-                        onClick={this.handleClearSearchTrackerString}
-                        aria-label="clear"
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </Paper>
-                  <List component="nav" className={classes.selectTrackerList}>
-                    {this.state.searchTrackerString != ""
-                        ? this.state.searchedTrackers.map((item, index) => {
-                          return (
-                              <ListItem
-                                  className={classNames(classes.listItemx)}
-                                  key={item.id}
-                                  button
-                                  onClick={() => this.handleSelectTrackerMenu(item)}
-                              >
-                                <ListItemText className="list-item-right">
-                                  {item.name}
-                                </ListItemText>
-                                <ListItemText className={classes.listItemTextMeta}>
-                                  {item.date}
-                                </ListItemText>
-                                <ListItemIcon className={classes.iconChevronList}>
-                                  <ChevronLeft />
-                                </ListItemIcon>
-                              </ListItem>
-                          );
-                        })
-                        : this.props.trackers.map((item, index) => {
-                          return (
-                              <ListItem
-                                  className={classNames(classes.listItemx)}
-                                  key={item.id}
-                                  button
-                                  onClick={() => this.handleSelectTrackerMenu(item)}
-                              >
-                                <ListItemText className="list-item-right">
-                                  {item.name}
-                                </ListItemText>
-                                <ListItemText className={classes.listItemTextMeta}>
-                                  {item.date}
-                                </ListItemText>
-                                <ListItemIcon className={classes.iconChevronList}>
-                                  <ChevronLeft />
-                                </ListItemIcon>
-                              </ListItem>
-                          );
-                        })}
-                  </List>
-                </div>
-              </Popover>
-            </ListItem>
-            <Collapse
-                in={this.props.selectedTracker}
-                timeout="auto"
-                unmountOnExit
-            >
-              <List component="div" disablePadding>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "dashboard"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("dashboard")}
-                >
-                  <ListItemText
-                      primary="میز کار"
-                      className="list-item-right level-2-items"
-                  />
-                </ListItem>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "posts"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("posts")}
-                >
-                  <ListItemText className="list-item-right level-2-items">
-                    پست‌ها
-                    <span className={classes.postsBadge}>347</span>
-                  </ListItemText>
-                </ListItem>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "keywords"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("keywords")}
-                >
-                  <ListItemText
-                      primary="عبارات خاص"
-                      className="list-item-right level-2-items"
-                  />
-                </ListItem>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "margins"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("margins")}
-
-                >
-                  <ListItemText
-                      primary="کنارش‌ها"
-                      className="list-item-right level-2-items"
-                  />
-                </ListItem>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "influencers"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("influencers")}
-
-                >
-                  <ListItemText
-                      primary="افراد مؤثر"
-                      className="list-item-right level-2-items"
-                  />
-                </ListItem>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "emotions"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("emotions")}
-
-                >
-                  <ListItemText
-                      primary="حس موجود"
-                      className="list-item-right level-2-items"
-                  />
-                </ListItem>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "groups"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("groups")}
-
-                >
-                  <ListItemText
-                      primary="دسته‌بندی‌ها"
-                      className="list-item-right level-2-items"
-                  />
-                </ListItem>
-                <ListItem
-                    className={classNames(
-                        classes.nested,
-                        classes.listItem,
-                        "" +
-                        (this.props.selectedTrackerDashboardItem == "locations"
-                            ? classes.selectedNested
-                            : "")
-                    )}
-                    onClick={() => this.handleClickListItem("locations")}
-
-                >
-                  <ListItemText
-                      primary="مکان مرتبط"
-                      className="list-item-right level-2-items"
-                  />
-                </ListItem>
-              </List>
-            </Collapse>
-          </List>
-          <List className={classes.footer} component="nav">
-            <Divider className={classes.divider} />
-            <ListItem>
-              <BootstrapTooltip title="راهنمای سیستم">
-                <IconButton color="inherit" className={classes.footerIcon}>
-                  <BookIcon />
-                </IconButton>
-              </BootstrapTooltip>
-              <BootstrapTooltip title="پرسش">
-                <IconButton color="inherit" className={classes.footerIcon}>
-                  <i className="far fa-question-circle" />
-                </IconButton>
-              </BootstrapTooltip>
-              <BootstrapTooltip title="اطلاعات">
-                <IconButton
-                    color="inherit"
-                    className={classNames(classes.footerIcon, classes.leftIcon)}
-                >
-                  <InfoIcon />
-                </IconButton>
-              </BootstrapTooltip>
-            </ListItem>
-          </List>
-        </Drawer>
+                <ListItemText className="list-item-right level-2-items">
+                  پست‌ها
+                  <span className={classes.postsBadge}>347</span>
+                </ListItemText>
+              </ListItem>
+              <ListItem
+                className={classNames(
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "keywords"
+                      ? classes.selectedNested
+                      : "")
+                )}
+                onClick={() => this.handleClickListItem("keywords")}
+              >
+                <ListItemText
+                  primary="عبارات خاص"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+              <ListItem
+                className={classNames(
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "margins"
+                      ? classes.selectedNested
+                      : "")
+                )}
+                onClick={() => this.handleClickListItem("margins")}
+              >
+                <ListItemText
+                  primary="کنارش‌ها"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+              <ListItem
+                className={classNames(
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "influencers"
+                      ? classes.selectedNested
+                      : "")
+                )}
+                onClick={() => this.handleClickListItem("influencers")}
+              >
+                <ListItemText
+                  primary="افراد مؤثر"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+              <ListItem
+                className={classNames(
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "emotions"
+                      ? classes.selectedNested
+                      : "")
+                )}
+                onClick={() => this.handleClickListItem("emotions")}
+              >
+                <ListItemText
+                  primary="حس موجود"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+              <ListItem
+                className={classNames(
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "groups"
+                      ? classes.selectedNested
+                      : "")
+                )}
+                onClick={() => this.handleClickListItem("groups")}
+              >
+                <ListItemText
+                  primary="دسته‌بندی‌ها"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+              <ListItem
+                className={classNames(
+                  classes.nested,
+                  classes.listItem,
+                  "" +
+                    (this.props.selectedTrackerDashboardItem == "locations"
+                      ? classes.selectedNested
+                      : "")
+                )}
+                onClick={() => this.handleClickListItem("locations")}
+              >
+                <ListItemText
+                  primary="مکان مرتبط"
+                  className="list-item-right level-2-items"
+                />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
+        <List className={classes.footer} component="nav">
+          <Divider className={classes.divider} />
+          <ListItem>
+            <BootstrapTooltip title="راهنمای سیستم">
+              <IconButton color="inherit" className={classes.footerIcon}>
+                <BookIcon />
+              </IconButton>
+            </BootstrapTooltip>
+            <BootstrapTooltip title="پرسش">
+              <IconButton color="inherit" className={classes.footerIcon}>
+                <i className="far fa-question-circle" />
+              </IconButton>
+            </BootstrapTooltip>
+            <BootstrapTooltip title="اطلاعات">
+              <IconButton
+                color="inherit"
+                className={classNames(classes.footerIcon, classes.leftIcon)}
+              >
+                <InfoIcon />
+              </IconButton>
+            </BootstrapTooltip>
+          </ListItem>
+        </List>
+      </Drawer>
     );
   }
 }
@@ -691,15 +700,20 @@ TrackersSidebar.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log("tracker sidebar map state")
-  console.log(state)
-  const {triggerDrawer, selectedTrackerMenu, selectedTrackerDashboardItem} = state;
+  console.log("tracker sidebar map state");
+  console.log(state);
+  const {
+    triggerDrawer,
+    selectedTrackerMenu,
+    selectedTrackerDashboardItem
+  } = state;
   return {
     isDrawerOpen: triggerDrawer.isDrawerOpen,
     selectedTracker: selectedTrackerDashboardItem.selectedTracker,
     trackers: selectedTrackerDashboardItem.trackers,
     selectedTrackerMenu: selectedTrackerMenu,
-    selectedTrackerDashboardItem: (selectedTrackerMenu.selectedTrackerId, selectedTrackerMenu.name)
+    selectedTrackerDashboardItem:
+      selectedTrackerDashboardItem.selectedTrackerDashboardItem
   };
 };
 
@@ -707,14 +721,15 @@ const mapDispatchToProps = dispatch => {
   return {
     triggerDrawer: () => dispatch(DashboardActions.triggerDrawer()),
     addTracker: username => dispatch(DashboardActions.addTracker(username)),
-    selectTracker: (id) => dispatch(DashboardActions.selectTracker(id)),
-    selectTrackerDashboardListItem: item => dispatch(DashboardActions.selectTrackerDashboardListItem(item)),
+    selectTracker: id => dispatch(DashboardActions.selectTracker(id)),
+    selectTrackerDashboardListItem: item =>
+      dispatch(DashboardActions.selectTrackerDashboardListItem(item)),
     selectPage: page => dispatch(DashboardActions.selectPage(page)),
     backToTrackers: () => dispatch(DashboardActions.backToTrackers())
   };
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(TrackersSidebar));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(TrackersSidebar));
