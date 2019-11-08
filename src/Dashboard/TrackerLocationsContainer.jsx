@@ -17,7 +17,6 @@ import {
 import { linearGradient } from "recharts";
 import { connect } from "react-redux";
 import { DashboardActions } from "../_actions";
-import ReactExport from "react-data-export";
 import moment from "moment";
 import BootstrapTooltip from "./BSTooltip";
 import "d3-transition";
@@ -26,8 +25,25 @@ import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
-import WordsCloud from "./WordsCloud";
 import CheckIcon from "@material-ui/icons/Check";
+import WorldMap from "./WorldMap";
+import PieChart from "./PieChart";
+
+import {
+  Sigma,
+  EdgeShapes,
+  NodeShapes,
+  LoadJSON,
+  LoadGEXF,
+  Filter,
+  ForceAtlas2,
+  RelativeSize,
+  NOverlap,
+  NeoCypher,
+  NeoGraphItemsProducers,
+  RandomizeNodePositions,
+  SigmaEnableWebGL
+} from "react-sigma";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Calendar } from "react-modern-calendar-datepicker";
 
@@ -103,33 +119,6 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center"
-  },
-
-  instagramIconBtn: {
-    color: "#fff",
-    backgroundColor: "#da2b72",
-    minWidth: 44,
-    height: 44,
-    borderRadius: 22,
-    margin: "0px 10px",
-    border: "solid 5px rgba(255, 255, 255, 0.85)",
-    "&:hover": {
-      opacity: 0.7,
-      backgroundColor: "#da2b72"
-    }
-  },
-  twitterIconBtn: {
-    color: "#fff",
-    backgroundColor: "#1da1f2",
-    minWidth: 44,
-    height: 44,
-    borderRadius: 22,
-    margin: "0px 10px",
-    border: "solid 5px rgba(255, 255, 255, 0.85)",
-    "&:hover": {
-      opacity: 0.7,
-      backgroundColor: "#1da1f2"
-    }
   },
   metaDivider: {
     height: 20,
@@ -333,17 +322,16 @@ const styles = theme => ({
   fieldsContent: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "right"
+    alignItems: "center"
   },
   tabs: {
     display: "flex",
-    width: "100%",
+    width: "75%",
     margin: "0px auto"
   },
   listItem: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    width: "100%",
+    heigth: 44,
+    width: 226,
     "&:hover": {
       color: "#4753ff",
       cursor: "pointer"
@@ -355,7 +343,16 @@ const styles = theme => ({
   },
   selectedTab: {
     color: "#3340ff",
-    borderBottom: "3px solid #4753ff"
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      bottom: 0,
+      left: "50%",
+      width: 6,
+      height: 6,
+      background: "#4753ff",
+      borderRadius: "50%"
+    }
   },
   showMoreFields: {
     fontSize: 12,
@@ -390,9 +387,9 @@ const styles = theme => ({
   emotionStats: {
     display: "flex",
     marginBottom: 35,
-    width: 150
+    width: 250
   },
-  negativeEmotion: {
+  negativeEmotionBox: {
     flexGrow: 1,
     display: "flex",
     flexDirection: "column",
@@ -410,7 +407,8 @@ const styles = theme => ({
       width: 16,
       height: 16,
       background: "#ec373c",
-      borderRadius: "50%"
+      borderRadius: "50%",
+      border: "solid 5px rgba(255, 255, 255, 0.85)"
     }
   },
   negativeText: {
@@ -432,6 +430,7 @@ const styles = theme => ({
       left: 0,
       width: 16,
       height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
       background: "#03d588",
       borderRadius: "50%"
     }
@@ -462,6 +461,68 @@ const styles = theme => ({
     left: "19px"
   },
 
+  metaIcon: {
+    position: "relative"
+  },
+  checkIconTiny: {
+    color: "#fff",
+    backgroundColor: "#03d588",
+    width: 14,
+    height: 14,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  defaultIconBtn: {
+    color: "#fff",
+    backgroundColor: "#adb2b9",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7
+    }
+  },
+  instagramIconBtn: {
+    color: "#fff",
+    backgroundColor: "#da2b72",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#da2b72"
+    }
+  },
+  twitterIconBtn: {
+    color: "#fff",
+    backgroundColor: "#1da1f2",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#1da1f2"
+    }
+  },
+
+  postsPaper: {
+    display: "flex",
+    padding: "16px 36px"
+  },
+  dividerM: {
+    margin: "15px 0px"
+  },
   actions: {
     display: "flex",
     alignItems: "center"
@@ -556,111 +617,18 @@ const styles = theme => ({
     backgroundColor: "#e4e8ed"
   },
 
-  table: {
-    width: "100%"
+  locationsPaper: {
+    height: 475
   },
-  tableHeader: {
-    fontSize: 12,
-    color: "#08080d"
-  },
-
-  negativeEmotion: {
+  pieChart: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    position: "relative",
-    "&::after": {
-      content: `""`,
-      position: "absolute",
-      width: 16,
-      height: 16,
-      background: "#ec373c",
-      border: "solid 5px rgba(255, 255, 255, 0.85)",
-      borderRadius: "50%"
-    }
-  },
-  positiveEmotion: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    "&::after": {
-      content: `""`,
-      position: "absolute",
-      width: 16,
-      height: 16,
-      background: "#03d588",
-      border: "solid 5px rgba(255, 255, 255, 0.85)",
-      borderRadius: "50%"
-    }
-  },
-  textMute: {
-    color: "#adb2b9"
+    height: "100%"
   },
 
-  paginationBox: {
-    marginBottom: 40
-  },
-  paginationLinks: {
-    width: 250,
-    height: 44,
-    border: "solid 2px #e4e8ed",
-    marginTop: 30,
-    borderRadius: 22,
-    marginBottom: 20,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  paginationLink: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 6,
-    marginBottom: 8,
-    width: 28,
-    height: 28,
-    borderRadius: "50%",
-    "&:hover": {
-      cursor: "pointer"
-    }
-  },
-  activePaginationLink: {
-    border: "solid 2px #3340ff",
-    backgroundColor: "#d7d9ff"
-  },
-  paginationText: {
-    textAlign: "center",
-    color: "#adb2b9"
-  },
-  textNormal: {
-    color: "#08080d",
-    padding: "0 3px"
-  },
-
-  tableUsernamePart: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-
-  tableRow: {
-    "&:hover": {
-      cursor: "pointer",
-      backgroundColor: "#f2f3fb"
-    }
-  },
-  postsPaper: {
-    display: "flex",
-    padding: "16px 36px"
-  },
-  dividerM: {
-    margin: "15px 0px"
-  },
-  selectedKeyword: {
-    color: "#4753ff"
+  relatedsPaper: {
+    height: "100%"
   },
   textRight: {
     textAlign: "right"
@@ -668,39 +636,56 @@ const styles = theme => ({
   textLeft: {
     textLeft: "left"
   },
-  relatedsPaper: {
-    height: "100%"
-  },
-  wordsPaper: {
-    height: "100%"
-  },
-
-  metaIcon: {
-    position: "relative"
-  },
-  checkIconTiny: {
-    color: "#fff",
-    backgroundColor: "#03d588",
-    width: 14,
-    height: 14,
-    borderRadius: 22,
-    position: "absolute",
-    top: 2,
-    right: 10,
+  fieldsContent: {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    flexDirection: "column",
+    alignItems: "right"
   },
-  defaultIconBtn: {
-    color: "#fff",
-    backgroundColor: "#adb2b9",
-    minWidth: 44,
-    height: 44,
-    borderRadius: 22,
-    margin: "0px 10px",
-    border: "solid 5px rgba(255, 255, 255, 0.85)",
+  tabs: {
+    display: "flex",
+    width: "100%",
+    margin: "0px auto"
+  },
+  listItem: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    width: "100%",
     "&:hover": {
-      opacity: 0.7
+      color: "#4753ff",
+      cursor: "pointer"
+    }
+  },
+  textCenter: {
+    textAlign: "center",
+    fontSize: 14
+  },
+  selectedTab: {
+    color: "#3340ff",
+    borderBottom: "3px solid #4753ff"
+  },
+  textMute: {
+    color: "#adb2b9"
+  },
+  neutralEmotion: {
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  neutralPercent: {
+    position: "relative",
+    width: 45,
+    fontWeight: "bold",
+    textAlign: "left",
+    "&::after": {
+      content: `""`,
+      position: "absolute",
+      right: 0,
+      width: 16,
+      height: 16,
+      border: "solid 5px rgba(255, 255, 255, 0.85)",
+      background: "#4a90e2",
+      borderRadius: "50%"
     }
   }
 });
@@ -731,14 +716,25 @@ const styles = theme => ({
 
 const emotionDatas = [
   {
-    name: "حس مثبت",
-    value: 58,
-    color: "#03d588"
+    name: "حس منفی",
+    value: 32,
+    color: "#ec373c",
+    emotion: "negative",
+    posts: 457
   },
   {
-    name: "حس منفی",
-    value: 42,
-    color: "#ec373c"
+    name: "حس خنثی",
+    value: 28,
+    color: "#4a90e2",
+    emotion: "neutral",
+    posts: 457
+  },
+  {
+    name: "حس مثبت",
+    value: 40,
+    color: "#03d588",
+    emotion: "positive",
+    posts: 457
   }
 ];
 
@@ -1077,59 +1073,11 @@ const data01 = [
   }
 ];
 
-function getCallback(callback) {
-  return function(word, event) {
-    const isActive = callback !== "onWordMouseOut";
-    const element = event.target;
-    const text = select(element);
-    console.log(mapStateToProps);
-    // text.setAttribute("fill", "#f2c314");
-    // console.log("x");
-    // console.log(element);
-
-    // const text = element.select();
-    // console.log("x");
-
-    text.on("click", () => {
-      window.keywordsContainer.setState({
-        selectedKeyword: word.text
-      });
-    });
-  };
-}
-const callbacks = {
-  onWordClick: getCallback("onWordClick"),
-  onWordMouseOut: getCallback("onWordMouseOut"),
-  onWordMouseOver: getCallback("onWordMouseOver")
-};
-
-//     // const text = element.select();
-//     // console.log("x");
-
-//     element
-//       .on("click", () => {
-//         this.setState({
-//           selectedKeyword: word.text
-//         });
-//       })
-//       .transition()
-//       .attr("background", "white")
-//       .attr("font-size", isActive ? "300%" : "100%")
-//       .attr("text-decoration", isActive ? "underline" : "none");
-//   };
-// }
-// const callbacks = {
-//   onWordClick: getCallback("onWordClick"),
-//   onWordMouseOut: getCallback("onWordMouseOut"),
-//   onWordMouseOver: getCallback("onWordMouseOver")
-// };
-
-class TrackerKeywordsContainer extends React.Component {
+class TrackerLocationsContainer extends React.Component {
   constructor(props) {
     super(props);
-    console.log("tracker keywords container");
-    console.log(props);
     this.state = {
+      words,
       data,
       data01,
       emotionDatas,
@@ -1137,11 +1085,8 @@ class TrackerKeywordsContainer extends React.Component {
       minSlider: 1,
       maxSlider: 40,
       selectedTab: "keyWords",
+      selectedView: "row",
       selectedChartAction: "day",
-      selectedView: "grid",
-      rowHover: 0,
-      selectedKeyword: "",
-      callbacks: {},
       twitter: 1,
       instagram: 0,
 
@@ -1164,11 +1109,9 @@ class TrackerKeywordsContainer extends React.Component {
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
-    this.handleSelectChartAction = this.handleSelectChartAction.bind(this);
+    this.handleTwitterClick = this.handleTwitterClick.bind(this);
+    this.handleInstagramClick = this.handleInstagramClick.bind(this);
     this.handleSelectView = this.handleSelectView.bind(this);
-    this.handleHoverRow = this.handleHoverRow.bind(this);
-    this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
-    this.handleWordClick = this.handleWordClick.bind(this);
   }
 
   handleSelectView = view => {
@@ -1177,124 +1120,9 @@ class TrackerKeywordsContainer extends React.Component {
     });
   };
 
-  handleHoverRow = id => {
-    this.setState({
-      rowHover: id
-    });
-  };
-
-  handleUnHoverRow = () => {
-    this.setState({
-      rowHover: 0
-    });
-  };
-
-  getCallback = callback => {
-    (word, event) => {
-      const isActive = callback !== "onWordMouseOut";
-      const element = event.target;
-      const text = select(element);
-      text.on("click", () => {
-        this.setState({
-          selectedKeyword: word.text
-        });
-      });
-      // .transition()
-      // .attr("background", "white")
-      // .attr("font-size", isActive ? "300%" : "100%")
-      // .attr("text-decoration", isActive ? "underline" : "none");
-    };
-  };
-
-  handleWordClick = (word, event) => {
-    this.setState({
-      selectedKeyword: word.text
-    });
-    // console.log(word);
-    // console.log(event);
-
-    const element = event.target;
-    console.log(element);
-    element.setAttribute("fill", "#f2c314");
-
-    // const text = element.select();
-    // console.log("x");
-
-    // text
-    //   .on("click", () => {
-    //     this.setState({
-    //       selectedKeyword: word.text
-    //     });
-    //   })
-    //   .transition()
-    //   .attr("background", "white")
-    //   .attr("font-size", isActive ? "300%" : "100%")
-    //   .attr("text-decoration", isActive ? "underline" : "none");
-  };
-
-  brushChangeHandler = event => {
-    var new_data = this.state.data;
-    new_data.map(
-      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
-    );
-    this.setState({
-      data: new_data
-    });
-  };
-
-  trackersSliderChangeHandler = (event, newValue) => {
-    this.setState({
-      trackersSliderValue: newValue
-    });
-  };
-
-  trackersSliderChangeCommittedHandler = (event, newValue) => {
-    var newMin = newValue[0] - 10;
-    if (newMin < 1) {
-      newMin = 1;
-    }
-
-    var newMax = newValue[1] + 10;
-    if (newMax > 360) {
-      newMax = 360;
-    } else if (newMax < 30) {
-      newMax = 30;
-    }
-
-    console.log(newMin, newMax);
-
-    this.setState({
-      minSlider: newMin,
-      maxSlider: newMax
-    });
-  };
-
-  trackerSliderButtonHandler = event => {
-    var new_data = [];
-    for (var i = 30; i >= 1; i--) {
-      var d = {
-        date: moment()
-          .subtract(i, "days")
-          .format("MMM Do"),
-        posts: Math.floor(Math.random() * (1000 + 1)),
-        color: "#36fb59"
-      };
-      new_data.push(d);
-    }
-    this.setState({
-      data: new_data
-    });
-  };
-
   handleSelectTab = tab => {
     this.setState({
       selectedTab: tab
-    });
-  };
-
-  handleSelectChartAction = action => {
-    this.setState({
-      selectedChartAction: action
     });
   };
 
@@ -1367,7 +1195,7 @@ class TrackerKeywordsContainer extends React.Component {
                     className={classes.topNavbarSelectedTracker}
                   >
                     {this.props.trackers.map((item, index) => {
-                      return item.id == this.props.selectedTracker.id
+                      return item.id == this.props.selectedTracker
                         ? item.name
                         : "";
                     })}
@@ -1383,7 +1211,7 @@ class TrackerKeywordsContainer extends React.Component {
                       }
                       onClick={() => this.handleInstagramClick()}
                     >
-                      <i className="fab fa-instagram"></i>
+                      <i className="fab fa-instagram" />
                     </Button>
                     {this.state.instagram ? (
                       <span className={classes.checkIconTiny}>
@@ -1402,7 +1230,7 @@ class TrackerKeywordsContainer extends React.Component {
                       }
                       onClick={() => this.handleTwitterClick()}
                     >
-                      <i className="fab fa-twitter"></i>
+                      <i className="fab fa-twitter" />
                     </Button>
                     {this.state.twitter ? (
                       <span className={classes.checkIconTiny}>
@@ -1470,23 +1298,26 @@ class TrackerKeywordsContainer extends React.Component {
           <Grid container className={classes.root} spacing={2}>
             <Grid item md={8} sm={12} xs={12}>
               <Paper
-                className={classNames(classes.chartPaper, classes.wordsPaper)}
+                className={classNames(
+                  classes.chartPaper,
+                  classes.locationsPaper
+                )}
               >
                 <div className={classes.paperHeader}>
                   <Typography variant="h6" className={classes.headerText}>
-                    عبارات خاص
+                    نمودار مکان‌های مرتبط با ردیاب
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
                     <BootstrapTooltip
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
-                <WordsCloud />
+                <WorldMap />
               </Paper>
             </Grid>
             <Grid item md={4} sm={12} xs={12}>
@@ -1498,17 +1329,14 @@ class TrackerKeywordsContainer extends React.Component {
               >
                 <div className={classes.paperHeader}>
                   <Typography variant="h6" className={classes.headerText}>
-                    لفظ‌های مرتبط با{" "}
-                    <span className={classes.selectedKeyword}>
-                      {this.props.selectedKeyword}
-                    </span>
+                    لفظ‌های مرتبط
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
                     <BootstrapTooltip
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1519,7 +1347,7 @@ class TrackerKeywordsContainer extends React.Component {
                       className={classNames(
                         classes.listItem,
                         "" +
-                          (this.props.selectedTab == "keyWords"
+                          (this.state.selectedTab == "keyWords"
                             ? classes.selectedTab
                             : "")
                       )}
@@ -1534,7 +1362,7 @@ class TrackerKeywordsContainer extends React.Component {
                       className={classNames(
                         classes.listItem,
                         "" +
-                          (this.props.selectedTab == "hashtags"
+                          (this.state.selectedTab == "hashtags"
                             ? classes.selectedTab
                             : "")
                       )}
@@ -1573,6 +1401,116 @@ class TrackerKeywordsContainer extends React.Component {
               </Paper>
             </Grid>
           </Grid>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item md={6} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.paper,
+                  classes.columnPaper,
+                  classes.botPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    نمودار ارتباط افراد مؤثر
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                    >
+                      <i className="far fa-lightbulb fa-lg" />
+                    </BootstrapTooltip>
+                  </div>
+                </div>
+                <Divider variant="fullWidth" />
+              </Paper>
+            </Grid>
+            <Grid item md={6} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.paper,
+                  classes.columnPaper,
+                  classes.botPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    احساس‌سنج
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip placement="top" title="احساس‌سنج">
+                      <i className="far fa-lightbulb fa-lg" />
+                    </BootstrapTooltip>
+                  </div>
+                </div>
+                <Divider variant="fullWidth" />
+                <div className={classes.pieChart}>
+                  <PieChart
+                    data={this.state.emotionDatas}
+                    innerRadius={300}
+                    outerRadius={400}
+                    width={250}
+                    height={250}
+                  />
+                </div>
+                <div className={classes.emotionsContent}>
+                  <div className={classes.emotionStats}>
+                    <div className={classes.negativeEmotionBox}>
+                      <Typography
+                        variant="body1"
+                        className={
+                          this.props.selectedEmotion == "negative"
+                            ? classes.selectedNegativePercent
+                            : classes.negativePercent
+                        }
+                      >
+                        {this.state.emotionDatas[0].value}%
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        className={classes.negativeText}
+                      >
+                        {this.state.emotionDatas[0].name}
+                      </Typography>
+                    </div>
+                    <div className={classes.neutralEmotion}>
+                      <Typography
+                        variant="body1"
+                        className={classes.neutralPercent}
+                      >
+                        {this.state.emotionDatas[1].value}%
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        className={classes.negativeText}
+                      >
+                        {this.state.emotionDatas[1].name}
+                      </Typography>
+                    </div>
+                    <div className={classes.positiveEmotionBox}>
+                      <Typography
+                        variant="body1"
+                        className={
+                          this.props.selectedEmotion == "positive"
+                            ? classes.selectedPositivePercent
+                            : classes.positivePercent
+                        }
+                      >
+                        {this.state.emotionDatas[1].value}%
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        className={classes.positiveText}
+                      >
+                        {this.state.emotionDatas[1].name}
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              </Paper>
+            </Grid>
+          </Grid>
           <Grid container className={classes.root}>
             <Grid item md={12} sm={12} xs={12}>
               <Paper
@@ -1594,7 +1532,7 @@ class TrackerKeywordsContainer extends React.Component {
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1607,7 +1545,7 @@ class TrackerKeywordsContainer extends React.Component {
                       placeholder="هشتگ و کلمات کلیدی"
                     />
                     <Button className={classes.searchIconBtn}>
-                      <i className="fa fa-search fa-lg"></i>
+                      <i className="fa fa-search fa-lg" />
                     </Button>
 
                     <Divider
@@ -1665,23 +1603,20 @@ class TrackerKeywordsContainer extends React.Component {
   }
 }
 
-TrackerKeywordsContainer.propTypes = {
+TrackerLocationsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   const { selectedTrackerDashboardItem } = state;
-  console.log("tracker keywords container map state to props");
-  console.log(state);
   return {
     trackers: selectedTrackerDashboardItem.trackers,
     selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    selectedTrackerDashboardItem,
+    selectedTrackerDashboardItem:
+      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
     posts: selectedTrackerDashboardItem.posts,
-    keywords: selectedTrackerDashboardItem.keywords,
-    words: selectedTrackerDashboardItem.words,
-    selectedKeyword: selectedTrackerDashboardItem.selectedKeyword
+    keywords: selectedTrackerDashboardItem.keywords
   };
 };
 
@@ -1696,4 +1631,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(TrackerKeywordsContainer));
+)(withStyles(styles, { withTheme: true })(TrackerLocationsContainer));

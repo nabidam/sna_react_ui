@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import TrackerDashboardContainer from "./TrackerDashboardContainer";
 import TrackerPostsContainer from "./TrackerPostsContainer";
 import TrackerKeywordsContainer from "./TrackerKeywordsContainer";
@@ -9,13 +9,13 @@ import TrackerMarginsContainer from "./TrackerMarginsContainer";
 import TrackerInfluencersContainer from "./TrackerInfluencersContainer";
 import TrackerGroupsContainer from "./TrackerGroupsContainer";
 import TrackerEmotionsContainer from "./TrackerEmotionsContainer";
-
+import TrackerLocationsContainer from "./TrackerLocationsContainer";
 
 class TrackersDashboard extends React.Component {
   constructor(props) {
     super(props);
-    console.log("constructor TrackersDashboard")
-    console.log(props)
+    console.log("constructor TrackersDashboard");
+    console.log(props);
     this.state = {};
   }
 
@@ -42,8 +42,8 @@ class TrackersDashboard extends React.Component {
       case "groups":
         return <TrackerGroupsContainer />;
         break;
-      case "emotions":
-        return <TrackerEmotionsContainer />;
+      case "locations":
+        return <TrackerLocationsContainer />;
         break;
 
       default:
@@ -58,13 +58,14 @@ TrackersDashboard.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {selectedTrackerDashboardItem} = state;
-  console.log("Trackers Dashboard mapStateToProps")
-  console.log(state)
+  const { selectedTrackerDashboardItem } = state;
+  console.log("Trackers Dashboard mapStateToProps");
+  console.log(state);
   return {
-    trackers:selectedTrackerDashboardItem.trackers,
+    trackers: selectedTrackerDashboardItem.trackers,
     selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    selectedTrackerDashboardItem:selectedTrackerDashboardItem.selectedTrackerDashboardItem
+    selectedTrackerDashboardItem:
+      selectedTrackerDashboardItem.selectedTrackerDashboardItem
   };
 };
 
@@ -77,6 +78,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(TrackersDashboard);

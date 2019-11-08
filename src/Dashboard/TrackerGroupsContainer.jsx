@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import {
   Typography,
@@ -12,10 +12,11 @@ import {
   ListItemText,
   Divider,
   Button,
+  Popover
 } from "@material-ui/core";
-import {linearGradient} from "recharts";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { linearGradient } from "recharts";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import ReactExport from "react-data-export";
 import moment from "moment";
 import BootstrapTooltip from "./BSTooltip";
@@ -29,12 +30,25 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
+import CheckIcon from "@material-ui/icons/Check";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
-const drawerWidth = 240;
+const months = [
+  "",
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند"
+];
 
 const dataSet1 = [
   {
@@ -99,7 +113,7 @@ const styles = theme => ({
     minWidth: 44,
     height: 44,
     borderRadius: 22,
-    margin: "0px ",
+    margin: "0px 10px",
     border: "solid 5px rgba(255, 255, 255, 0.85)",
     "&:hover": {
       opacity: 0.7,
@@ -270,7 +284,7 @@ const styles = theme => ({
     color: "#000",
     position: "relative",
     boxShadow:
-        "0 2px 10px 0 rgba(0, 0, 0, 0.03), 0 2px 5px 0 rgba(0, 0, 0, 0.12)"
+      "0 2px 10px 0 rgba(0, 0, 0, 0.03), 0 2px 5px 0 rgba(0, 0, 0, 0.12)"
   },
   chartTopActions: {
     display: "flex",
@@ -669,6 +683,35 @@ const styles = theme => ({
     backgroundColor: "#dbddff",
     borderRadius: 3,
     border: "solid 2px #3340ff"
+  },
+
+  metaIcon: {
+    position: "relative"
+  },
+  checkIconTiny: {
+    color: "#fff",
+    backgroundColor: "#03d588",
+    width: 14,
+    height: 14,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  defaultIconBtn: {
+    color: "#fff",
+    backgroundColor: "#adb2b9",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7
+    }
   }
 });
 
@@ -712,232 +755,232 @@ const emotionDatas = [
 const data = [
   {
     date: moment()
-    .subtract(29, "days")
-    .format("MMM Do"),
+      .subtract(29, "days")
+      .format("MMM Do"),
     posts: 100,
     dayOfMonth: 1,
     color: "#a9da79"
   },
   {
     date: moment()
-    .subtract(28, "days")
-    .format("MMM Do"),
+      .subtract(28, "days")
+      .format("MMM Do"),
     posts: 150,
     dayOfMonth: 2,
     color: "#95eb56"
   },
   {
     date: moment()
-    .subtract(27, "days")
-    .format("MMM Do"),
+      .subtract(27, "days")
+      .format("MMM Do"),
     posts: 200,
     dayOfMonth: 3,
     color: "#91dde2"
   },
   {
     date: moment()
-    .subtract(26, "days")
-    .format("MMM Do"),
+      .subtract(26, "days")
+      .format("MMM Do"),
     posts: 321,
     dayOfMonth: 4,
     color: "#0a1b35"
   },
   {
     date: moment()
-    .subtract(25, "days")
-    .format("MMM Do"),
+      .subtract(25, "days")
+      .format("MMM Do"),
     posts: 100,
     dayOfMonth: 5,
     color: "#e9432f"
   },
   {
     date: moment()
-    .subtract(24, "days")
-    .format("MMM Do"),
+      .subtract(24, "days")
+      .format("MMM Do"),
     posts: 533,
     dayOfMonth: 6,
     color: "#72e25f"
   },
   {
     date: moment()
-    .subtract(23, "days")
-    .format("MMM Do"),
+      .subtract(23, "days")
+      .format("MMM Do"),
     posts: 423,
     dayOfMonth: 7,
     color: "#8b8bf6"
   },
   {
     date: moment()
-    .subtract(22, "days")
-    .format("MMM Do"),
+      .subtract(22, "days")
+      .format("MMM Do"),
     posts: 324,
     dayOfMonth: 8,
     color: "#b2ab52"
   },
   {
     date: moment()
-    .subtract(21, "days")
-    .format("MMM Do"),
+      .subtract(21, "days")
+      .format("MMM Do"),
     posts: 423,
     dayOfMonth: 9,
     color: "#c35fd5"
   },
   {
     date: moment()
-    .subtract(20, "days")
-    .format("MMM Do"),
+      .subtract(20, "days")
+      .format("MMM Do"),
     posts: 312,
     dayOfMonth: 10,
     color: "#39c4e3"
   },
   {
     date: moment()
-    .subtract(19, "days")
-    .format("MMM Do"),
+      .subtract(19, "days")
+      .format("MMM Do"),
     posts: 123,
     dayOfMonth: 11,
     color: "#e03673"
   },
   {
     date: moment()
-    .subtract(18, "days")
-    .format("MMM Do"),
+      .subtract(18, "days")
+      .format("MMM Do"),
     posts: 253,
     dayOfMonth: 12,
     color: "#36fb59"
   },
   {
     date: moment()
-    .subtract(17, "days")
-    .format("MMM Do"),
+      .subtract(17, "days")
+      .format("MMM Do"),
     posts: 397,
     dayOfMonth: 13,
     color: "#c80b8a"
   },
   {
     date: moment()
-    .subtract(16, "days")
-    .format("MMM Do"),
+      .subtract(16, "days")
+      .format("MMM Do"),
     posts: 456,
     dayOfMonth: 14,
     color: "#67df60"
   },
   {
     date: moment()
-    .subtract(15, "days")
-    .format("MMM Do"),
+      .subtract(15, "days")
+      .format("MMM Do"),
     posts: 575,
     dayOfMonth: 15,
     color: "#9bcc4c"
   },
   {
     date: moment()
-    .subtract(14, "days")
-    .format("MMM Do"),
+      .subtract(14, "days")
+      .format("MMM Do"),
     posts: 423,
     dayOfMonth: 16,
     color: "#78bef0"
   },
   {
     date: moment()
-    .subtract(13, "days")
-    .format("MMM Do"),
+      .subtract(13, "days")
+      .format("MMM Do"),
     posts: 100,
     dayOfMonth: 17,
     color: "#dcffaa"
   },
   {
     date: moment()
-    .subtract(12, "days")
-    .format("MMM Do"),
+      .subtract(12, "days")
+      .format("MMM Do"),
     posts: 222,
     dayOfMonth: 18,
     color: "#a9da79"
   },
   {
     date: moment()
-    .subtract(11, "days")
-    .format("MMM Do"),
+      .subtract(11, "days")
+      .format("MMM Do"),
     posts: 321,
     dayOfMonth: 19,
     color: "#91dde2"
   },
   {
     date: moment()
-    .subtract(10, "days")
-    .format("MMM Do"),
+      .subtract(10, "days")
+      .format("MMM Do"),
     posts: 123,
     dayOfMonth: 20,
     color: "#0a1b35"
   },
   {
     date: moment()
-    .subtract(9, "days")
-    .format("MMM Do"),
+      .subtract(9, "days")
+      .format("MMM Do"),
     posts: 99,
     dayOfMonth: 21,
     color: "#e9432f"
   },
   {
     date: moment()
-    .subtract(8, "days")
-    .format("MMM Do"),
+      .subtract(8, "days")
+      .format("MMM Do"),
     posts: 654,
     dayOfMonth: 22,
     color: "#72e25f"
   },
   {
     date: moment()
-    .subtract(7, "days")
-    .format("MMM Do"),
+      .subtract(7, "days")
+      .format("MMM Do"),
     posts: 122,
     dayOfMonth: 23,
     color: "#8b8bf6"
   },
   {
     date: moment()
-    .subtract(6, "days")
-    .format("MMM Do"),
+      .subtract(6, "days")
+      .format("MMM Do"),
     posts: 344,
     dayOfMonth: 24,
     color: "#b2ab52"
   },
   {
     date: moment()
-    .subtract(5, "days")
-    .format("MMM Do"),
+      .subtract(5, "days")
+      .format("MMM Do"),
     posts: 244,
     dayOfMonth: 25,
     color: "#c35fd5"
   },
   {
     date: moment()
-    .subtract(4, "days")
-    .format("MMM Do"),
+      .subtract(4, "days")
+      .format("MMM Do"),
     posts: 354,
     dayOfMonth: 26,
     color: "#39c4e3"
   },
   {
     date: moment()
-    .subtract(3, "days")
-    .format("MMM Do"),
+      .subtract(3, "days")
+      .format("MMM Do"),
     posts: 421,
     dayOfMonth: 27,
     color: "#e03673"
   },
   {
     date: moment()
-    .subtract(2, "days")
-    .format("MMM Do"),
+      .subtract(2, "days")
+      .format("MMM Do"),
     posts: 124,
     dayOfMonth: 28,
     color: "#36fb59"
   },
   {
     date: moment()
-    .subtract(1, "days")
-    .format("MMM Do"),
+      .subtract(1, "days")
+      .format("MMM Do"),
     posts: 123,
     dayOfMonth: 29,
     color: "#36fb59"
@@ -1047,8 +1090,8 @@ const data01 = [
 class TrackerGroupsContainer extends React.Component {
   constructor(props) {
     super(props);
-    console.log("tracker Groups Container")
-    console.log(props)
+    console.log("tracker Groups Container");
+    console.log(props);
     this.state = {
       words,
       data,
@@ -1062,7 +1105,26 @@ class TrackerGroupsContainer extends React.Component {
       selectedView: "row",
       rowHover: 0,
       selectedKeyword: "",
-      callbacks: {}
+      callbacks: {},
+      twitter: 1,
+      instagram: 0,
+
+      isCalenderOpen: false,
+      calenderAnchorEl: null,
+
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 1
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      isDaySelected: true
     };
 
     this.handleSelectTab = this.handleSelectTab.bind(this);
@@ -1093,7 +1155,7 @@ class TrackerGroupsContainer extends React.Component {
   brushChangeHandler = event => {
     var new_data = this.state.data;
     new_data.map(
-        (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
+      (item, index) => (item.posts = Math.floor(Math.random() * (1000 + 1)))
     );
     this.setState({
       data: new_data
@@ -1132,8 +1194,8 @@ class TrackerGroupsContainer extends React.Component {
     for (var i = 30; i >= 1; i--) {
       var d = {
         date: moment()
-        .subtract(i, "days")
-        .format("MMM Do"),
+          .subtract(i, "days")
+          .format("MMM Do"),
         posts: Math.floor(Math.random() * (1000 + 1)),
         color: "#36fb59"
       };
@@ -1156,504 +1218,609 @@ class TrackerGroupsContainer extends React.Component {
     });
   };
 
+  handleTwitterClick = () => {
+    this.setState({
+      twitter: !this.state.twitter
+    });
+  };
+
+  handleInstagramClick = () => {
+    this.setState({
+      instagram: !this.state.instagram
+    });
+  };
+
+  handleCalenderClick = event => {
+    this.setState({
+      calenderAnchorEl: event.currentTarget,
+      isCalenderOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseCalender = () => {
+    this.setState({
+      calenderAnchorEl: null,
+      isCalenderOpen: false
+    });
+  };
+
+  handleSelectedDay = day => {
+    // console.log(day);
+    this.setState({
+      selectedDay: day,
+      isDaySelected: true
+    });
+  };
+
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Container className={classes.topNavbar}>
-            <Grid container className={classes.root}>
-              <Grid item md={12} sm={12} xs={12}>
-                <Paper className={classes.topNavbarPaper}>
-                  <div className={classes.topNavbarTitleBox}>
-                    <Typography
-                        variant="body1"
-                        className={classes.topNavbarTitleText}
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Container className={classes.topNavbar}>
+          <Grid container className={classes.root}>
+            <Grid item md={12} sm={12} xs={12}>
+              <Paper className={classes.topNavbarPaper}>
+                <div className={classes.topNavbarTitleBox}>
+                  <Typography
+                    variant="body1"
+                    className={classes.topNavbarTitleText}
+                  >
+                    ردیاب:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={classes.topNavbarSelectedTracker}
+                  >
+                    {this.props.trackers.map((item, index) => {
+                      return item.id == this.props.selectedTracker
+                        ? item.name
+                        : "";
+                    })}
+                  </Typography>
+                </div>
+                <div className={classes.topNavbarMeta}>
+                  <div className={classes.metaIcon}>
+                    <Button
+                      className={
+                        this.state.instagram
+                          ? classes.instagramIconBtn
+                          : classes.defaultIconBtn
+                      }
+                      onClick={() => this.handleInstagramClick()}
                     >
-                      ردیاب:
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        className={classes.topNavbarSelectedTracker}
-                    >
-                      {this.props.trackers.map((item, index) => {
-                        return item.id == this.props.selectedTracker
-                            ? item.name
-                            : "";
-                      })}
-                    </Typography>
-                  </div>
-                  <div className={classes.topNavbarMeta}>
-                    <Button className={classes.instagramIconBtn}>
                       <i className="fab fa-instagram"></i>
                     </Button>
-                    <Button className={classes.twitterIconBtn}>
+                    {this.state.instagram ? (
+                      <span className={classes.checkIconTiny}>
+                        <CheckIcon style={{ fontSize: "0.9rem" }} />
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className={classes.metaIcon}>
+                    <Button
+                      className={
+                        this.state.twitter
+                          ? classes.twitterIconBtn
+                          : classes.defaultIconBtn
+                      }
+                      onClick={() => this.handleTwitterClick()}
+                    >
                       <i className="fab fa-twitter"></i>
                     </Button>
-                    <Divider
-                        orientation="vertical"
-                        className={classes.metaDivider}
-                    />
-                    <Button color="primary" className={classes.selectDateRange}>
-                      ۱ مرداد - ۱۹ مرداد
-                      <div className={classes.selectDateRangeIcon}>
-                        <i className="fas fa-chevron-down" />
-                      </div>
-                    </Button>
+                    {this.state.twitter ? (
+                      <span className={classes.checkIconTiny}>
+                        <CheckIcon style={{ fontSize: "0.9rem" }} />
+                      </span>
+                    ) : (
+                      ""
+                    )}
                   </div>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Container>
-          <Container className={classes.chartContainer}>
-            <Grid container className={classes.root} spacing={2}>
-              <Grid item md={8} sm={12} xs={12}>
-                <Paper className={classes.chartPaper}>
-                  <div className={classes.paperHeader}>
-                    <Typography variant="h6" className={classes.headerText}>
-                      عبارات خاص
-                    </Typography>
-                    <div className={classes.paperHeaderGuideIcon}>
-                      <BootstrapTooltip
-                          placement="top"
-                          title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                      >
-                        <i className="far fa-lightbulb fa-lg"></i>
-                      </BootstrapTooltip>
+                  <Divider
+                    orientation="vertical"
+                    className={classes.metaDivider}
+                  />
+                  <Button
+                    color="primary"
+                    className={classes.selectDateRange}
+                    onClick={event => this.handleCalenderClick(event)}
+                  >
+                    {this.state.isDaySelected == false
+                      ? "انتخاب بازه زمانی"
+                      : this.state.selectedDay.from.day +
+                        " " +
+                        months[this.state.selectedDay.from.month] +
+                        " " +
+                        " - " +
+                        (this.state.selectedDay.to
+                          ? this.state.selectedDay.to.day +
+                            " " +
+                            months[this.state.selectedDay.to.month] +
+                            " "
+                          : "")}
+                    <div className={classes.selectDateRangeIcon}>
+                      <i className="fas fa-chevron-down" />
                     </div>
+                  </Button>
+                  <Popover
+                    open={this.state.isCalenderOpen}
+                    onClose={() => this.handleCloseCalender()}
+                    anchorEl={this.state.calenderAnchorEl}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right"
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right"
+                    }}
+                    classes={{
+                      paper: classes.calenderPopover
+                    }}
+                  >
+                    <Calendar
+                      value={this.state.selectedDay}
+                      onChange={day => this.handleSelectedDay(day)}
+                      shouldHighlightWeekends
+                      isPersian
+                    />
+                  </Popover>
+                </div>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+        <Container className={classes.chartContainer}>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item md={8} sm={12} xs={12}>
+              <Paper className={classes.chartPaper}>
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    عبارات خاص
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                    >
+                      <i className="far fa-lightbulb fa-lg"></i>
+                    </BootstrapTooltip>
                   </div>
-                  <Divider variant="fullWidth" className={classes.dividerM} />
-                  <Grid container className={classes.root}>
-                    <Grid item md={8} sm={12} xs={12}>
-                      <Table className={classes.table} stickyHeader>
-                        <TableHead>
-                          <TableRow>
+                </div>
+                <Divider variant="fullWidth" className={classes.dividerM} />
+                <Grid container className={classes.root}>
+                  <Grid item md={8} sm={12} xs={12}>
+                    <Table className={classes.table} stickyHeader>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            align="right"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "20%" }}
+                          >
+                            نام دسته
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            پست‌ها
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            مجموع لایک
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            متوسط لایک
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            مجموع کامنت
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            متوسط کامنت
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            حساب‌های مؤثر
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            حس متن
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableHeader
+                            )}
+                            style={{ width: "10%" }}
+                          >
+                            حس کامنت
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {this.props.groups.map(row => (
+                          <TableRow
+                            key={row.id}
+                            className={classNames(
+                              classes.tableCellLowPadding,
+                              classes.tableRow,
+                              this.props.selectedGroup == row.id
+                                ? classes.selectedGroup
+                                : ""
+                            )}
+                            onMouseEnter={() => this.handleHoverRow(row.id)}
+                            onMouseLeave={() => this.handleUnHoverRow()}
+                            onClick={id => this.props.selectGroup(row.id)}
+                          >
                             <TableCell
-                                align="right"
-                                className={classNames(
-                                    classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "20%"}}
+                              style={{ width: "20%" }}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                classes.flex
+                              )}
+                              // padding="none"
+                              align="right"
                             >
-                              نام دسته
+                              {row.name}
                             </TableCell>
                             <TableCell
-                                align="center"
-                                className={classNames(
-                                    classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
+                              align="center"
+                              style={{ width: "10%" }}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                this.state.rowHover != row.id &&
+                                  this.props.selectedGroup != row.id
+                                  ? classes.textMute
+                                  : ""
+                              )}
                             >
-                              پست‌ها
+                              {row.posts}
                             </TableCell>
                             <TableCell
-                                align="center"
-                                className={classNames(
-                                    classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
+                              align="center"
+                              style={{ width: "10%" }}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                this.state.rowHover != row.id &&
+                                  this.props.selectedGroup != row.id
+                                  ? classes.textMute
+                                  : ""
+                              )}
                             >
-                              مجموع لایک
+                              {row.overall_likes}
                             </TableCell>
                             <TableCell
-                                align="center"
-                                className={classNames(
-                                    classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
+                              align="center"
+                              style={{ width: "10%" }}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                this.state.rowHover != row.id &&
+                                  this.props.selectedGroup != row.id
+                                  ? classes.textMute
+                                  : ""
+                              )}
                             >
-                              متوسط لایک
+                              {row.average_likes}
                             </TableCell>
                             <TableCell
-                                align="center"
-                                className={classNames(
-                                    classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
+                              align="center"
+                              style={{ width: "10%" }}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                this.state.rowHover != row.id &&
+                                  this.props.selectedGroup != row.id
+                                  ? classes.textMute
+                                  : ""
+                              )}
                             >
-                              مجموع کامنت
+                              {row.overall_comments}
                             </TableCell>
                             <TableCell
-                                align="center"
-                                className={classNames(
-                                    classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
+                              align="center"
+                              style={{ width: "10%" }}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                this.state.rowHover != row.id &&
+                                  this.props.selectedGroup != row.id
+                                  ? classes.textMute
+                                  : ""
+                              )}
                             >
-                              متوسط کامنت
+                              {row.average_comments}
                             </TableCell>
                             <TableCell
-                                align="center"
-                                className={classNames(
-                                    classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
+                              align="center"
+                              style={{ width: "10%" }}
+                              className={classNames(
+                                classes.tableCellLowPadding,
+                                this.state.rowHover != row.id &&
+                                  this.props.selectedGroup != row.id
+                                  ? classes.textMute
+                                  : ""
+                              )}
                             >
-                              حساب‌های مؤثر
+                              {row.effective_accounts}
                             </TableCell>
-                            <TableCell
-                                align="center"
-                                className={classNames(
+                            <TableCell align="center" style={{ width: "10%" }}>
+                              {row.content_emotion == -1 ? (
+                                <div
+                                  className={classNames(
                                     classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
-                            >
-                              حس متن
+                                    this.props.selectedEmotion == "negative"
+                                      ? classes.selectedNegativeEmotion
+                                      : classes.negativeEmotion
+                                  )}
+                                ></div>
+                              ) : (
+                                <div
+                                  className={classNames(
+                                    classes.tableCellLowPadding,
+                                    this.props.selectedEmotion == "positive"
+                                      ? classes.selectedPositiveEmotion
+                                      : classes.positiveEmotion
+                                  )}
+                                ></div>
+                              )}
                             </TableCell>
-                            <TableCell
-                                align="center"
-                                className={classNames(
+                            <TableCell align="center" style={{ width: "10%" }}>
+                              {row.comment_emotion == -1 ? (
+                                <div
+                                  className={classNames(
                                     classes.tableCellLowPadding,
-                                    classes.tableHeader
-                                )}
-                                style={{width: "10%"}}
-                            >
-                              حس کامنت
+                                    this.props.selectedEmotion == "negative"
+                                      ? classes.selectedNegativeEmotion
+                                      : classes.negativeEmotion
+                                  )}
+                                ></div>
+                              ) : (
+                                <div
+                                  className={classNames(
+                                    classes.tableCellLowPadding,
+                                    this.props.selectedEmotion == "positive"
+                                      ? classes.selectedPositiveEmotion
+                                      : classes.positiveEmotion
+                                  )}
+                                ></div>
+                              )}
                             </TableCell>
                           </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {this.props.groups.map(row => (
-                              <TableRow
-                                  key={row.id}
-                                  className={classNames(
-                                      classes.tableCellLowPadding,
-                                      classes.tableRow,
-                                      this.props.selectedGroup == row.id
-                                          ? classes.selectedGroup
-                                          : ""
-                                  )}
-                                  onMouseEnter={() => this.handleHoverRow(row.id)}
-                                  onMouseLeave={() => this.handleUnHoverRow()}
-                                  onClick={id => this.props.selectGroup(row.id)}
-                              >
-                                <TableCell
-                                    style={{width: "20%"}}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        classes.flex
-                                    )}
-                                    // padding="none"
-                                    align="right"
-                                >
-                                  {row.name}
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{width: "10%"}}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        this.state.rowHover != row.id &&
-                                        this.props.selectedGroup != row.id
-                                            ? classes.textMute
-                                            : ""
-                                    )}
-                                >
-                                  {row.posts}
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{width: "10%"}}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        this.state.rowHover != row.id &&
-                                        this.props.selectedGroup != row.id
-                                            ? classes.textMute
-                                            : ""
-                                    )}
-                                >
-                                  {row.overall_likes}
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{width: "10%"}}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        this.state.rowHover != row.id &&
-                                        this.props.selectedGroup != row.id
-                                            ? classes.textMute
-                                            : ""
-                                    )}
-                                >
-                                  {row.average_likes}
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{width: "10%"}}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        this.state.rowHover != row.id &&
-                                        this.props.selectedGroup != row.id
-                                            ? classes.textMute
-                                            : ""
-                                    )}
-                                >
-                                  {row.overall_comments}
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{width: "10%"}}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        this.state.rowHover != row.id &&
-                                        this.props.selectedGroup != row.id
-                                            ? classes.textMute
-                                            : ""
-                                    )}
-                                >
-                                  {row.average_comments}
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{width: "10%"}}
-                                    className={classNames(
-                                        classes.tableCellLowPadding,
-                                        this.state.rowHover != row.id &&
-                                        this.props.selectedGroup != row.id
-                                            ? classes.textMute
-                                            : ""
-                                    )}
-                                >
-                                  {row.effective_accounts}
-                                </TableCell>
-                                <TableCell align="center" style={{width: "10%"}}>
-                                  {row.content_emotion == -1 ? (
-                                      <div
-                                          className={classNames(
-                                              classes.tableCellLowPadding,
-                                              this.props.selectedEmotion == "negative"
-                                                  ? classes.selectedNegativeEmotion
-                                                  : classes.negativeEmotion
-                                          )}
-                                      ></div>
-                                  ) : (
-                                      <div
-                                          className={classNames(
-                                              classes.tableCellLowPadding,
-                                              this.props.selectedEmotion == "positive"
-                                                  ? classes.selectedPositiveEmotion
-                                                  : classes.positiveEmotion
-                                          )}
-                                      ></div>
-                                  )}
-                                </TableCell>
-                                <TableCell align="center" style={{width: "10%"}}>
-                                  {row.comment_emotion == -1 ? (
-                                      <div
-                                          className={classNames(
-                                              classes.tableCellLowPadding,
-                                              this.props.selectedEmotion == "negative"
-                                                  ? classes.selectedNegativeEmotion
-                                                  : classes.negativeEmotion
-                                          )}
-                                      ></div>
-                                  ) : (
-                                      <div
-                                          className={classNames(
-                                              classes.tableCellLowPadding,
-                                              this.props.selectedEmotion == "positive"
-                                                  ? classes.selectedPositiveEmotion
-                                                  : classes.positiveEmotion
-                                          )}
-                                      ></div>
-                                  )}
-                                </TableCell>
-                              </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </Grid>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </Grid>
-                </Paper>
-              </Grid>
-              <Grid item md={4} sm={12} xs={12}>
-                <Paper
-                    className={classNames(
-                        classes.relatedsPaper,
-                        classes.chartPaper
-                    )}
-                >
-                  <div className={classes.paperHeader}>
-                    <Typography variant="h6" className={classes.headerText}>
-                      لفظ‌های مرتبط با{" "}
-                      <span className={classes.selectedKeyword}>
+                </Grid>
+              </Paper>
+            </Grid>
+            <Grid item md={4} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.relatedsPaper,
+                  classes.chartPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    لفظ‌های مرتبط با{" "}
+                    <span className={classes.selectedKeyword}>
                       {this.props.groups.map(item => {
                         if (item.id == this.props.selectedGroup) {
                           return "" + item.name;
                         }
                       })}
                     </span>
-                    </Typography>
-                    <div className={classes.paperHeaderGuideIcon}>
-                      <BootstrapTooltip
-                          placement="top"
-                          title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                      >
-                        <i className="far fa-lightbulb fa-lg"></i>
-                      </BootstrapTooltip>
-                    </div>
-                  </div>
-                  <Divider variant="fullWidth" className={classes.dividerM} />
-                  <div className={classes.fieldsContent}>
-                    <List component="div" disablePadding className={classes.tabs}>
-                      <ListItem
-                          className={classNames(
-                              classes.listItem,
-                              "" +
-                              (this.state.selectedTab == "keyWords"
-                                  ? classes.selectedTab
-                                  : "")
-                          )}
-                          onClick={() => this.handleSelectTab("keyWords")}
-                      >
-                        <ListItemText
-                            primary="کلمات کلیدی"
-                            className={classNames(classes.textCenter)}
-                        />
-                      </ListItem>
-                      <ListItem
-                          className={classNames(
-                              classes.listItem,
-                              "" +
-                              (this.state.selectedTab == "hashtags"
-                                  ? classes.selectedTab
-                                  : "")
-                          )}
-                          onClick={() => this.handleSelectTab("hashtags")}
-                      >
-                        <ListItemText
-                            primary="هشتگ‌ها"
-                            className={classNames(classes.textCenter)}
-                        />
-                      </ListItem>
-                    </List>
-                    <List
-                        component="div"
-                        disablePadding
-                        className={classes.relateds}
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      {this.props.keywords.map((item, index) => {
-                        return (
-                            <ListItem className={classes.listItem} key={index}>
-                              <ListItemText
-                                  primary={item.text}
-                                  className={classNames(classes.textRight)}
-                              />
-                              <ListItemText
-                                  primary={item.value}
-                                  className={classNames(
-                                      classes.textMute,
-                                      classes.textLeft
-                                  )}
-                              />
-                            </ListItem>
-                        );
-                      })}
-                    </List>
+                      <i className="far fa-lightbulb fa-lg"></i>
+                    </BootstrapTooltip>
                   </div>
-                </Paper>
-              </Grid>
+                </div>
+                <Divider variant="fullWidth" className={classes.dividerM} />
+                <div className={classes.fieldsContent}>
+                  <List component="div" disablePadding className={classes.tabs}>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        "" +
+                          (this.state.selectedTab == "keyWords"
+                            ? classes.selectedTab
+                            : "")
+                      )}
+                      onClick={() => this.handleSelectTab("keyWords")}
+                    >
+                      <ListItemText
+                        primary="کلمات کلیدی"
+                        className={classNames(classes.textCenter)}
+                      />
+                    </ListItem>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        "" +
+                          (this.state.selectedTab == "hashtags"
+                            ? classes.selectedTab
+                            : "")
+                      )}
+                      onClick={() => this.handleSelectTab("hashtags")}
+                    >
+                      <ListItemText
+                        primary="هشتگ‌ها"
+                        className={classNames(classes.textCenter)}
+                      />
+                    </ListItem>
+                  </List>
+                  <List
+                    component="div"
+                    disablePadding
+                    className={classes.relateds}
+                  >
+                    {this.props.keywords.map((item, index) => {
+                      return (
+                        <ListItem className={classes.listItem} key={index}>
+                          <ListItemText
+                            primary={item.text}
+                            className={classNames(classes.textRight)}
+                          />
+                          <ListItemText
+                            primary={item.value}
+                            className={classNames(
+                              classes.textMute,
+                              classes.textLeft
+                            )}
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </div>
+              </Paper>
             </Grid>
-            <Grid container className={classes.root}>
-              <Grid item md={12} sm={12} xs={12}>
-                <Paper
-                    className={classNames(
-                        classes.paper,
-                        classes.columnPaper,
-                        classes.postsPaper
-                    )}
-                >
-                  <div className={classes.paperHeader}>
-                    <Typography variant="h6" className={classes.headerText}>
-                      پست‌های مرتبط با{" "}
-                      <span className={classes.selectedKeyword}>
+          </Grid>
+          <Grid container className={classes.root}>
+            <Grid item md={12} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.paper,
+                  classes.columnPaper,
+                  classes.postsPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    پست‌های مرتبط با{" "}
+                    <span className={classes.selectedKeyword}>
                       {this.props.groups.map(item => {
                         if (item.id == this.props.selectedGroup) {
                           return "" + item.name;
                         }
                       })}
                     </span>
-                    </Typography>
-                    <div className={classes.paperHeaderGuideIcon}>
-                      <BootstrapTooltip
-                          placement="top"
-                          title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
-                      >
-                        <i className="far fa-lightbulb fa-lg"></i>
-                      </BootstrapTooltip>
-                    </div>
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                    >
+                      <i className="far fa-lightbulb fa-lg"></i>
+                    </BootstrapTooltip>
                   </div>
-                  <Divider variant="fullWidth" className={classes.dividerM} />
-                  <Grid container className={classes.root}>
-                    <Grid item md={12} className={classes.actions}>
-                      <input
-                          type="text"
-                          className={classes.searchInput}
-                          placeholder="هشتگ و کلمات کلیدی"
-                      />
-                      <Button className={classes.searchIconBtn}>
-                        <i className="fa fa-search fa-lg"></i>
-                      </Button>
+                </div>
+                <Divider variant="fullWidth" className={classes.dividerM} />
+                <Grid container className={classes.root}>
+                  <Grid item md={12} className={classes.actions}>
+                    <input
+                      type="text"
+                      className={classes.searchInput}
+                      placeholder="هشتگ و کلمات کلیدی"
+                    />
+                    <Button className={classes.searchIconBtn}>
+                      <i className="fa fa-search fa-lg"></i>
+                    </Button>
 
-                      <Divider
-                          orientation="vertical"
-                          className={classes.searchDivider}
-                      />
-                      <div className={classes.sortBtnContainer}>
-                        <Button color="primary" className={classes.sortBtn}>
-                          مرتب‌سازی
-                          <div className={classes.sortIcon}>
-                            <i className="fas fa-chevron-down" />
-                          </div>
-                        </Button>
-                      </div>
-                      <div color="primary" className={classes.selectTableView}>
-                        <Button
-                            className={classNames(
-                                classes.selectTableViewIcon,
-                                "" +
-                                (this.state.selectedView == "row"
-                                    ? classes.selectedView
-                                    : "")
-                            )}
-                            onClick={() => this.handleSelectView("row")}
-                        >
-                          <ViewStreamOutlinedIcon />
-                        </Button>
-                        <Button
-                            className={classNames(
-                                classes.selectTableViewIcon,
-                                "" +
-                                (this.state.selectedView == "grid"
-                                    ? classes.selectedView
-                                    : "")
-                            )}
-                            onClick={() => this.handleSelectView("grid")}
-                        >
-                          <ViewModuleOutlinedIcon />
-                        </Button>
-                      </div>
-                    </Grid>
-                    <Divider variant="fullWidth" className={classes.dividerFW} />
-                    {this.state.selectedView == "row" ? (
-                        <ListPosts />
-                    ) : (
-                        <GridPosts />
-                    )}
+                    <Divider
+                      orientation="vertical"
+                      className={classes.searchDivider}
+                    />
+                    <div className={classes.sortBtnContainer}>
+                      <Button color="primary" className={classes.sortBtn}>
+                        مرتب‌سازی
+                        <div className={classes.sortIcon}>
+                          <i className="fas fa-chevron-down" />
+                        </div>
+                      </Button>
+                    </div>
+                    <div color="primary" className={classes.selectTableView}>
+                      <Button
+                        className={classNames(
+                          classes.selectTableViewIcon,
+                          "" +
+                            (this.state.selectedView == "row"
+                              ? classes.selectedView
+                              : "")
+                        )}
+                        onClick={() => this.handleSelectView("row")}
+                      >
+                        <ViewStreamOutlinedIcon />
+                      </Button>
+                      <Button
+                        className={classNames(
+                          classes.selectTableViewIcon,
+                          "" +
+                            (this.state.selectedView == "grid"
+                              ? classes.selectedView
+                              : "")
+                        )}
+                        onClick={() => this.handleSelectView("grid")}
+                      >
+                        <ViewModuleOutlinedIcon />
+                      </Button>
+                    </div>
                   </Grid>
-                </Paper>
-              </Grid>
+                  <Divider variant="fullWidth" className={classes.dividerFW} />
+                  {this.state.selectedView == "row" ? (
+                    <ListPosts />
+                  ) : (
+                    <GridPosts />
+                  )}
+                </Grid>
+              </Paper>
             </Grid>
-          </Container>
-        </main>
+          </Grid>
+        </Container>
+      </main>
     );
   }
 }
@@ -1664,13 +1831,14 @@ TrackerGroupsContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-  console.log("tracker Groups Container")
-  console.log(state)
-  const {lastTrackers, selectedTrackerDashboardItem} = state
+  console.log("tracker Groups Container");
+  console.log(state);
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
-    selectedTrackerDashboardItem: selectedTrackerDashboardItem.selectedTrackerDashboardItem,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
+    selectedTrackerDashboardItem:
+      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
     keywords: selectedTrackerDashboardItem.keywords,
     groups: selectedTrackerDashboardItem.groups,
     selectedGroup: selectedTrackerDashboardItem.selectedGroup
@@ -1689,6 +1857,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(TrackerGroupsContainer));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(TrackerGroupsContainer));

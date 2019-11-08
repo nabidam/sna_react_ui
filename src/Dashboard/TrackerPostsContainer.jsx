@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import classNames from "classnames";
 import {
   Typography,
   Container,
@@ -8,9 +9,11 @@ import {
   Paper,
   Divider,
   Button,
+  Avatar,
+  Popover
 } from "@material-ui/core";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import ReactExport from "react-data-export";
 import ViewStreamOutlinedIcon from "@material-ui/icons/ViewStreamOutlined";
 import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
@@ -19,12 +22,27 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import ListPosts from "./ListPosts";
+import GridPosts from "./GridPosts";
+import CheckIcon from "@material-ui/icons/Check";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
-
-const drawerWidth = 240;
+const months = [
+  "",
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند"
+];
 
 const styles = theme => ({
   root: {
@@ -62,7 +80,7 @@ const styles = theme => ({
     minWidth: 44,
     height: 44,
     borderRadius: 22,
-    margin: "0px ",
+    margin: "0px 10px",
     border: "solid 5px rgba(255, 255, 255, 0.85)",
     "&:hover": {
       opacity: 0.7,
@@ -82,6 +100,7 @@ const styles = theme => ({
       backgroundColor: "#1da1f2"
     }
   },
+
   twtterIconAvatar: {
     color: "#fff",
     backgroundColor: "#1da1f2",
@@ -288,6 +307,7 @@ const styles = theme => ({
     height: 44,
     borderRadius: 22,
     margin: "0px 15px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
     "&:hover": {
       opacity: 0.7,
       backgroundColor: "#4753ff"
@@ -321,9 +341,7 @@ const styles = theme => ({
     display: "flex",
     position: "absolute",
     left: "10px"
-  }
-  ,
-
+  },
   selectTableView: {
     display: "flex",
     flexDirection: "row",
@@ -453,6 +471,35 @@ const styles = theme => ({
       cursor: "pointer",
       backgroundColor: "#f2f3fb"
     }
+  },
+
+  metaIcon: {
+    position: "relative"
+  },
+  checkIconTiny: {
+    color: "#fff",
+    backgroundColor: "#03d588",
+    width: 14,
+    height: 14,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  defaultIconBtn: {
+    color: "#fff",
+    backgroundColor: "#adb2b9",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    "&:hover": {
+      opacity: 0.7
+    }
   }
 });
 
@@ -466,14 +513,35 @@ class TrackerPostsContainer extends React.Component {
       trackersSliderValue: [1, 30],
       minSlider: 1,
       maxSlider: 40,
-      selectedView: "grid",
-      rowHover: 0
+      selectedView: "row",
+      rowHover: 0,
+      twitter: 1,
+      instagram: 0,
+
+      isCalenderOpen: false,
+      calenderAnchorEl: null,
+
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 1
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      isDaySelected: true
     };
     console.log(this.state.selectedView);
     this.handleSelectView = this.handleSelectView.bind(this);
     this.handleHoverRow = this.handleHoverRow.bind(this);
     this.handleUnHoverRow = this.handleUnHoverRow.bind(this);
-    this.trackersSliderChangeHandler = this.trackersSliderChangeHandler.bind(this);
+    this.trackersSliderChangeHandler = this.trackersSliderChangeHandler.bind(
+      this
+    );
   }
 
   handleHoverRow = id => {
@@ -498,316 +566,226 @@ class TrackerPostsContainer extends React.Component {
     });
   };
 
+  handleTwitterClick = () => {
+    this.setState({
+      twitter: !this.state.twitter
+    });
+  };
+
+  handleInstagramClick = () => {
+    this.setState({
+      instagram: !this.state.instagram
+    });
+  };
+
+  handleCalenderClick = event => {
+    this.setState({
+      calenderAnchorEl: event.currentTarget,
+      isCalenderOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseCalender = () => {
+    this.setState({
+      calenderAnchorEl: null,
+      isCalenderOpen: false
+    });
+  };
+
+  handleSelectedDay = day => {
+    // console.log(day);
+    this.setState({
+      selectedDay: day,
+      isDaySelected: true
+    });
+  };
+
   render() {
-    const {classes} = this.props;
-    console.log("tracker posts container render")
-    console.log(
-        (this.state.selectedView == "row"
-            ? classes.selectedView
-            : "")
-    )
+    const { classes } = this.props;
+    console.log("tracker posts container render");
+    console.log(this.state.selectedView == "row" ? classes.selectedView : "");
     return (
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Container className={classes.topNavbar} square={true}>
-            <Grid container className={classes.root}>
-              <Grid item md={12} sm={12} xs={12}>
-                <Paper className={classes.topNavbarPaper}>
-                  <div className={classes.topNavbarTitleBox}>
-                    <Typography
-                        variant="body1"
-                        className={classes.topNavbarTitleText}
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Container className={classes.topNavbar} square={true}>
+          <Grid container className={classes.root}>
+            <Grid item md={12} sm={12} xs={12}>
+              <Paper className={classes.topNavbarPaper}>
+                <div className={classes.topNavbarTitleBox}>
+                  <Typography
+                    variant="body1"
+                    className={classes.topNavbarTitleText}
+                  >
+                    ردیاب:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={classes.topNavbarSelectedTracker}
+                  >
+                    {this.props.trackers.map((item, index) => {
+                      return item.id == this.props.selectedTracker
+                        ? item.name
+                        : "";
+                    })}
+                  </Typography>
+                </div>
+                <div className={classes.topNavbarMeta}>
+                  <div className={classes.metaIcon}>
+                    <Button
+                      className={
+                        this.state.instagram
+                          ? classes.instagramIconBtn
+                          : classes.defaultIconBtn
+                      }
+                      onClick={() => this.handleInstagramClick()}
                     >
-                      ردیاب:
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        className={classes.topNavbarSelectedTracker}
-                    >
-                      {this.props.trackers.map((item, index) => {
-                        return item.id == this.props.selectedTracker
-                            ? item.name
-                            : "";
-                      })}
-                    </Typography>
-                  </div>
-                  <div className={classes.topNavbarMeta}>
-                    <Button className={classes.instagramIconBtn}>
                       <i className="fab fa-instagram"></i>
                     </Button>
-                    <Button className={classes.twitterIconBtn}>
+                    {this.state.instagram ? (
+                      <span className={classes.checkIconTiny}>
+                        <CheckIcon style={{ fontSize: "0.9rem" }} />
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className={classes.metaIcon}>
+                    <Button
+                      className={
+                        this.state.twitter
+                          ? classes.twitterIconBtn
+                          : classes.defaultIconBtn
+                      }
+                      onClick={() => this.handleTwitterClick()}
+                    >
                       <i className="fab fa-twitter"></i>
                     </Button>
-                    <Divider
-                        orientation="vertical"
-                        className={classes.metaDivider}
-                    />
-                    <Button color="primary" className={classes.selectDateRange}>
-                      ۱ مرداد - ۱۹ مرداد
-                      <div className={classes.selectDateRangeIcon}>
-                        <i className="fas fa-chevron-down" />
-                      </div>
-                    </Button>
+                    {this.state.twitter ? (
+                      <span className={classes.checkIconTiny}>
+                        <CheckIcon style={{ fontSize: "0.9rem" }} />
+                      </span>
+                    ) : (
+                      ""
+                    )}
                   </div>
-                </Paper>
-              </Grid>
+                  <Divider
+                    orientation="vertical"
+                    className={classes.metaDivider}
+                  />
+                  <Button
+                    color="primary"
+                    className={classes.selectDateRange}
+                    onClick={event => this.handleCalenderClick(event)}
+                  >
+                    {this.state.isDaySelected == false
+                      ? "انتخاب بازه زمانی"
+                      : this.state.selectedDay.from.day +
+                        " " +
+                        months[this.state.selectedDay.from.month] +
+                        " " +
+                        " - " +
+                        (this.state.selectedDay.to
+                          ? this.state.selectedDay.to.day +
+                            " " +
+                            months[this.state.selectedDay.to.month] +
+                            " "
+                          : "")}
+                    <div className={classes.selectDateRangeIcon}>
+                      <i className="fas fa-chevron-down" />
+                    </div>
+                  </Button>
+                  <Popover
+                    open={this.state.isCalenderOpen}
+                    onClose={() => this.handleCloseCalender()}
+                    anchorEl={this.state.calenderAnchorEl}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right"
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right"
+                    }}
+                    classes={{
+                      paper: classes.calenderPopover
+                    }}
+                  >
+                    <Calendar
+                      value={this.state.selectedDay}
+                      onChange={day => this.handleSelectedDay(day)}
+                      shouldHighlightWeekends
+                      isPersian
+                    />
+                  </Popover>
+                </div>
+              </Paper>
             </Grid>
-            <Grid container className={classes.root}>
-              <Grid item md={12} sm={12} xs={12}>
-                <Paper className={classes.postsPaper} square={true}>
-                  <Grid container className={classes.root}>
-                    <Grid item md={12} className={classes.actions}>
-                      <input
-                          type="text"
-                          className={classes.searchInput}
-                          placeholder="هشتگ و کلمات کلیدی"
-                      />
-                      <Button className={classes.searchIconBtn}>
-                        <i className="fa fa-search fa-lg"></i>
-                      </Button>
+          </Grid>
+          <Grid container className={classes.root}>
+            <Grid item md={12} sm={12} xs={12}>
+              <Paper className={classes.postsPaper} square={true}>
+                <Grid container className={classes.root}>
+                  <Grid item md={12} className={classes.actions}>
+                    <input
+                      type="text"
+                      className={classes.searchInput}
+                      placeholder="هشتگ و کلمات کلیدی"
+                    />
+                    <Button className={classes.searchIconBtn}>
+                      <i className="fa fa-search fa-lg"></i>
+                    </Button>
 
-                      <Divider
-                          orientation="vertical"
-                          className={classes.searchDivider}
-                      />
-                      <div className={classes.sortBtnContainer}>
+                    <Divider
+                      orientation="vertical"
+                      className={classes.searchDivider}
+                    />
+                    <div className={classes.sortBtnContainer}>
                       <Button className={classes.sortBtn}>
                         مرتب‌سازی
                         <div className={classes.sortIcon}>
                           <i className="fas fa-chevron-down" />
                         </div>
                       </Button>
-                      </div>
-                      <div color="primary" className={classes.selectTableView}>
-                        <Button
-                            className={classNames(
-                                classes.selectTableViewIcon,
-                                "" +
-                                (this.state.selectedView == "row"
-                                    ? classes.selectedView
-                                    : "")
-                            )}
-                            onClick={() => this.handleSelectView("row")}
-                        >
-                          <ViewStreamOutlinedIcon />
-                        </Button>
-                        <Button
-                            className={classNames(
-                                classes.selectTableViewIcon,
-                                "" +
-                                (this.state.selectedView == "grid"
-                                    ? classes.selectedView
-                                    : "")
-                            )}
-                            onClick={() => this.handleSelectView("grid")}
-                        >
-                          <ViewModuleOutlinedIcon />
-                        </Button>
-                      </div>
-                    </Grid>
-                    <Divider variant="fullWidth" className={classes.dividerFW} />
-                    <Grid item md={12} className={classes.tableGrid}>
-                      <Table className={classes.table}>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell
-                                align="right"
-                                className={classes.tableHeader}
-                                style={{width: "10%"}}
-                            >
-                              کاربری
-                            </TableCell>
-                            <TableCell
-                                align="right"
-                                className={classes.tableHeader}
-                                style={{width: "42%"}}
-                            >
-                              پست
-                            </TableCell>
-                            <TableCell
-                                align="center"
-                                className={classes.tableHeader}
-                                style={{width: "12%"}}
-                            >
-                              حس متن
-                            </TableCell>
-                            <TableCell
-                                align="center"
-                                className={classes.tableHeader}
-                                style={{width: "14%"}}
-                            >
-                              قابلیت اشتراک
-                            </TableCell>
-                            <TableCell
-                                align="center"
-                                className={classes.tableHeader}
-                                style={{width: "5%"}}
-                            >
-                              لایک
-                            </TableCell>
-                            <TableCell
-                                align="center"
-                                className={classes.tableHeader}
-                                style={{width: "5%"}}
-                            >
-                              کامنت
-                            </TableCell>
-                            <TableCell
-                                className={classes.tableHeader}
-                                style={{width: "10%"}}
-                            >
-                              تاریخ
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {this.props.posts.map(row => (
-                              <TableRow key={row.id} className={classes.tableRow}
-                                        onMouseEnter={() => this.handleHoverRow(row.id)}
-                                        onMouseLeave={() => this.handleUnHoverRow()}
-                              >
-                                <TableCell
-                                    style={{width: "25%"}}
-                                    className={classes.flex}
-                                    // padding="none"
-                                    align="right"
-                                >
-                                  <Grid
-                                      container
-                                      className={classes.root}
-                                      spacing={1}
-                                  >
-                                    <Grid
-                                        item
-                                        md={4}
-                                        sm={4}
-                                        xs={4}
-                                        className={classes.tableUsernamePart}
-                                    >
-                                      <Avatar
-                                          alt="Remy Sharp"
-                                          src="https://material-ui.com/static/images/avatar/1.jpg"
-                                          className={classes.avatar}
-                                      />
-                                      <span className={classes.twitterIconAvatar}>
-                                    <i className="fab fa-twitter fa-sm"></i>
-                                  </span>
-                                    </Grid>
-                                    <Grid
-                                        item
-                                        md={8}
-                                        sm={8}
-                                        xs={8}
-                                        className={classes.tableUsernamePart}
-                                    >
-                                      <span>{row.name}</span>
-                                      <span className={classes.textMute}>
-                                    @{row.username}
-                                  </span>
-                                    </Grid>
-                                  </Grid>
-                                </TableCell>
-                                <TableCell align="right" style={{width: "50%"}}>
-                                  {row.post}...
-                                </TableCell>
-                                <TableCell align="center" style={{width: "5%"}}>
-                                  {row.emotion == "negative" ? (
-                                      <div className={classes.negativeEmotion}></div>
-                                  ) : (
-                                      <div className={classes.positiveEmotion}></div>
-                                  )}
-                                </TableCell>
-                                <TableCell
-                                    className={  this.state.rowHover != row.id
-                                        ? classes.textMute
-                                        : ""}
-                                    align="center"
-                                    style={{width: "5%"}}
-                                >
-                                  {row.sharable == 0 ? "ندارد" : "دارد"}
-                                </TableCell>
-                                <TableCell
-                                    className={this.state.rowHover != row.id
-                                        ? classes.textMute
-                                        : ""}
-                                    align="center"
-                                    style={{width: "5%"}}
-                                >
-                                  {row.likes}
-                                </TableCell>
-                                <TableCell
-                                    className={this.state.rowHover != row.id
-                                        ? classes.textMute
-                                        : ""}
-                                    align="center"
-                                    style={{width: "5%"}}
-                                >
-                                  {row.comments}
-                                </TableCell>
-                                <TableCell
-                                    className={this.state.rowHover != row.id
-                                        ? classes.textMute
-                                        : ""}
-                                    align="left"
-                                    style={{width: "5%"}}
-                                >
-                                  {row.date}
-                                  <br />
-                                  {row.time}
-                                </TableCell>
-                              </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </Grid>
-                    <Grid
-                        item
-                        md={12}
-                        className={classes.pagination}
-                        align="center"
-                    >
-                      <div className={classes.paginationBox}>
-                        <div className={classes.paginationLinks}>
-                          <div
-                              className={classNames(
-                                  classes.paginationLink,
-                                  classes.activePaginationLink
-                              )}
-                          >
-                            1
-                          </div>
-                          <div className={classNames(classes.paginationLink)}>
-                            2
-                          </div>
-                          <div className={classNames(classes.paginationLink)}>
-                            3
-                          </div>
-                          <div className={classNames(classes.paginationLink)}>
-                            4
-                          </div>
-                          <div className={classNames(classes.paginationLink)}>
-                            5
-                          </div>
-                          <div className={classNames(classes.paginationLink)}>
-                            <i className="fa fa-angle-left"></i>
-                          </div>
-                          <div className={classNames(classes.paginationLink)}>
-                            <i className="fa fa-angle-double-left"></i>
-                          </div>
-                        </div>
-                        <div className={classes.paginationText}>
-                          نمایش <span className={classes.textNormal}>1</span> از{" "}
-                          <span className={classes.textNormal}>20</span> برای{" "}
-                          <span className={classes.textNormal}>3343</span> پست
-                        </div>
-                      </div>
-                    </Grid>
+                    </div>
+                    <div color="primary" className={classes.selectTableView}>
+                      <Button
+                        className={classNames(
+                          classes.selectTableViewIcon,
+                          "" +
+                            (this.state.selectedView == "row"
+                              ? classes.selectedView
+                              : "")
+                        )}
+                        onClick={() => this.handleSelectView("row")}
+                      >
+                        <ViewStreamOutlinedIcon />
+                      </Button>
+                      <Button
+                        className={classNames(
+                          classes.selectTableViewIcon,
+                          "" +
+                            (this.state.selectedView == "grid"
+                              ? classes.selectedView
+                              : "")
+                        )}
+                        onClick={() => this.handleSelectView("grid")}
+                      >
+                        <ViewModuleOutlinedIcon />
+                      </Button>
+                    </div>
                   </Grid>
-                </Paper>
-              </Grid>
+                  <Divider variant="fullWidth" className={classes.dividerFW} />
+                  {this.state.selectedView == "row" ? (
+                    <ListPosts />
+                  ) : (
+                    <GridPosts />
+                  )}
+                </Grid>
+              </Paper>
             </Grid>
-          </Container>
-        </main>
+          </Grid>
+        </Container>
+      </main>
     );
   }
 }
@@ -820,11 +798,14 @@ TrackerPostsContainer.propTypes = {
 const mapStateToProps = state => {
   console.log("tracker post container mapstate");
   console.log(state);
-  const {selectedTrackerDashboardItem} = state;
+  const { selectedTrackerDashboardItem } = state;
   return {
-    trackers:selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.trackers.filter((t) => t.id === selectedTrackerDashboardItem.selectedTracker)[0],
-    selectedTrackerDashboardItem:selectedTrackerDashboardItem.selectedTrackerDashboardItem,
+    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: selectedTrackerDashboardItem.trackers.filter(
+      t => t.id === selectedTrackerDashboardItem.selectedTracker
+    )[0],
+    selectedTrackerDashboardItem:
+      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
     posts: selectedTrackerDashboardItem.posts
   };
 };
@@ -838,6 +819,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(TrackerPostsContainer));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(TrackerPostsContainer));

@@ -24,8 +24,8 @@ const styles = theme => ({
     height: 16,
     borderRadius: 22,
     position: "absolute",
-    top: 2,
-    left: 2,
+    top: 0,
+    left: 5,
     display: "flex",
     justifyContent: "center",
     alignItems: "center"

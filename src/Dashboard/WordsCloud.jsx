@@ -1,8 +1,10 @@
 import React from "react";
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import classNames from "classnames";
+import { DashboardActions } from "../_actions";
+import { withStyles } from "@material-ui/core/styles";
 import "d3-transition";
-import {select, selectAll} from "d3-selection";
+import { select, selectAll } from "d3-selection";
 import TagCloud from "./TagCloud";
 
 const styles = {
@@ -17,6 +19,19 @@ const styles = {
   small: {
     opacity: 0.7,
     fontSize: 16
+  },
+  word: {
+    "&:hover": {
+      cursor: "pointer"
+    }
+  },
+  selectedWord: {
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    backgroundColor: "#4753ff",
+    padding: "2px 4px",
+    borderRadius: 19,
+    color: "#fff",
+    zIndex: 1000
   }
 };
 
@@ -94,55 +109,67 @@ class WordsCloud extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
-        <div className="app-outer">
-          <div className="app-inner">
-            <TagCloud
-                className="tag-cloud"
-                style={{
-                  fontFamily: "BYekan",
-                  // fontSize: () => Math.round(Math.random() * 50) + 16,
-                  // fontSize: 30,
-                  color: () => {
-                    return "#3340ff";
-                  }
-                }}
-            >
-              {this.props.words.map((word, index) => {
-                var size =
-                    (word.value - this.state.min) /
-                    (this.state.max - this.state.min) +
-                    1 +
-                    "em";
-                console.log(`"${size}"`);
+      <div className="app-outer">
+        <div className="app-inner">
+          <TagCloud
+            className="tag-cloud"
+            style={{
+              fontFamily: "BYekan",
+              // fontSize: () => Math.round(Math.random() * 50) + 16,
+              // fontSize: 30,
+              color: () => {
+                return "#3340ff";
+              }
+            }}
+          >
+            {this.props.words.map((word, index) => {
+              var size =
+                (word.value - this.state.min) /
+                  (this.state.max - this.state.min) +
+                1 +
+                "em";
+              console.log(`"${size}"`);
 
-                return (
-                    <div
-                        key={index}
-                        style={{
-                          fontSize: () =>
-                              ((word.value - this.state.min) /
-                                  (this.state.max - this.state.min) +
-                                  1) *
-                              12
-                        }}
-                    >
-                      {word.text}
-                    </div>
-                );
-              })}
-            </TagCloud>
-          </div>
+              return (
+                <div
+                  className={classNames(
+                    classes.word,
+                    this.props.selectedKeyword == word.text
+                      ? classes.selectedWord
+                      : ""
+                  )}
+                  key={index}
+                  style={{
+                    fontSize: () =>
+                      ((word.value - this.state.min) /
+                        (this.state.max - this.state.min) +
+                        1) *
+                      12,
+                    color:
+                      this.props.selectedKeyword == word.text
+                        ? "#fff"
+                        : "#08080d"
+                  }}
+                  onClick={() => this.props.selectKeyword(word)}
+                >
+                  {word.text}
+                </div>
+              );
+            })}
+          </TagCloud>
         </div>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const {selectedTrackerDashboardItem} = state
+  const { selectedTrackerDashboardItem } = state;
   return {
-    words: selectedTrackerDashboardItem.words
+    words: selectedTrackerDashboardItem.words,
+    selectedKeyword: selectedTrackerDashboardItem.selectedKeyword
   };
 };
 
@@ -155,6 +182,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(WordsCloud);
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(WordsCloud));

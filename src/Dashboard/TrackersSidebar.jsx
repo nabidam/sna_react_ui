@@ -562,7 +562,16 @@ class TrackersSidebar extends Component {
               >
                 <ListItemText className="list-item-right level-2-items">
                   پست‌ها
-                  <span className={classes.postsBadge}>347</span>
+                  <span
+                    className={classNames(
+                      classes.postsBadge,
+                      this.props.selectedTrackerDashboardItem == "posts"
+                        ? classes.selectedBadge
+                        : ""
+                    )}
+                  >
+                    347
+                  </span>
                 </ListItemText>
               </ListItem>
               <ListItem

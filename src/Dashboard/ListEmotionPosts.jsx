@@ -1,17 +1,11 @@
-import React, {unstable_Profiler} from "react";
+import React, { unstable_Profiler } from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-import {
+import { Grid, Avatar } from "@material-ui/core";
 
-  Grid,
-
-  Avatar,
-
-} from "@material-ui/core";
-
-import {connect} from "react-redux";
-import {DashboardActions} from "../_actions";
+import { connect } from "react-redux";
+import { DashboardActions } from "../_actions";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -187,213 +181,213 @@ class ListEmotionPosts extends React.Component {
     });
   };
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
-        <div>
-          <Grid item md={12} className={classes.tableGrid}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
+      <div>
+        <Grid item md={12} className={classes.tableGrid}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align="right"
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  کاربری
+                </TableCell>
+                <TableCell
+                  align="right"
+                  className={classes.tableHeader}
+                  style={{ width: "42%" }}
+                >
+                  پست
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "12%" }}
+                >
+                  حس متن
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "14%" }}
+                >
+                  حس کامنت
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "5%" }}
+                >
+                  لایک
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className={classes.tableHeader}
+                  style={{ width: "5%" }}
+                >
+                  کامنت
+                </TableCell>
+                <TableCell
+                  className={classes.tableHeader}
+                  style={{ width: "10%" }}
+                >
+                  تاریخ
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.props.posts.map(row => (
+                <TableRow
+                  key={row.id}
+                  className={classes.tableRow}
+                  onMouseEnter={() => this.handleHoverRow(row.id)}
+                  onMouseLeave={() => this.handleUnHoverRow()}
+                >
                   <TableCell
-                      align="right"
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
+                    style={{ width: "25%" }}
+                    className={classes.flex}
+                    // padding="none"
+                    align="right"
                   >
-                    کاربری
-                  </TableCell>
-                  <TableCell
-                      align="right"
-                      className={classes.tableHeader}
-                      style={{width: "42%"}}
-                  >
-                    پست
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "12%"}}
-                  >
-                    حس متن
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "14%"}}
-                  >
-                    حس کامنت
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "5%"}}
-                  >
-                    لایک
-                  </TableCell>
-                  <TableCell
-                      align="center"
-                      className={classes.tableHeader}
-                      style={{width: "5%"}}
-                  >
-                    کامنت
-                  </TableCell>
-                  <TableCell
-                      className={classes.tableHeader}
-                      style={{width: "10%"}}
-                  >
-                    تاریخ
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.props.posts.map(row => (
-                    <TableRow
-                        key={row.id}
-                        className={classes.tableRow}
-                        onMouseEnter={() => this.handleHoverRow(row.id)}
-                        onMouseLeave={() => this.handleUnHoverRow()}
-                    >
-                      <TableCell
-                          style={{width: "25%"}}
-                          className={classes.flex}
-                          // padding="none"
-                          align="right"
+                    <Grid container className={classes.root} spacing={1}>
+                      <Grid
+                        item
+                        md={4}
+                        sm={4}
+                        xs={4}
+                        className={classes.tableUsernamePart}
                       >
-                        <Grid container className={classes.root} spacing={1}>
-                          <Grid
-                              item
-                              md={4}
-                              sm={4}
-                              xs={4}
-                              className={classes.tableUsernamePart}
-                          >
-                            <Avatar
-                                alt="Remy Sharp"
-                                src="https://material-ui.com/static/images/avatar/1.jpg"
-                                className={classes.avatar}
-                            />
-                            <span className={classes.twtterIconAvatar}>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src="https://material-ui.com/static/images/avatar/1.jpg"
+                          className={classes.avatar}
+                        />
+                        <span className={classes.twtterIconAvatar}>
                           <i className="fab fa-twitter fa-sm"></i>
                         </span>
-                          </Grid>
-                          <Grid
-                              item
-                              md={8}
-                              sm={8}
-                              xs={8}
-                              className={classes.tableUsernamePart}
-                          >
-                            <span>{row.name}</span>
-                            <span className={classes.textMute}>
+                      </Grid>
+                      <Grid
+                        item
+                        md={8}
+                        sm={8}
+                        xs={8}
+                        className={classes.tableUsernamePart}
+                      >
+                        <span>{row.name}</span>
+                        <span className={classes.textMute}>
                           @{row.username}
                         </span>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell align="right" style={{width: "50%"}}>
-                        {row.post}...
-                      </TableCell>
-                      <TableCell align="center" style={{width: "5%"}}>
-                        {row.emotion == "negative" ? (
-                            <div
-                                className={
-                                  this.props.selectedEmotion == "negative"
-                                      ? classes.selectedNegativeEmotion
-                                      : classes.negativeEmotion
-                                }
-                            ></div>
-                        ) : (
-                            <div
-                                className={
-                                  this.props.selectedEmotion == "positive"
-                                      ? classes.selectedPositiveEmotion
-                                      : classes.positiveEmotion
-                                }
-                            ></div>
-                        )}
-                      </TableCell>
-                      <TableCell align="center" style={{width: "5%"}}>
-                        {row.comment_emotion == "negative" ? (
-                            <div
-                                className={
-                                  this.props.selectedEmotion == "negative"
-                                      ? classes.selectedNegativeEmotion
-                                      : classes.negativeEmotion
-                                }
-                            ></div>
-                        ) : (
-                            <div
-                                className={
-                                  this.props.selectedEmotion == "positive"
-                                      ? classes.selectedPositiveEmotion
-                                      : classes.positiveEmotion
-                                }
-                            ></div>
-                        )}
-                      </TableCell>
-                      <TableCell
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                          align="center"
-                          style={{width: "5%"}}
-                      >
-                        {row.likes}
-                      </TableCell>
-                      <TableCell
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                          align="center"
-                          style={{width: "5%"}}
-                      >
-                        {row.comments}
-                      </TableCell>
-                      <TableCell
-                          className={
-                            this.state.rowHover != row.id ? classes.textMute : ""
-                          }
-                          align="left"
-                          style={{width: "5%"}}
-                      >
-                        {row.date}
-                        <br />
-                        {row.time}
-                      </TableCell>
-                    </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Grid>
-          <Grid item md={12} className={classes.pagination} align="center">
-            <div className={classes.paginationBox}>
-              <div className={classes.paginationLinks}>
-                <div
-                    className={classNames(
-                        classes.paginationLink,
-                        classes.activePaginationLink
+                      </Grid>
+                    </Grid>
+                  </TableCell>
+                  <TableCell align="right" style={{ width: "50%" }}>
+                    {row.post}...
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "5%" }}>
+                    {row.emotion == "negative" ? (
+                      <div
+                        className={
+                          this.props.selectedEmotion == "negative"
+                            ? classes.selectedNegativeEmotion
+                            : classes.negativeEmotion
+                        }
+                      ></div>
+                    ) : (
+                      <div
+                        className={
+                          this.props.selectedEmotion == "positive"
+                            ? classes.selectedPositiveEmotion
+                            : classes.positiveEmotion
+                        }
+                      ></div>
                     )}
-                >
-                  1
-                </div>
-                <div className={classNames(classes.paginationLink)}>2</div>
-                <div className={classNames(classes.paginationLink)}>3</div>
-                <div className={classNames(classes.paginationLink)}>4</div>
-                <div className={classNames(classes.paginationLink)}>5</div>
-                <div className={classNames(classes.paginationLink)}>
-                  <i className="fa fa-angle-left"></i>
-                </div>
-                <div className={classNames(classes.paginationLink)}>
-                  <i className="fa fa-angle-double-left"></i>
-                </div>
+                  </TableCell>
+                  <TableCell align="center" style={{ width: "5%" }}>
+                    {row.comment_emotion == "negative" ? (
+                      <div
+                        className={
+                          this.props.selectedEmotion == "negative"
+                            ? classes.selectedNegativeEmotion
+                            : classes.negativeEmotion
+                        }
+                      ></div>
+                    ) : (
+                      <div
+                        className={
+                          this.props.selectedEmotion == "positive"
+                            ? classes.selectedPositiveEmotion
+                            : classes.positiveEmotion
+                        }
+                      ></div>
+                    )}
+                  </TableCell>
+                  <TableCell
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                    align="center"
+                    style={{ width: "5%" }}
+                  >
+                    {row.likes}
+                  </TableCell>
+                  <TableCell
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                    align="center"
+                    style={{ width: "5%" }}
+                  >
+                    {row.comments}
+                  </TableCell>
+                  <TableCell
+                    className={
+                      this.state.rowHover != row.id ? classes.textMute : ""
+                    }
+                    align="left"
+                    style={{ width: "5%" }}
+                  >
+                    {row.date}
+                    <br />
+                    {row.time}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Grid>
+        <Grid item md={12} className={classes.pagination} align="center">
+          <div className={classes.paginationBox}>
+            <div className={classes.paginationLinks}>
+              <div
+                className={classNames(
+                  classes.paginationLink,
+                  classes.activePaginationLink
+                )}
+              >
+                1
               </div>
-              <div className={classes.paginationText}>
-                نمایش <span className={classes.textNormal}>1</span> از{" "}
-                <span className={classes.textNormal}>20</span> برای{" "}
-                <span className={classes.textNormal}>3343</span> پست
+              <div className={classNames(classes.paginationLink)}>2</div>
+              <div className={classNames(classes.paginationLink)}>3</div>
+              <div className={classNames(classes.paginationLink)}>4</div>
+              <div className={classNames(classes.paginationLink)}>5</div>
+              <div className={classNames(classes.paginationLink)}>
+                <i className="fa fa-angle-left"></i>
+              </div>
+              <div className={classNames(classes.paginationLink)}>
+                <i className="fa fa-angle-double-left"></i>
               </div>
             </div>
-          </Grid>
-        </div>
+            <div className={classes.paginationText}>
+              نمایش <span className={classes.textNormal}>1</span> از{" "}
+              <span className={classes.textNormal}>20</span> برای{" "}
+              <span className={classes.textNormal}>3343</span> پست
+            </div>
+          </div>
+        </Grid>
+      </div>
     );
   }
 }
@@ -404,9 +398,9 @@ ListEmotionPosts.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {lastTrackers,selectedTracker,selectedTrackerDashboardItem} = state;
+  const { selectedTracker, selectedTrackerDashboardItem } = state;
   return {
-    trackers: lastTrackers.trackers,
+    trackers: selectedTrackerDashboardItem.trackers,
     selectedTracker,
     selectedTrackerDashboardItem,
     posts: selectedTrackerDashboardItem.posts,
@@ -426,6 +420,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(ListEmotionPosts));
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(ListEmotionPosts));
