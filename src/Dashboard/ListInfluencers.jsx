@@ -351,15 +351,14 @@ ListInfluencers.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   console.log("ListInfluencers mapstate");
   console.log(state);
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    selectedTrackerDashboardItem:
-      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
-    influencers: selectedTrackerDashboardItem.influencers
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
+    influencers: trackers.influencers
   };
 };
 

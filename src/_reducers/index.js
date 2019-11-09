@@ -14,13 +14,7 @@ const rootReducer = combineReducers({
   selectedTrackerMenu: DashboardReducer.selectedTrackerMenu,
   selectedTrackerDashboardItem: DashboardReducer.selectedTrackerDashboardItem,
   // trackers reducers
-  editableTracker: trackersReducer.editableTracker,
-  goToAddTracker: trackersReducer.goToAddTracker,
-  changeAddTracker: trackersReducer.changeAddTracker,
-  createTracker: trackersReducer.createTracker,
-  deleteTracker: trackersReducer.deleteTracker,
-  changeEditableTracker: trackersReducer.changeEditableTracker,
-  editTracker: trackersReducer.editTracker
+  trackers: trackersReducer.trackers
 });
 
 export default rootReducer;

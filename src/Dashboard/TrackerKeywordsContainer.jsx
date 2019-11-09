@@ -1671,17 +1671,17 @@ TrackerKeywordsContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   console.log("tracker keywords container map state to props");
   console.log(state);
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    selectedTrackerDashboardItem,
-    posts: selectedTrackerDashboardItem.posts,
-    keywords: selectedTrackerDashboardItem.keywords,
-    words: selectedTrackerDashboardItem.words,
-    selectedKeyword: selectedTrackerDashboardItem.selectedKeyword
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
+    posts: trackers.posts,
+    keywords: trackers.keywords,
+    words: trackers.words,
+    selectedKeyword: trackers.selectedKeyword
   };
 };
 

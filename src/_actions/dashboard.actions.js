@@ -1,4 +1,4 @@
-import { DashboardConstants } from "../_constants";
+import { DashboardConstants, trackersConstants } from "../_constants";
 import { trackerService } from "../_services";
 import { alertActions } from "./alert.actions";
 
@@ -19,6 +19,16 @@ export const DashboardActions = {
   changeTrafficAnalysisStatus,
   selectTrafficAnalysisType,
   selectPage
+};
+
+export const TrackersActions = {
+  editableTracker,
+  goToAddTracker,
+  changeAddTracker,
+  createTracker,
+  deleteTracker,
+  changeEditableTracker,
+  editTracker
 };
 
 function addTracker(data) {
@@ -137,5 +147,52 @@ function selectPage(page) {
   return {
     type: DashboardConstants.SELECT_PAGE,
     page
+  };
+}
+
+// Naa
+function editableTracker(id) {
+  return {
+    type: trackersConstants.EDITABLE_TRACKER,
+    id
+  };
+}
+
+function goToAddTracker() {
+  return {
+    type: trackersConstants.GO_TO_ADD_TRACKER
+  };
+}
+
+function changeAddTracker(data) {
+  return {
+    type: trackersConstants.CHANGE_ADD_TRACKER,
+    data
+  };
+}
+
+function createTracker() {
+  return {
+    type: trackersConstants.CREATE_TRACKER
+  };
+}
+
+function deleteTracker(query) {
+  return {
+    type: trackersConstants.DELETE_TRACKER,
+    query
+  };
+}
+
+function changeEditableTracker(data) {
+  return {
+    type: trackersConstants.CHANGE_EDITABLE_TRACKER,
+    data
+  };
+}
+
+function editTracker() {
+  return {
+    type: trackersConstants.EDIT_TRACKER
   };
 }

@@ -524,7 +524,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "dashboard"
+                        (this.props.trackers == "dashboard"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -540,7 +540,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "posts"
+                        (this.props.trackers == "posts"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -556,7 +556,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "keywords"
+                        (this.props.trackers == "keywords"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -572,7 +572,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "margins"
+                        (this.props.trackers == "margins"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -589,7 +589,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "influencers"
+                        (this.props.trackers == "influencers"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -606,7 +606,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "emotions"
+                        (this.props.trackers == "emotions"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -623,7 +623,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "groups"
+                        (this.props.trackers == "groups"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -640,7 +640,7 @@ class TrackersSidebar extends Component {
                         classes.nested,
                         classes.listItem,
                         "" +
-                        (this.props.selectedTrackerDashboardItem == "locations"
+                        (this.props.trackers == "locations"
                             ? classes.selectedNested
                             : "")
                     )}
@@ -693,12 +693,12 @@ TrackersSidebar.propTypes = {
 const mapStateToProps = state => {
   console.log("tracker sidebar map state")
   console.log(state)
-  const {triggerDrawer, selectedTrackerMenu, selectedTrackerDashboardItem} = state;
+  const {triggerDrawer, selectedTrackerMenu, trackers} = state;
   return {
     isDrawerOpen: triggerDrawer.isDrawerOpen,
-    trackers: selectedTrackerDashboardItem.trackers,
+    trackers: trackers.trackers,
     selectedTrackerMenu: selectedTrackerMenu,
-    selectedTrackerDashboardItem: (selectedTrackerMenu.selectedTrackerId, selectedTrackerMenu.name)
+    trackers: (selectedTrackerMenu.selectedTrackerId, selectedTrackerMenu.name)
   };
 };
 

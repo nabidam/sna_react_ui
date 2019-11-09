@@ -1790,13 +1790,13 @@ TrackerEmotionsContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTracker, selectedTrackerDashboardItem } = state;
+  const { selectedTracker, trackers } = state;
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    posts: selectedTrackerDashboardItem.posts,
-    keywords: selectedTrackerDashboardItem.keywords,
-    selectedEmotion: selectedTrackerDashboardItem.selectedEmotion
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    posts: trackers.posts,
+    keywords: trackers.keywords,
+    selectedEmotion: trackers.selectedEmotion
   };
 };
 

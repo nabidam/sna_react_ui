@@ -614,13 +614,13 @@ Projects.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    accounts: selectedTrackerDashboardItem.accounts,
-    posts: selectedTrackerDashboardItem.myPosts,
-    projects: selectedTrackerDashboardItem.projects
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    accounts: trackers.accounts,
+    posts: trackers.myPosts,
+    projects: trackers.projects
   };
 };
 

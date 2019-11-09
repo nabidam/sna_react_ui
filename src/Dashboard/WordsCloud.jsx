@@ -166,10 +166,10 @@ class WordsCloud extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   return {
-    words: selectedTrackerDashboardItem.words,
-    selectedKeyword: selectedTrackerDashboardItem.selectedKeyword
+    words: trackers.words,
+    selectedKeyword: trackers.selectedKeyword
   };
 };
 

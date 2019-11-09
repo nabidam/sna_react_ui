@@ -394,14 +394,13 @@ ListPosts.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    selectedTrackerDashboardItem:
-      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
-    posts: selectedTrackerDashboardItem.posts,
-    selectedEmotion: selectedTrackerDashboardItem.selectedEmotion
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
+    posts: trackers.posts,
+    selectedEmotion: trackers.selectedEmotion
   };
 };
 

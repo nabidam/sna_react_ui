@@ -344,14 +344,14 @@ SecondHeader.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { triggerDrawer, authentication, selectedTrackerDashboardItem } = state;
+  const { triggerDrawer, authentication, trackers } = state;
   console.log("second header map state");
   console.log(state);
   return {
     auth: authentication,
     isAuthenticated: authentication.loggingIn,
     isDrawerOpen: triggerDrawer.isDrawerOpen,
-    selectedPage: selectedTrackerDashboardItem.selectedPage
+    selectedPage: trackers.selectedPage
   };
 };
 

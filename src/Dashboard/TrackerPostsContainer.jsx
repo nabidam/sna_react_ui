@@ -798,15 +798,14 @@ TrackerPostsContainer.propTypes = {
 const mapStateToProps = state => {
   console.log("tracker post container mapstate");
   console.log(state);
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.trackers.filter(
-      t => t.id === selectedTrackerDashboardItem.selectedTracker
+    trackers: trackers.trackers,
+    selectedTracker: trackers.trackers.filter(
+      t => t.id === trackers.selectedTracker
     )[0],
-    selectedTrackerDashboardItem:
-      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
-    posts: selectedTrackerDashboardItem.posts
+    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
+    posts: trackers.posts
   };
 };
 

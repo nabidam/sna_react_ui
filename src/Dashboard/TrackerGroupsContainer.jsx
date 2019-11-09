@@ -1833,15 +1833,14 @@ TrackerGroupsContainer.propTypes = {
 const mapStateToProps = state => {
   console.log("tracker Groups Container");
   console.log(state);
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    selectedTrackerDashboardItem:
-      selectedTrackerDashboardItem.selectedTrackerDashboardItem,
-    keywords: selectedTrackerDashboardItem.keywords,
-    groups: selectedTrackerDashboardItem.groups,
-    selectedGroup: selectedTrackerDashboardItem.selectedGroup
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
+    keywords: trackers.keywords,
+    groups: trackers.groups,
+    selectedGroup: trackers.selectedGroup
   };
 };
 

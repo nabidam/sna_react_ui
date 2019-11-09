@@ -10,22 +10,730 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  Button
+  Button,
+  Popover,
+  ListItemIcon
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { DashboardActions, trackersActions } from "../_actions";
+import { DashboardActions, TrackersActions } from "../_actions";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
 import PauseIcon from "@material-ui/icons/Pause";
+import ClearIcon from "@material-ui/icons/Clear";
+import CheckIcon from "@material-ui/icons/Check";
+import MapComponent from "./MapComponent";
 
-const styles = theme => ({});
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { Calendar } from "react-modern-calendar-datepicker";
 
-class Trackers extends React.Component {
+const months = [
+  "",
+  "فروردین",
+  "اردیبهشت",
+  "خرداد",
+  "تیر",
+  "مرداد",
+  "شهریور",
+  "مهر",
+  "آبان",
+  "آذر",
+  "دی",
+  "بهمن",
+  "اسفند"
+];
+
+const styles = theme => ({
+  wrapper: {
+    width: "100vw",
+    minHeight: "100vh",
+    backgroundColor: "#fff"
+  },
+  root: {
+    display: "flex",
+    flexGrow: 1
+  },
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0 8px",
+    height: 80,
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-start"
+  },
+  content: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    // direction: "rtl",
+    flexGrow: 1,
+    // padding: theme.spacing(3),
+    marginRight: 0,
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+
+  container: {
+    paddingTop: 10,
+    paddingBottom: 40
+  },
+  labelBox: {
+    display: "flex",
+    flexDirection: "row",
+    padding: "20px 0px"
+  },
+  input: {
+    width: "100%",
+    height: 44,
+    position: "relative",
+    borderRadius: 22,
+    backgroundColor: "#edf1f6",
+    border: "none",
+    padding: "0px 22px",
+    color: "#08080d",
+    display: "flex",
+    justifyContent: "right",
+    "&::placeholder": {
+      color: "#a2a5a9"
+    }
+  },
+  bulbIcon: {
+    width: 22,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#adb2b9"
+  },
+  map: {
+    width: "100%",
+    height: "100%"
+  },
+  mapBox: {
+    border: "2px solid #e4e8ed",
+    borderRadius: 3,
+    height: 180,
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  chevronDownIcon: {
+    display: "flex",
+    position: "absolute",
+    left: "19px",
+    color: "#08080d"
+  },
+  socialMediaIcon: {
+    width: 44,
+    height: 44,
+    padding: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "solid 5px rgba(0, 0, 0, 0.02)",
+    borderRadius: 22,
+    backgroundColor: "#edf1f6",
+    color: "rgba(8, 8, 13, 0.5)"
+  },
+  box: {
+    width: "100%",
+    height: 180,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 3,
+    border: "solid 2px #e4e8ed"
+  },
+  textMute: {
+    color: "#adb2b9"
+  },
+
+  mapOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#fff",
+    opacity: "0.4"
+  },
+
+  changeMapBtn: {
+    width: 170,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#4753ff",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#0500cb"
+    },
+    "&:active": {
+      opacity: 0.7
+    }
+  },
+  enableMapGrid: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  enableMapBtn: {
+    width: 215,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#fff",
+    border: "solid 2px #08080d",
+    color: "#08080d",
+    "&:hover": {
+      backgroundColor: "#fff"
+    },
+    "&:active": {
+      opacity: 0.7
+    }
+  },
+  paperSP: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 440,
+    borderBottomLeftRadius: "unset",
+    borderBottomRightRadius: "unset",
+    boxShadow: "unset",
+    borderBottom: "6px solid #edf1f6"
+  },
+  popover: {
+    borderRadius: 22,
+    width: 440
+  },
+  listItem: {
+    heigth: 40,
+    fontSize: 12,
+    "&:hover": {
+      color: "#4753ff",
+      cursor: "pointer"
+    },
+    "&::after": {
+      content: `""`,
+      display: "block",
+      margin: "auto",
+      position: "absolute",
+      right: 16,
+      bottom: 0,
+      width: 404,
+      height: 2,
+      background: "#e2e6ea"
+    },
+    // paddingLeft: 24,
+    // paddingRight: 24,
+    "&:last-child::after": {
+      display: "none"
+    }
+  },
+  listItemNewProject: {
+    color: "#3340ff"
+  },
+  iconAddProject: {
+    minWidth: "unset",
+    color: "#3340ff"
+  },
+  openSelectProjectInput: {
+    border: "solid 4px #e3e5ff"
+  },
+  projectIsSelected: {
+    color: "#08080d"
+  },
+
+  tagWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    overflow: "hidden",
+    minHeight: 44,
+    position: "relative",
+    borderRadius: 22,
+    backgroundColor: "#edf1f6",
+    border: "none",
+    padding: "8px 22px",
+    color: "#a2a5a9",
+    display: "flex",
+    justifyContent: "right",
+    alignItems: "center",
+    flexWrap: "wrap",
+    "&::placeholder": {
+      color: "#a2a5a9"
+    }
+  },
+  tagHolder: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 5,
+    marginTop: 1,
+    marginBottom: 1,
+    borderRadius: 22,
+    height: 26,
+    color: "#fff",
+    marginLeft: 10,
+    backgroundColor: "#4753ff"
+  },
+  tag: {
+    fontSize: 12,
+    marginLeft: 5
+  },
+  tagRemove: {
+    backgroundColor: "#fff",
+    color: "#4753ff",
+    width: 16,
+    height: 16,
+    borderRadius: "50%",
+    "&:hover": {
+      cursor: "pointer"
+    }
+  },
+  tagRemoveIcon: {
+    fontSize: "1rem"
+  },
+  tagInput: {
+    flexGrow: 1,
+    border: "none",
+    backgroundColor: "#edf1f6",
+    color: "#a2a5a9",
+    "&:focus": {
+      outline: "none"
+    }
+  },
+
+  socialMediaIconBox: {
+    position: "relative"
+  },
+  checkIconTiny: {
+    color: "#fff",
+    backgroundColor: "#03d588",
+    width: 14,
+    height: 14,
+    borderRadius: 22,
+    position: "absolute",
+    top: 2,
+    right: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  instagramIconBtn: {
+    color: "#fff",
+    backgroundColor: "#da2b72",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    padding: 0,
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#da2b72"
+    }
+  },
+  twitterIconBtn: {
+    color: "#fff",
+    backgroundColor: "#1da1f2",
+    minWidth: 44,
+    height: 44,
+    borderRadius: 22,
+    margin: "0px 10px",
+    border: "solid 5px rgba(255, 255, 255, 0.85)",
+    padding: 0,
+    "&:hover": {
+      opacity: 0.7,
+      backgroundColor: "#1da1f2"
+    }
+  },
+
+  dayIsSelected: {
+    color: "#08080d"
+  }
+});
+
+class AddTrackers extends React.Component {
   constructor(props) {
     super(props);
     console.log("add trackers constructor");
     console.log(props);
-    this.state = {};
+    this.state = {
+      instagramUsers: [],
+      twitterUsers: [],
+      hashtags: [],
+      keywords: [],
+
+      twitter: 0,
+      instagram: 0,
+
+      isLocationEnable: false,
+      mapCenter: [51.4124, 35.7325],
+
+      isSelectProjectOpen: false,
+      selectProjectAnchorEl: null,
+      selectedProject: null,
+
+      isCalenderOpen: false,
+      calenderAnchorEl: null,
+
+      selectedDay: {
+        from: null,
+        to: null
+      },
+      isDaySelected: false,
+
+      addTrackerName: "",
+      addTracker: {}
+    };
   }
+
+  handleSelectProjectClick = event => {
+    this.setState({
+      selectProjectAnchorEl: event.currentTarget,
+      isSelectProjectOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseSelectProject = () => {
+    this.setState({
+      selectProjectAnchorEl: null,
+      isSelectProjectOpen: false
+    });
+  };
+
+  handleSeletProject = project => {
+    this.setState({
+      selectedProject: project,
+      addTracker: {
+        ...this.state.addTracker,
+        selectedProject: project
+      }
+    });
+
+    this.handleCloseSelectProject();
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      selectedProject: project
+    });
+  };
+
+  handleCalenderClick = event => {
+    this.setState({
+      calenderAnchorEl: event.currentTarget,
+      isCalenderOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleCloseCalender = () => {
+    this.setState({
+      calenderAnchorEl: null,
+      isCalenderOpen: false
+    });
+  };
+
+  handleSelectedDay = day => {
+    // console.log(day);
+    this.setState({
+      selectedDay: day,
+      isDaySelected: true,
+      addTracker: {
+        ...this.state.addTracker,
+        selectedDay: day,
+        isDaySelected: true
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      selectedDay: day,
+      isDaySelected: true
+    });
+  };
+
+  handleAddInstagramUser = e => {
+    e.persist();
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        instagramUsers: [...this.state.instagramUsers, e.target.value],
+        addTracker: {
+          ...this.state.addTracker,
+          social: {
+            ...this.state.addTracker.social,
+            instagramUsers: [...this.state.instagramUsers, e.target.value]
+          }
+        }
+      });
+      this.props.changeAddTracker({
+        ...this.state.addTracker,
+        social: {
+          ...this.state.addTracker.social,
+          instagramUsers: [...this.state.instagramUsers, e.target.value]
+        }
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveInstagramUser = id => {
+    var removed_list = [];
+    this.state.instagramUsers.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      instagramUsers: removed_list,
+      addTracker: {
+        ...this.state.addTracker,
+        social: {
+          ...this.state.addTracker.social,
+          instagramUsers: removed_list
+        }
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      social: {
+        ...this.state.addTracker.social,
+        instagramUsers: removed_list
+      }
+    });
+  };
+
+  handleAddTwitterUser = e => {
+    e.persist();
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        twitterUsers: [...this.state.twitterUsers, e.target.value],
+        addTracker: {
+          ...this.state.addTracker,
+          social: {
+            ...this.state.addTracker.social,
+            twitterUsers: [...this.state.twitterUsers, e.target.value]
+          }
+        }
+      });
+      this.props.changeAddTracker({
+        ...this.state.addTracker,
+        social: {
+          ...this.state.addTracker.social,
+          twitterUsers: [...this.state.twitterUsers, e.target.value]
+        }
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveTwitterUser = id => {
+    var removed_list = [];
+    this.state.twitterUsers.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      twitterUsers: removed_list,
+      addTracker: {
+        ...this.state.addTracker,
+        social: {
+          ...this.state.addTracker.social,
+          twitterUsers: removed_list
+        }
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      social: {
+        ...this.state.addTracker.social,
+        twitterUsers: removed_list
+      }
+    });
+  };
+
+  handleAddHashtag = e => {
+    e.persist();
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        hashtags: [...this.state.hashtags, e.target.value],
+        addTracker: {
+          ...this.state.addTracker,
+          hashtags: [...this.state.hashtags, e.target.value]
+        }
+      });
+      this.props.changeAddTracker({
+        ...this.state.addTracker,
+        hashtags: [...this.state.hashtags, e.target.value]
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveHashtag = id => {
+    var removed_list = [];
+    this.state.hashtags.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      hashtags: removed_list,
+      addTracker: {
+        ...this.state.addTracker,
+        hashtags: removed_list
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      hashtags: removed_list
+    });
+  };
+
+  handleAddKeyword = e => {
+    e.persist();
+    if (e.keyCode == 13 && e.target.value != "") {
+      this.setState({
+        keywords: [...this.state.keywords, e.target.value],
+        addTracker: {
+          ...this.state.addTracker,
+          keywords: [...this.state.keywords, e.target.value]
+        }
+      });
+      this.props.changeAddTracker({
+        ...this.state.addTracker,
+        keywords: [...this.state.keywords, e.target.value]
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveKeyword = id => {
+    var removed_list = [];
+    this.state.keywords.map((item, index) => {
+      if (index != id) {
+        removed_list.push(item);
+      }
+    });
+    this.setState({
+      keywords: removed_list,
+      addTracker: {
+        ...this.state.addTracker,
+        keywords: removed_list
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      keywords: removed_list
+    });
+  };
+
+  handleTwitterClick = () => {
+    this.setState({
+      twitter: !this.state.twitter,
+      addTracker: {
+        ...this.state.addTracker,
+        social: {
+          ...this.state.addTracker.social,
+          twitter: !this.state.twitter
+        }
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      social: {
+        ...this.state.addTracker.social,
+        twitter: !this.state.twitter
+      }
+    });
+  };
+
+  handleInstagramClick = () => {
+    this.setState({
+      instagram: !this.state.instagram,
+      addTracker: {
+        ...this.state.addTracker,
+        social: {
+          ...this.state.addTracker.social,
+          instagram: !this.state.instagram
+        }
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      social: {
+        ...this.state.addTracker.social,
+        instagram: !this.state.instagram
+      }
+    });
+  };
+
+  handleEnableLocation = () => {
+    this.setState({
+      isLocationEnable: !this.state.isLocationEnable,
+      addTracker: {
+        ...this.state.addTracker,
+        location: {
+          ...this.state.addTracker.location,
+          isLocationEnable: !this.state.isLocationEnable
+        }
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      location: {
+        ...this.state.addTracker.location,
+        isLocationEnable: !this.state.isLocationEnable
+      }
+    });
+  };
+
+  handleChangeName = e => {
+    e.persist();
+    this.setState({
+      addTrackerName: e.target.value,
+      addTracker: {
+        ...this.state.addTracker,
+        name: e.target.value
+      }
+    });
+    this.props.changeAddTracker({
+      ...this.state.addTracker,
+      name: e.target.value
+    });
+  };
+
+  handleClickChangeMap = () => {
+    var mapOverlay = document.getElementById("map-overlay");
+    mapOverlay.parentNode.removeChild(mapOverlay);
+    var mapBtn = document.getElementById("map-btn");
+    mapBtn.parentNode.removeChild(mapBtn);
+    var mapBox = document.getElementById("map-box");
+    mapBox.style.borderColor = "#4753ff";
+  };
+
+  componentDidMount = () => {
+    // console.log(this.props.addTracker);
+    this.setState({
+      instagramUsers: this.props.addTracker.social.instagramUsers,
+      twitterUsers: this.props.addTracker.social.twitterUsers,
+      hashtags: this.props.addTracker.hashtags,
+      keywords: this.props.addTracker.keywords,
+
+      twitter: this.props.addTracker.social.twitter,
+      instagram: this.props.addTracker.social.instagram,
+
+      isLocationEnable: this.props.addTracker.location.isLocationEnable,
+      isMapChangable: this.props.addTracker.location.isLocationEnable,
+      mapCenter: this.props.addTracker.location.center,
+
+      selectedProject: this.props.addTracker.selectedProject,
+
+      selectedDay: this.props.addTracker.selectedDay,
+      isDaySelected: this.props.addTracker.isDaySelected,
+
+      addTracker: this.props.addTracker,
+      addTrackerName: this.props.addTracker.name
+    });
+  };
 
   render() {
     const { classes } = this.props;
@@ -87,7 +795,7 @@ class Trackers extends React.Component {
                     paper: classes.popover
                   }}
                 >
-                  <List component="nav" className={classes.selectQueryList}>
+                  <List component="nav" className={classes.selectTrackerList}>
                     <ListItem
                       className={classNames(
                         classes.listItem,
@@ -134,7 +842,7 @@ class Trackers extends React.Component {
                   type="text"
                   className={classes.input}
                   placeholder="وارد کردن نام ردیاب"
-                  value={this.state.addQueryName}
+                  value={this.state.addTrackerName}
                   onChange={e => this.handleChangeName(e)}
                 />
               </Grid>
@@ -436,26 +1144,32 @@ class Trackers extends React.Component {
   }
 }
 
-Trackers.propTypes = {};
+AddTrackers.propTypes = {};
 
 const mapStateToProps = state => {
-  const { lastTrackers, selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   console.log("trackers map state");
   console.log(state);
+  console.log("xxxxxx");
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: lastTrackers.selectedTracker,
-    selectedTrackersType: lastTrackers.selectedTrackersType
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    selectedTrackersType: trackers.selectedTrackersType,
+
+    addTracker: trackers.addTracker,
+    projects: trackers.projects
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    selectTracker: id => dispatch(DashboardActions.selectTracker(id))
+    selectTracker: id => dispatch(DashboardActions.selectTracker(id)),
+    selectPage: page => dispatch(DashboardActions.selectPage(page)),
+    changeAddTracker: data => dispatch(TrackersActions.changeAddTracker(data))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(Trackers));
+)(withStyles(styles, { withTheme: true })(AddTrackers));

@@ -751,7 +751,7 @@ function mapStateToProps(state) {
     triggerDrawer,
     lastTrackers,
     selectedTrackerMenu,
-    selectedTrackerDashboardItem
+    trackers
   } = state;
   const { selectedTrackerId, name } = selectedTrackerMenu;
 
@@ -759,7 +759,7 @@ function mapStateToProps(state) {
     isDrawerOpen: triggerDrawer.isDrawerOpen,
     trackers: lastTrackers.trackers,
     selectedTrackerMenu: (selectedTrackerId, name),
-    selectedPage: selectedTrackerDashboardItem.selectedPage
+    selectedPage: trackers.selectedPage
   };
 }
 

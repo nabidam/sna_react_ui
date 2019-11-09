@@ -5,6 +5,14 @@ export const DashboardReducer = {
   changeSnackbarStatus,
   selectedTrackerMenu,
   selectedTrackerDashboardItem
+
+  // editableTracker,
+  // goToAddTracker,
+  // changeAddTracker,
+  // createTracker,
+  // deleteTracker,
+  // changeEditableTracker,
+  // editTracker
 };
 
 const initState0 = {
@@ -1142,20 +1150,110 @@ function changeSnackbarStatus(state = initState2, action) {
   }
 }
 
+// Naa
+
 // trackers reducer
 export const trackersReducer = {
-  editableTracker,
-  goToAddTracker,
-  changeAddTracker,
-  createTracker,
-  deleteTracker,
-  changeEditableTracker,
-  editTracker
+  trackers
 };
 
-function editableTracker(state = initState1, action) {
+function trackers(state = initState4, action) {
   switch (action.type) {
-    case trackersConstants.TRACKERS_EDITABLE_TRACKER:
+    // dashboard
+    case DashboardConstants.SELECT_PAGE:
+      return {
+        ...state,
+        selectedPage: action.page
+      };
+    case DashboardConstants.SELECT_TRACKER_DASHBOARD_LIST_ITEM:
+      return {
+        ...state,
+        selectedTrackerDashboardItem: action.item
+      };
+    case DashboardConstants.SELECT_ANALYSIS_TYPE:
+      return {
+        ...state,
+        selectedAnalysisType: action.t
+      };
+    case DashboardConstants.CHANGE_ANALYSIS_STATUS:
+      console.log(action);
+
+      return {
+        ...state,
+        analysis: state.analysis.map(el =>
+          el.id == action.analysis ? { ...el, active: !el.active } : el
+        )
+      };
+    case DashboardConstants.SELECT_KEYWORD:
+      return {
+        ...state,
+        selectedKeyword: action.word.text
+      };
+    case DashboardConstants.BACK_TO_TRACKERS:
+      return {
+        ...state,
+        selectedTrackerDashboardItem: null
+      };
+    case DashboardConstants.SELECT_GROUP:
+      return {
+        ...state,
+        selectedGroup: action.id
+      };
+    case DashboardConstants.SELECT_TRACKER:
+      console.log("SELECT TRACKER");
+      console.log(action);
+      console.log({
+        ...state,
+        selectedTracker: action.id,
+        selectedTrackerDashboardItem: "dashboard"
+      });
+      return {
+        ...state,
+        selectedTracker: action.id,
+        selectedTrackerDashboardItem: "dashboard"
+      };
+    case DashboardConstants.CHANGE_SELCETED_TRACKER:
+      return {
+        ...state,
+        selectedTracker: action.id
+      };
+    // last trackers
+    case DashboardConstants.ADD_TRACKER:
+      var now = new Date();
+      var id = state.lastTrackerId + 1;
+      return {
+        lastTrackerId: id,
+        trackers: [
+          ...state.trackers,
+          {
+            id,
+            name: action.data.name,
+            terms: action.data.terms,
+            date: now
+          }
+        ],
+        selectedTracker: state.selectedTracker
+      };
+    case DashboardConstants.SELECT_EMOTION:
+      return {
+        ...state,
+        selectedEmotion: action.emotion
+      };
+    case DashboardConstants.CHANGE_TRACKER_STATUS:
+      return {
+        ...state,
+        trackers: state.trackers.map(el =>
+          el.id == action.tracker ? { ...el, active: !el.active } : el
+        )
+      };
+    case DashboardConstants.SELECT_TRACKERS_TYPE:
+      console.log(action.t);
+      return {
+        ...state,
+        selectedTrackersType: action.t
+      };
+    // trackers
+    case trackersConstants.EDITABLE_TRACKER:
       var editableTracker = {};
       state.queries.map(t => {
         if (t.id == action.id) {
@@ -1166,14 +1264,7 @@ function editableTracker(state = initState1, action) {
         ...state,
         editableTracker
       };
-    default:
-      return state;
-  }
-}
-
-function goToAddTracker(state = initState1, action) {
-  switch (action.type) {
-    case trackersConstants.TRACKERS_GO_TO_ADD_TRACKER:
+    case trackersConstants.GO_TO_ADD_TRACKER:
       var addTracker = {
         id: null,
         name: "",
@@ -1205,41 +1296,21 @@ function goToAddTracker(state = initState1, action) {
         ...state,
         addTracker
       };
-    default:
-      return state;
-  }
-}
-
-function changeAddTracker(state = initState1, action) {
-  switch (action.type) {
-    case trackersConstants.TRACKERS_CHANGE_ADD_TRACKER:
+    case trackersConstants.CHANGE_ADD_TRACKER:
       return {
         ...state,
         addTracker: action.data
       };
-    default:
-      return state;
-  }
-}
-
-function createTracker(state = initState1, action) {
-  switch (action.type) {
-    case trackersConstants.TRACKERS_CREATE_TRACKER:
+    case trackersConstants.CREATE_TRACKER:
       var last_id = state.trackers[state.trackers.length - 1].id;
       var addTracker = state.addTracker;
       addTracker.id = last_id + 1;
+      console.log("create_tracker");
       return {
         ...state,
         trackers: [...state.trackers, addTracker]
       };
-    default:
-      return state;
-  }
-}
-
-function deleteTracker(state = initState1, action) {
-  switch (action.type) {
-    case trackersConstants.TRACKERS_DELETE_TRACKER:
+    case trackersConstants.DELETE_TRACKER:
       var removed_list = [];
       // console.log(action.tracker.id);
       state.trackers.map((item, index) => {
@@ -1251,26 +1322,12 @@ function deleteTracker(state = initState1, action) {
         ...state,
         trackers: removed_list
       };
-    default:
-      return state;
-  }
-}
-
-function changeEditableTracker(state = initState1, action) {
-  switch (action.type) {
-    case trackersConstants.TRACKERS_CHANGE_EDITABLE_TRACKER:
+    case trackersConstants.CHANGE_EDITABLE_TRACKER:
       return {
         ...state,
         editableTracker: action.data
       };
-    default:
-      return state;
-  }
-}
-
-function editTracker(state = initState1, action) {
-  switch (action.type) {
-    case trackersConstants.TRACKERS_EDIT_TRACKER:
+    case trackersConstants.EDIT_TRACKER:
       var editableTracker = state.editableTracker;
       var trackers = state.trackers;
       var new_trackers = [];

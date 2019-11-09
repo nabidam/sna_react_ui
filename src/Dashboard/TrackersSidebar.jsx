@@ -711,18 +711,13 @@ TrackersSidebar.propTypes = {
 const mapStateToProps = state => {
   console.log("tracker sidebar map state");
   console.log(state);
-  const {
-    triggerDrawer,
-    selectedTrackerMenu,
-    selectedTrackerDashboardItem
-  } = state;
+  const { triggerDrawer, selectedTrackerMenu, trackers } = state;
   return {
     isDrawerOpen: triggerDrawer.isDrawerOpen,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    trackers: selectedTrackerDashboardItem.trackers,
+    selectedTracker: trackers.selectedTracker,
+    trackers: trackers.trackers,
     selectedTrackerMenu: selectedTrackerMenu,
-    selectedTrackerDashboardItem:
-      selectedTrackerDashboardItem.selectedTrackerDashboardItem
+    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem
   };
 };
 

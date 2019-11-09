@@ -1373,15 +1373,15 @@ Trends.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    groups: selectedTrackerDashboardItem.groups,
-    keywords: selectedTrackerDashboardItem.keywords,
-    selectedGroup: selectedTrackerDashboardItem.selectedGroup,
-    influencers: selectedTrackerDashboardItem.influencers,
-    trends: selectedTrackerDashboardItem.trends
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    groups: trackers.groups,
+    keywords: trackers.keywords,
+    selectedGroup: trackers.selectedGroup,
+    influencers: trackers.influencers,
+    trends: trackers.trends
   };
 };
 

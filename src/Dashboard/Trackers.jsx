@@ -13,7 +13,7 @@ import {
   Button
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { DashboardActions, trackersActions } from "../_actions";
+import { DashboardActions, TrackersActions } from "../_actions";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import { history } from "../_helpers";
@@ -277,7 +277,11 @@ class Trackers extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     ردیاب‌ها
                   </Typography>
-                  <Button color="primary" className={classes.newTrackerBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newTrackerBtn}
+                    onClick={() => this.handleClickAddTrackers()}
+                  >
                     ساخت ردیاب جدید
                   </Button>
                 </div>
@@ -471,13 +475,13 @@ Trackers.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   console.log("trackers map state");
   console.log(state);
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    selectedTrackersType: selectedTrackerDashboardItem.selectedTrackersType
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    selectedTrackersType: trackers.selectedTrackersType
   };
 };
 
@@ -488,9 +492,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(DashboardActions.selectTrackersType(type)),
     changeTrackerStatus: tracker =>
       dispatch(DashboardActions.changeTrackerStatus(tracker)),
-    selectPage: page => dispatch(trackersActions.electPage(page)),
-    editableTracker: id => dispatch(trackersActions.editableTracker(id)),
-    goToAddTracker: () => dispatch(trackersActions.goToAddTracker())
+    selectPage: page => dispatch(DashboardActions.selectPage(page)),
+    editableTracker: id => dispatch(TrackersActions.editableTracker(id)),
+    goToAddTracker: () => dispatch(TrackersActions.goToAddTracker())
   };
 };
 

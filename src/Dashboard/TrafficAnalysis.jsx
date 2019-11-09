@@ -341,12 +341,12 @@ TrafficAnalysis.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { selectedTrackerDashboardItem } = state;
+  const { trackers } = state;
   return {
-    trackers: selectedTrackerDashboardItem.trackers,
-    selectedTracker: selectedTrackerDashboardItem.selectedTracker,
-    analysis: selectedTrackerDashboardItem.analysis,
-    selectedAnalysisType: selectedTrackerDashboardItem.selectedAnalysisType
+    trackers: trackers.trackers,
+    selectedTracker: trackers.selectedTracker,
+    analysis: trackers.analysis,
+    selectedAnalysisType: trackers.selectedAnalysisType
   };
 };
 
