@@ -177,10 +177,10 @@ function createTracker() {
   };
 }
 
-function deleteTracker(query) {
+function deleteTracker(tracker) {
   return {
     type: trackersConstants.DELETE_TRACKER,
-    query
+    tracker
   };
 }
 

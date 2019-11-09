@@ -35,8 +35,8 @@ import AddTrackersHeader from "./AddTrackersHeader";
 // import AddProjectsHeader from "./AddProjectsHeader";
 // import AddPosts from "./AddPosts";
 // import AddPostsHeader from "./AddPostsHeader";
-// import EditTrackers from "./EditTrackers";
-// import EditTrackersHeader from "./EditTrackersHeader";
+import EditTrackers from "./EditTrackers";
+import EditTrackersHeader from "./EditTrackersHeader";
 // import EditProjects from "./EditProjects";
 // import EditProjectsHeader from "./EditProjectsHeader";
 // import EditTrafficAnalysis from "./EditTrafficAnalysis";
@@ -250,12 +250,12 @@ class Dashboard extends React.Component {
           path="/dashboard/trackers/add"
           component={AddTrackersHeader}
         />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/trackers/edit"
           component={EditTrackersHeader}
         />
-        <PrivateRoute
+        {/* <PrivateRoute
           exact
           path="/dashboard/projects/add"
           component={AddProjectsHeader}
@@ -301,11 +301,11 @@ class Dashboard extends React.Component {
           path="/dashboard/trackers/add"
           component={AddTrackers}
         />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/trackers/edit"
           component={EditTrackers}
-        /> */}
+        />
         <PrivateRoute
           exact
           path="/dashboard/traffic-analysis"

@@ -422,6 +422,7 @@ class Trackers extends React.Component {
                                 <Typography
                                   variant="body1"
                                   className={classes.edit}
+                                  onClick={() => this.handleClickEdit(item.id)}
                                 >
                                   ویرایش
                                 </Typography>

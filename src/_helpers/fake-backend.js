@@ -12,8 +12,8 @@ export function configureFakeBackend() {
   window.fetch = function(url, opts) {
     return new Promise((resolve, reject) => {
       // wrap in timeout to simulate server api call
-      console.log(url);
-      console.log("asd");
+      // console.log(url);
+      // console.log("asd");
       setTimeout(() => {
         // authenticate
         if (url.url.endsWith("/users/authenticate") && opts.method === "POST") {
