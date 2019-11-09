@@ -13,9 +13,10 @@ import {
   Button
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { DashboardActions } from "../_actions";
+import { DashboardActions, TrafficAnalysisActions } from "../_actions";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
+import { history } from "../_helpers";
 
 const styles = theme => ({
   wrapper: {
@@ -191,6 +192,18 @@ class TrafficAnalysis extends React.Component {
     this.state = {};
   }
 
+  handleClickAddAnalysis = () => {
+    this.props.goToAddTrafficAnalysis();
+    this.props.selectPage("traffic-analysis/add");
+    history.push("/dashboard/traffic-analysis/add");
+  };
+
+  handleClickEdit = id => {
+    this.props.editableTrafficAnalysis(id);
+    this.props.selectPage("traffic-analysis/edit");
+    history.push("/dashboard/traffic-analysis/edit");
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -213,7 +226,11 @@ class TrafficAnalysis extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     تحلیل ترافیکی
                   </Typography>
-                  <Button color="primary" className={classes.newAnalysisBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newAnalysisBtn}
+                    onClick={() => this.handleClickAddAnalysis()}
+                  >
                     ساخت تحلیل جدید
                   </Button>
                 </div>
@@ -270,7 +287,7 @@ class TrafficAnalysis extends React.Component {
               <Grid item md={9} sm={9} xs={9}>
                 <List className={classes.activeAnalysis}>
                   <Divider />
-                  {this.props.analysis.map((item, index) => {
+                  {this.props.trafficAnalysis.map((item, index) => {
                     if (item.active == this.props.selectedAnalysisType) {
                       return (
                         <div key={index}>
@@ -283,7 +300,7 @@ class TrafficAnalysis extends React.Component {
                               this.props.changeTrafficAnalysisStatus(item.id)
                             }
                           >
-                            {console.log(this.props.analysis)}
+                            {console.log(this.props.trafficAnalysis)}
                             <div className={classes.analysisListText}>
                               <Typography
                                 variant="h1"
@@ -314,6 +331,7 @@ class TrafficAnalysis extends React.Component {
                               <Typography
                                 variant="body1"
                                 className={classes.edit}
+                                onClick={() => this.handleClickEdit(item.id)}
                               >
                                 ویرایش
                               </Typography>
@@ -345,7 +363,7 @@ const mapStateToProps = state => {
   return {
     trackers: trackers.trackers,
     selectedTracker: trackers.selectedTracker,
-    analysis: trackers.analysis,
+    trafficAnalysis: trackers.trafficAnalysis,
     selectedAnalysisType: trackers.selectedAnalysisType
   };
 };
@@ -356,8 +374,13 @@ const mapDispatchToProps = dispatch => {
       dispatch(DashboardActions.changeSelectedTracker(id)),
     selectTrafficAnalysisType: type =>
       dispatch(DashboardActions.selectTrafficAnalysisType(type)),
-    changeTrafficAnalysisStatus: analysis =>
-      dispatch(DashboardActions.changeTrafficAnalysisStatus(analysis))
+    changeTrafficAnalysisStatus: trafficAnalysis =>
+      dispatch(DashboardActions.changeTrafficAnalysisStatus(trafficAnalysis)),
+    selectPage: page => dispatch(DashboardActions.selectPage(page)),
+    editableTrafficAnalysis: id =>
+      dispatch(TrafficAnalysisActions.editableTrafficAnalysis(id)),
+    goToAddTrafficAnalysis: () =>
+      dispatch(TrafficAnalysisActions.goToAddTrafficAnalysis())
   };
 };
 

@@ -1,4 +1,8 @@
-import { DashboardConstants, trackersConstants } from "../_constants";
+import {
+  DashboardConstants,
+  trackersConstants,
+  trafficAnalysisConstants
+} from "../_constants";
 import { trackerService } from "../_services";
 import { alertActions } from "./alert.actions";
 
@@ -29,6 +33,16 @@ export const TrackersActions = {
   deleteTracker,
   changeEditableTracker,
   editTracker
+};
+
+export const TrafficAnalysisActions = {
+  editableTrafficAnalysis,
+  goToAddTrafficAnalysis,
+  changeAddTrafficAnalysis,
+  createTrafficAnalysis,
+  deleteTrafficAnalysis,
+  changeEditableTrafficAnalysis,
+  editTrafficAnalysis
 };
 
 function addTracker(data) {
@@ -129,10 +143,10 @@ function selectTracker(id) {
   };
 }
 
-function changeTrafficAnalysisStatus(analysis) {
+function changeTrafficAnalysisStatus(trafficAnalysis) {
   return {
     type: DashboardConstants.CHANGE_ANALYSIS_STATUS,
-    analysis
+    trafficAnalysis
   };
 }
 
@@ -151,6 +165,8 @@ function selectPage(page) {
 }
 
 // Naa
+
+// trackers
 function editableTracker(id) {
   return {
     type: trackersConstants.EDITABLE_TRACKER,
@@ -194,5 +210,52 @@ function changeEditableTracker(data) {
 function editTracker() {
   return {
     type: trackersConstants.EDIT_TRACKER
+  };
+}
+
+// traffic analysis
+function editableTrafficAnalysis(id) {
+  return {
+    type: trafficAnalysisConstants.EDITABLE_TRAFFIC_ANALYSIS,
+    id
+  };
+}
+
+function goToAddTrafficAnalysis() {
+  return {
+    type: trafficAnalysisConstants.GO_TO_ADD_TRAFFIC_ANALYSIS
+  };
+}
+
+function changeAddTrafficAnalysis(data) {
+  return {
+    type: trafficAnalysisConstants.CHANGE_ADD_TRAFFIC_ANALYSIS,
+    data
+  };
+}
+
+function createTrafficAnalysis() {
+  return {
+    type: trafficAnalysisConstants.CREATE_TRAFFIC_ANALYSIS
+  };
+}
+
+function deleteTrafficAnalysis(trafficAnalysis) {
+  return {
+    type: trafficAnalysisConstants.DELETE_TRAFFIC_ANALYSIS,
+    trafficAnalysis
+  };
+}
+
+function changeEditableTrafficAnalysis(data) {
+  return {
+    type: trafficAnalysisConstants.CHANGE_EDITABLE_TRAFFIC_ANALYSIS,
+    data
+  };
+}
+
+function editTrafficAnalysis() {
+  return {
+    type: trafficAnalysisConstants.EDIT_TRAFFIC_ANALYSIS
   };
 }

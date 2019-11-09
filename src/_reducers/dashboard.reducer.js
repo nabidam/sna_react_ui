@@ -1,4 +1,8 @@
-import { DashboardConstants, trackersConstants } from "../_constants";
+import {
+  DashboardConstants,
+  trackersConstants,
+  trafficAnalysisConstants
+} from "../_constants";
 
 export const DashboardReducer = {
   triggerDrawer,
@@ -186,27 +190,80 @@ const initState4 = {
   selectedAnalysisType: 1,
   editableTracker: null,
   addTracker: null,
-  analysis: [
+  editableTrafficAnalysis: null,
+  addTrafficAnalysis: null,
+  trafficAnalysis: [
     {
       id: 1,
       name: "رز میرداماد",
       active: 1,
       date: "12 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      }
     },
     {
       id: 2,
       name: "آزادی",
       active: 1,
       date: "18 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      }
     },
     {
       id: 3,
       name: "تیراژه",
       active: 0,
       date: "10 خرداد 98",
-      time: "16:43"
+      time: "16:43",
+      isDaySelected: true,
+      selectedDay: {
+        from: {
+          year: 1398,
+          month: 8,
+          day: 14
+        },
+        to: {
+          year: 1398,
+          month: 8,
+          day: 24
+        }
+      },
+      location: {
+        isLocationEnable: true,
+        center: [51.4124, 35.7325]
+      }
     }
   ],
   groups: [
@@ -1298,8 +1355,8 @@ function selectedTrackerDashboardItem(state = initState4, action) {
 
       return {
         ...state,
-        analysis: state.analysis.map(el =>
-          el.id == action.analysis ? { ...el, active: !el.active } : el
+        trafficAnalysis: state.trafficAnalysis.map(el =>
+          el.id == action.trafficAnalysis ? { ...el, active: !el.active } : el
         )
       };
     case DashboardConstants.SELECT_KEYWORD:
@@ -1417,8 +1474,8 @@ function trackers(state = initState4, action) {
 
       return {
         ...state,
-        analysis: state.analysis.map(el =>
-          el.id == action.analysis ? { ...el, active: !el.active } : el
+        trafficAnalysis: state.trafficAnalysis.map(el =>
+          el.id == action.trafficAnalysis ? { ...el, active: !el.active } : el
         )
       };
     case DashboardConstants.SELECT_KEYWORD:
@@ -1578,6 +1635,96 @@ function trackers(state = initState4, action) {
       return {
         ...state,
         trackers: new_trackers
+      };
+    // traffic analysis
+    case trafficAnalysisConstants.EDITABLE_TRAFFIC_ANALYSIS:
+      var editableTrafficAnalysis = {};
+      state.trafficAnalysis.map(t => {
+        if (t.id == action.id) {
+          editableTrafficAnalysis = t;
+        }
+      });
+      return {
+        ...state,
+        editableTrafficAnalysis
+      };
+    case trafficAnalysisConstants.GO_TO_ADD_TRAFFIC_ANALYSIS:
+      var addTrafficAnalysis = {
+        id: null,
+        name: "",
+        active: 1,
+        social: {
+          twitter: 0,
+          instagram: 0,
+          instagramUsers: [],
+          twitterUsers: []
+        },
+        retrieved_posts: 0,
+        date: "12 خرداد 98",
+        time: "16:43",
+        selectedProject: null,
+        isDaySelected: false,
+        selectedDay: {
+          from: null,
+          to: null
+        },
+        location: {
+          isLocationEnable: false,
+          center: [51.4124, 35.7325]
+        },
+        keywords: [],
+        hashtags: []
+      };
+      // console.log(addTrafficAnalysis);
+      return {
+        ...state,
+        addTrafficAnalysis
+      };
+    case trafficAnalysisConstants.CHANGE_ADD_TRAFFIC_ANALYSIS:
+      return {
+        ...state,
+        addTrafficAnalysis: action.data
+      };
+    case trafficAnalysisConstants.CREATE_TRAFFIC_ANALYSIS:
+      var last_id = state.trafficAnalysis[state.trafficAnalysis.length - 1].id;
+      var addTrafficAnalysis = state.addTrafficAnalysis;
+      addTrafficAnalysis.id = last_id + 1;
+      console.log("create_tracker");
+      return {
+        ...state,
+        trafficAnalysis: [...state.trafficAnalysis, addTrafficAnalysis]
+      };
+    case trafficAnalysisConstants.DELETE_TRAFFIC_ANALYSIS:
+      var removed_list = [];
+      // console.log(action.tracker);
+      state.trafficAnalysis.map((item, index) => {
+        if (item.id != action.trafficAnalysis.id) {
+          removed_list.push(item);
+        }
+      });
+      return {
+        ...state,
+        trafficAnalysis: removed_list
+      };
+    case trafficAnalysisConstants.CHANGE_EDITABLE_TRAFFIC_ANALYSIS:
+      return {
+        ...state,
+        editableTrafficAnalysis: action.data
+      };
+    case trafficAnalysisConstants.EDIT_TRAFFIC_ANALYSIS:
+      var editableTrafficAnalysis = state.editableTrafficAnalysis;
+      var trafficAnalysis = state.trafficAnalysis;
+      var new_trafficAnalysis = [];
+      trafficAnalysis.map((item, index) => {
+        if (item.id != editableTrafficAnalysis.id) {
+          new_trafficAnalysis.push(item);
+        } else {
+          new_trafficAnalysis.push(editableTrafficAnalysis);
+        }
+      });
+      return {
+        ...state,
+        trafficAnalysis: new_trafficAnalysis
       };
     default:
       return state;

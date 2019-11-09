@@ -27,8 +27,8 @@ import Projects from "./Projects";
 import Trends from "./Trends";
 import Trackers from "./Trackers";
 
-// import AddTrafficAnalysis from "./AddTrafficAnalysis";
-// import AddTrafficAnalysisHeader from "./AddTrafficAnalysisHeader";
+import AddTrafficAnalysis from "./AddTrafficAnalysis";
+import AddTrafficAnalysisHeader from "./AddTrafficAnalysisHeader";
 import AddTrackers from "./AddTrackers";
 import AddTrackersHeader from "./AddTrackersHeader";
 // import AddProjects from "./AddProjects";
@@ -39,8 +39,8 @@ import EditTrackers from "./EditTrackers";
 import EditTrackersHeader from "./EditTrackersHeader";
 // import EditProjects from "./EditProjects";
 // import EditProjectsHeader from "./EditProjectsHeader";
-// import EditTrafficAnalysis from "./EditTrafficAnalysis";
-// import EditTrafficAnalysisHeader from "./EditTrafficAnalysisHeader";
+import EditTrafficAnalysis from "./EditTrafficAnalysis";
+import EditTrafficAnalysisHeader from "./EditTrafficAnalysisHeader";
 // import Fab from "@material-ui/core/Fab";
 // import CallToActionIcon from "@material-ui/icons/CallToAction";
 // import Badge from "@material-ui/core/Badge";
@@ -235,7 +235,7 @@ class Dashboard extends React.Component {
           <PrivateRoute  exact path="/" component={Header} />*/}
         {/* <Header /> */}
 
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/traffic-analysis/add"
           component={AddTrafficAnalysisHeader}
@@ -244,7 +244,7 @@ class Dashboard extends React.Component {
           exact
           path="/dashboard/traffic-analysis/edit"
           component={EditTrafficAnalysisHeader}
-        /> */}
+        />
         <PrivateRoute
           exact
           path="/dashboard/trackers/add"
@@ -311,7 +311,7 @@ class Dashboard extends React.Component {
           path="/dashboard/traffic-analysis"
           component={TrafficAnalysis}
         />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/traffic-analysis/add"
           component={AddTrafficAnalysis}
@@ -320,7 +320,7 @@ class Dashboard extends React.Component {
           exact
           path="/dashboard/traffic-analysis/edit"
           component={EditTrafficAnalysis}
-        /> */}
+        />
         <PrivateRoute
           exact
           path="/dashboard/influencers"

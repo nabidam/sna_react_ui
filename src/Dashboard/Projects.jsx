@@ -630,8 +630,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(DashboardActions.changeSelectedTracker(id)),
     selectAnalysisType: type =>
       dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis =>
-      dispatch(DashboardActions.changeAnalysisStatus(analysis))
+    changeAnalysisStatus: trafficAnalysis =>
+      dispatch(DashboardActions.changeAnalysisStatus(trafficAnalysis))
   };
 };
 

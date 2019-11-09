@@ -15,7 +15,7 @@ import {
   Popover
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { DashboardActions } from "../_actions";
+import { DashboardActions, AnalysisActions } from "../_actions";
 import BootstrapTooltip from "./BSTooltip";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -1391,8 +1391,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(DashboardActions.changeSelectedTracker(id)),
     selectAnalysisType: type =>
       dispatch(AnalysisActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis =>
-      dispatch(AnalysisActions.changeAnalysisStatus(analysis)),
+    changeAnalysisStatus: trafficAnalysis =>
+      dispatch(AnalysisActions.changeAnalysisStatus(trafficAnalysis)),
     selectGroup: id => dispatch(AnalysisActions.selectGroup(id))
   };
 };

@@ -486,7 +486,7 @@ class Accounts extends React.Component {
               {/* <Grid item md={9} sm={9} xs={9} center>
                 <List className={classes.activeAnalysis}>
                   <Divider fullWidth />
-                  {this.props.analysis.map(item => {
+                  {this.props.trafficAnalysis.map(item => {
                     if (item.active == this.props.selectedAnalysisType) {
                       return (
                         <div>
@@ -499,7 +499,7 @@ class Accounts extends React.Component {
                               this.props.changeAnalysisStatus(item.id)
                             }
                           >
-                            {console.log(this.props.analysis)}
+                            {console.log(this.props.trafficAnalysis)}
                             <div className={classes.analysisListText}>
                               <Typography
                                 variant="h1"
@@ -661,8 +661,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(DashboardActions.changeSelectedTracker(id)),
     selectAnalysisType: type =>
       dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: analysis =>
-      dispatch(DashboardActions.changeAnalysisStatus(analysis))
+    changeAnalysisStatus: trafficAnalysis =>
+      dispatch(DashboardActions.changeAnalysisStatus(trafficAnalysis))
   };
 };
 
