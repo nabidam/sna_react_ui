@@ -299,7 +299,9 @@ class Trackers extends React.Component {
                     variant="body1"
                     className={classes.numberOfTracker}
                   >
-                    {this.props.trackers.length} ردیاب ایجاد شده
+                    {this.props.trackers.length
+                      ? this.props.trackers.length + " ردیاب ایجاد شده"
+                      : "ردیابی ایجاد نشده است."}
                   </Typography>
                 </div>
               </Grid>
