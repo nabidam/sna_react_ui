@@ -6,11 +6,19 @@ import {
   CssBaseline,
   Snackbar,
   SnackbarContent,
-  IconButton
+  IconButton,
+  Typography,
+  List,
+  ListItem,
+  Button
 } from "@material-ui/core";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
-import { DashboardActions } from "../_actions";
+import {
+  DashboardActions,
+  TrafficAnalysisActions,
+  TrackersActions
+} from "../_actions";
 import { green } from "@material-ui/core/colors";
 import { PrivateRoute } from "../_components";
 import AddTracker from "./AddTracker";
@@ -41,21 +49,18 @@ import EditProjects from "./EditProjects";
 import EditProjectsHeader from "./EditProjectsHeader";
 import EditTrafficAnalysis from "./EditTrafficAnalysis";
 import EditTrafficAnalysisHeader from "./EditTrafficAnalysisHeader";
-// import Fab from "@material-ui/core/Fab";
-// import CallToActionIcon from "@material-ui/icons/CallToAction";
-// import Badge from "@material-ui/core/Badge";
-// import Popover from "@material-ui/core/Popover";
-// import AddIcon from "@material-ui/icons/Add";
-// import goToAddQuery from "../../actions/goToAddQuery";
-// import goToAddTrafficAnalysis from "../../actions/goToAddTrafficAnalysis";
-// import selectPage from "../../actions/selectPage";
-// import changeBagItemStatus from "../../actions/changeBagItemStatus";
-// import checkAllBagItemStatus from "../../actions/checkAllBagItemStatus";
-// import Checkbox from "@material-ui/core/Checkbox";
-// import FormGroup from "@material-ui/core/FormGroup";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import FormControl from "@material-ui/core/FormControl";
-// import FormLabel from "@material-ui/core/FormLabel";
+import Fab from "@material-ui/core/Fab";
+import CallToActionIcon from "@material-ui/icons/CallToAction";
+import Badge from "@material-ui/core/Badge";
+import Popover from "@material-ui/core/Popover";
+import AddIcon from "@material-ui/icons/Add";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+
+import { history } from "../_helpers";
 
 const styles = theme => ({
   root: {
@@ -143,7 +148,7 @@ const styles = theme => ({
       opacity: 0.7
     }
   },
-  newQueryBtn: {
+  newTrackerBtn: {
     width: 110,
     height: 44,
     borderRadius: 22,
@@ -212,6 +217,65 @@ class Dashboard extends React.Component {
       open: false,
       msg: ""
     });
+  };
+
+  handlePopoverClick = event => {
+    this.setState({
+      popoverAnchorEl: event.currentTarget,
+      isPopoverOpen: Boolean(event.currentTarget)
+    });
+  };
+
+  handleClosePopover = () => {
+    this.setState({
+      popoverAnchorEl: null,
+      isPopoverOpen: false
+    });
+  };
+
+  handleClickAddAnalysis = () => {
+    this.setState({
+      popoverAnchorEl: null,
+      isPopoverOpen: false
+    });
+    this.props.goToAddTrafficAnalysis();
+    this.props.selectPage("traffic-analysis/add");
+    history.push("/dashboard/traffic-analysis/add");
+  };
+
+  handleClickAddTrackers = () => {
+    this.setState({
+      popoverAnchorEl: null,
+      isPopoverOpen: false
+    });
+    this.props.goToAddTracker();
+    this.props.selectPage("trackers/add");
+    history.push("/dashboard/trackers/add");
+  };
+
+  handleClickBagItem = item => {
+    this.props.changeBagItemStatus(item.name);
+  };
+
+  handleCheckAllBagItems = () => {
+    this.props.checkAllBagItemStatus(!this.state.allBagItemsChecked);
+    this.setState({
+      allBagItemsChecked: !this.state.allBagItemsChecked
+    });
+  };
+
+  componentDidMount = () => {
+    var c = 0;
+    this.props.myBag.map((item, index) => {
+      if (item.selected) {
+        c++;
+      }
+    });
+    if (c == this.props.myBag.length) {
+      this.setState({
+        allBagItemsChecked: true
+      });
+    }
   };
 
   render() {
@@ -346,6 +410,89 @@ class Dashboard extends React.Component {
         <PrivateRoute exact path="/dashboard/trends" component={Trends} />
         <PrivateRoute exact path="/" component={MainDashboard} />
 
+        <Fab
+          className={classes.fab}
+          onClick={event => this.handlePopoverClick(event)}
+        >
+          <CallToActionIcon />
+          <div className={classes.badge}>4</div>
+        </Fab>
+        <Popover
+          open={this.state.isPopoverOpen}
+          onClose={() => this.handleClosePopover()}
+          anchorEl={this.state.popoverAnchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "left"
+          }}
+          classes={{
+            paper: classes.popover
+          }}
+        >
+          <div className={classes.popoverHeader}>
+            <Typography
+              variant="body2"
+              onClick={() => this.handleCheckAllBagItems()}
+              className={classes.checkAllBtn}
+            >
+              {this.state.allBagItemsChecked ? "حذف همه" : "انتخاب همه"}
+            </Typography>
+            <Typography
+              variant="body2"
+              style={{ fontSize: 12, fontWeight: "bold" }}
+            >
+              خورجین من
+            </Typography>
+            <IconButton onClick={() => this.handleClosePopover()}>
+              <CloseIcon className={classes.closeIcon} />
+            </IconButton>
+          </div>
+          <List component="nav" className={classes.popoverList}>
+            {this.props.myBag.map((item, index) => {
+              return (
+                <ListItem
+                  className={classNames(classes.popoverListItem)}
+                  key={index}
+                  button
+                >
+                  <Checkbox
+                    value={item.name}
+                    checked={item.selected}
+                    color="primary"
+                    className={classes.popoverCheckbox}
+                    onChange={() => this.handleClickBagItem(item)}
+                  />
+                  <Typography
+                    variant="body2"
+                    className={classes.popoverListItemText}
+                  >
+                    {item.name}
+                  </Typography>
+                </ListItem>
+              );
+            })}
+          </List>
+          <div className={classes.popoverActions}>
+            <Button
+              color="primary"
+              className={classes.newTrackerBtn}
+              onClick={() => this.handleClickAddTrackers()}
+            >
+              ساخت ردیاب
+            </Button>
+            <Button
+              color="primary"
+              className={classes.newAnalysisBtn}
+              onClick={() => this.handleClickAddAnalysis()}
+            >
+              ساخت تحلیل
+            </Button>
+          </div>
+        </Popover>
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",
@@ -391,12 +538,17 @@ Dashboard.propTypes = {
 const mapStateToProps = state => {
   console.log("dashboard map state");
   console.log(state);
-  const { changeSnackbarStatus, trackers } = state;
+  const {
+    changeSnackbarStatus,
+    trackers,
+    selectedTrackerDashboardItem
+  } = state;
   return {
     isSnackbarOpen: changeSnackbarStatus.isSnackbarOpen,
     snackbarMessage: changeSnackbarStatus.snackbarMessage,
     selectedPage: trackers.selectedPage,
-    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem
+    selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
+    myBag: selectedTrackerDashboardItem.myBag
   };
 };
 
@@ -404,7 +556,15 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSnackbarStatus: data => {
       dispatch(DashboardActions.changeSnackbarStatus(data));
-    }
+    },
+    selectPage: page => dispatch(DashboardActions.selectPage(page)),
+    goToAddTrafficAnalysis: () =>
+      dispatch(TrafficAnalysisActions.goToAddTrafficAnalysis()),
+    goToAddTracker: () => dispatch(TrackersActions.goToAddTracker()),
+    changeBagItemStatus: item =>
+      dispatch(DashboardActions.changeBagItemStatus(item)),
+    checkAllBagItemStatus: status =>
+      dispatch(DashboardActions.checkAllBagItemStatus(status))
   };
 };
 

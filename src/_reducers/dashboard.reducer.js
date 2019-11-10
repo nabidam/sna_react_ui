@@ -180,6 +180,27 @@ const initState3 = {
 };
 
 const initState4 = {
+  comeFrom: "",
+  globalVar: {
+    hashtags: [],
+    keywords: [],
+    instagram: 0,
+    twitter: 0
+  },
+  myBag: [
+    {
+      name: "گرینلند",
+      selected: false
+    },
+    {
+      name: "# پمپئو",
+      selected: true
+    },
+    {
+      name: "فلورانس",
+      selected: true
+    }
+  ],
   selectedTrackerDashboardItem: null, //dashboard,posts!,keywords,influencers,emotions,groups
   lastTrackerId: 4,
   selectedTracker: 3,
@@ -1427,6 +1448,41 @@ function selectedTrackerDashboardItem(state = initState4, action) {
       return {
         ...state,
         selectedTrackersType: action.t
+      };
+    // Naa
+    case DashboardConstants.CHANGE_BAG_ITEM_STATUS:
+      var myBag = state.myBag;
+      var newBag = [];
+      myBag.map((item, index) => {
+        if (action.item == item.name) {
+          newBag.push({ name: item.name, selected: !item.selected });
+        } else {
+          newBag.push(item);
+        }
+      });
+      return {
+        ...state,
+        myBag: newBag
+      };
+    case DashboardConstants.CHECK_ALL_BAG_ITEM_STATUS:
+      var myBag = state.myBag;
+      var newBag = [];
+      myBag.map((item, index) => {
+        newBag.push({ name: item.name, selected: action.status });
+      });
+      return {
+        ...state,
+        myBag: newBag
+      };
+    case DashboardConstants.CHANGE_GLOBAL_VAR:
+      return {
+        ...state,
+        globalVar: action.data
+      };
+    case DashboardConstants.CHANGE_COME_FROM:
+      return {
+        ...state,
+        comeFrom: action.comeFrom
       };
     default:
       return state;

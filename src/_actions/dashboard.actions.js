@@ -23,7 +23,12 @@ export const DashboardActions = {
   selectTracker,
   changeTrafficAnalysisStatus,
   selectTrafficAnalysisType,
-  selectPage
+  selectPage,
+
+  changeBagItemStatus,
+  checkAllBagItemStatus,
+  changeGlobalVar,
+  changeComeFrom
 };
 
 export const TrackersActions = {
@@ -176,6 +181,33 @@ function selectPage(page) {
 }
 
 // Naa
+function changeBagItemStatus(item) {
+  return {
+    type: DashboardConstants.CHANGE_BAG_ITEM_STATUS,
+    item
+  };
+}
+
+function checkAllBagItemStatus(status) {
+  return {
+    type: DashboardConstants.CHECK_ALL_BAG_ITEM_STATUS,
+    status
+  };
+}
+
+function changeGlobalVar(data) {
+  return {
+    type: DashboardConstants.CHANGE_GLOBAL_VAR,
+    data
+  };
+}
+
+function changeComeFrom(comeFrom) {
+  return {
+    type: DashboardConstants.CHANGE_COME_FROM,
+    comeFrom
+  };
+}
 
 // trackers
 function editableTracker(id) {
