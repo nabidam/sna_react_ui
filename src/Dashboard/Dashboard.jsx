@@ -33,8 +33,8 @@ import AddTrackers from "./AddTrackers";
 import AddTrackersHeader from "./AddTrackersHeader";
 import AddProjects from "./AddProjects";
 import AddProjectsHeader from "./AddProjectsHeader";
-// import AddPosts from "./AddPosts";
-// import AddPostsHeader from "./AddPostsHeader";
+import AddPosts from "./AddPosts";
+import AddPostsHeader from "./AddPostsHeader";
 import EditTrackers from "./EditTrackers";
 import EditTrackersHeader from "./EditTrackersHeader";
 import EditProjects from "./EditProjects";
@@ -265,11 +265,11 @@ class Dashboard extends React.Component {
           path="/dashboard/projects/edit"
           component={EditProjectsHeader}
         />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/accounts/add-post"
           component={AddPostsHeader}
-        /> */}
+        />
 
         {this.props.selectedTrackerDashboardItem != null ? (
           <PrivateRoute
@@ -327,11 +327,11 @@ class Dashboard extends React.Component {
           component={Influencers}
         />
         <PrivateRoute exact path="/dashboard/accounts" component={Accounts} />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/accounts/add-post"
           component={AddPosts}
-        /> */}
+        />
         <PrivateRoute exact path="/dashboard/projects" component={Projects} />
         <PrivateRoute
           exact
