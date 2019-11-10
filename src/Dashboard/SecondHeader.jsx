@@ -58,10 +58,10 @@ const styles = theme => ({
     width: 260
   },
   headerPaper: {
-    padding: "0px 0px",
+    padding: "0px 5px",
     fontSize: 12,
     color: "#08080d",
-    margin: "0px 25px",
+    margin: "0px 15px",
     backgroundColor: "#fff",
     borderRadius: 0,
     boxShadow: "none",
@@ -83,7 +83,7 @@ const styles = theme => ({
     }
   },
   headerItemIcon: {
-    marginLeft: 17
+    marginLeft: 5
   },
   cardText: {
     display: "flex",
