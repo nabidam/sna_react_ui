@@ -248,7 +248,7 @@ class TrafficAnalysis extends React.Component {
                     variant="body1"
                     className={classes.numberOfAnalysis}
                   >
-                    ۳ تحلیل ایجاد شده
+                    {this.props.trafficAnalysis.length} تحلیل ایجاد شده
                   </Typography>
                 </div>
               </Grid>

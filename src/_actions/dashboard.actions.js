@@ -1,7 +1,8 @@
 import {
   DashboardConstants,
   trackersConstants,
-  trafficAnalysisConstants
+  trafficAnalysisConstants,
+  projectsConstants
 } from "../_constants";
 import { trackerService } from "../_services";
 import { alertActions } from "./alert.actions";
@@ -43,6 +44,16 @@ export const TrafficAnalysisActions = {
   deleteTrafficAnalysis,
   changeEditableTrafficAnalysis,
   editTrafficAnalysis
+};
+
+export const ProjectsActions = {
+  editableProject,
+  goToAddProject,
+  changeAddProject,
+  createProject,
+  deleteProject,
+  changeEditableProject,
+  editProject
 };
 
 function addTracker(data) {
@@ -257,5 +268,52 @@ function changeEditableTrafficAnalysis(data) {
 function editTrafficAnalysis() {
   return {
     type: trafficAnalysisConstants.EDIT_TRAFFIC_ANALYSIS
+  };
+}
+
+// projects
+function editableProject(id) {
+  return {
+    type: projectsConstants.EDITABLE_PROJECT,
+    id
+  };
+}
+
+function goToAddProject() {
+  return {
+    type: projectsConstants.GO_TO_ADD_PROJECT
+  };
+}
+
+function changeAddProject(data) {
+  return {
+    type: projectsConstants.CHANGE_ADD_PROJECT,
+    data
+  };
+}
+
+function createProject() {
+  return {
+    type: projectsConstants.CREATE_PROJECT
+  };
+}
+
+function deleteProject(project) {
+  return {
+    type: projectsConstants.DELETE_PROJECT,
+    project
+  };
+}
+
+function changeEditableProject(data) {
+  return {
+    type: projectsConstants.CHANGE_EDITABLE_PROJECT,
+    data
+  };
+}
+
+function editProject() {
+  return {
+    type: projectsConstants.EDIT_PROJECT
   };
 }

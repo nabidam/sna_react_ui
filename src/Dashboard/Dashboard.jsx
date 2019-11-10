@@ -31,14 +31,14 @@ import AddTrafficAnalysis from "./AddTrafficAnalysis";
 import AddTrafficAnalysisHeader from "./AddTrafficAnalysisHeader";
 import AddTrackers from "./AddTrackers";
 import AddTrackersHeader from "./AddTrackersHeader";
-// import AddProjects from "./AddProjects";
-// import AddProjectsHeader from "./AddProjectsHeader";
+import AddProjects from "./AddProjects";
+import AddProjectsHeader from "./AddProjectsHeader";
 // import AddPosts from "./AddPosts";
 // import AddPostsHeader from "./AddPostsHeader";
 import EditTrackers from "./EditTrackers";
 import EditTrackersHeader from "./EditTrackersHeader";
-// import EditProjects from "./EditProjects";
-// import EditProjectsHeader from "./EditProjectsHeader";
+import EditProjects from "./EditProjects";
+import EditProjectsHeader from "./EditProjectsHeader";
 import EditTrafficAnalysis from "./EditTrafficAnalysis";
 import EditTrafficAnalysisHeader from "./EditTrafficAnalysisHeader";
 // import Fab from "@material-ui/core/Fab";
@@ -255,7 +255,7 @@ class Dashboard extends React.Component {
           path="/dashboard/trackers/edit"
           component={EditTrackersHeader}
         />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/projects/add"
           component={AddProjectsHeader}
@@ -265,7 +265,7 @@ class Dashboard extends React.Component {
           path="/dashboard/projects/edit"
           component={EditProjectsHeader}
         />
-        <PrivateRoute
+        {/* <PrivateRoute
           exact
           path="/dashboard/accounts/add-post"
           component={AddPostsHeader}
@@ -333,7 +333,7 @@ class Dashboard extends React.Component {
           component={AddPosts}
         /> */}
         <PrivateRoute exact path="/dashboard/projects" component={Projects} />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/dashboard/projects/add"
           component={AddProjects}
@@ -342,7 +342,7 @@ class Dashboard extends React.Component {
           exact
           path="/dashboard/projects/edit"
           component={EditProjects}
-        /> */}
+        />
         <PrivateRoute exact path="/dashboard/trends" component={Trends} />
         <PrivateRoute exact path="/" component={MainDashboard} />
 

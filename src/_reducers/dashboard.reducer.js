@@ -1,7 +1,8 @@
 import {
   DashboardConstants,
   trackersConstants,
-  trafficAnalysisConstants
+  trafficAnalysisConstants,
+  projectsConstants
 } from "../_constants";
 
 export const DashboardReducer = {
@@ -605,7 +606,7 @@ const initState4 = {
       name: "کاله",
       date: "12 خرداد 1398",
       time: "16:43",
-      queries: [
+      trackers: [
         {
           id: 1,
           name: "ماست",
@@ -631,14 +632,14 @@ const initState4 = {
           active: 1
         }
       ],
-      selectedQueries: [1]
+      selectedTrackers: [1]
     },
     {
       id: 2,
       name: "بازتاب",
       date: "12 خرداد 1398",
       time: "16:43",
-      queries: [
+      trackers: [
         {
           id: 1,
           name: "ماست",
@@ -680,14 +681,14 @@ const initState4 = {
           active: 1
         }
       ],
-      selectedQueries: [1]
+      selectedTrackers: [1]
     },
     {
       id: 3,
       name: "مطالعه",
       date: "12 خرداد 1398",
       time: "16:43",
-      queries: [
+      trackers: [
         {
           id: 1,
           name: "ماست",
@@ -737,7 +738,7 @@ const initState4 = {
           active: 1
         }
       ],
-      selectedQueries: [1]
+      selectedTrackers: [1]
     }
   ],
   myPosts: [
@@ -959,7 +960,7 @@ const initState4 = {
         name: "کاله",
         date: "12 خرداد 1398",
         time: "16:43",
-        queries: [
+        trackers: [
           {
             id: 1,
             name: "ماست",
@@ -1024,7 +1025,7 @@ const initState4 = {
         name: "کاله",
         date: "12 خرداد 1398",
         time: "16:43",
-        queries: [
+        trackers: [
           {
             id: 1,
             name: "ماست",
@@ -1089,7 +1090,7 @@ const initState4 = {
         name: "کاله",
         date: "12 خرداد 1398",
         time: "16:43",
-        queries: [
+        trackers: [
           {
             id: 1,
             name: "ماست",
@@ -1154,7 +1155,7 @@ const initState4 = {
         name: "کاله",
         date: "12 خرداد 1398",
         time: "16:43",
-        queries: [
+        trackers: [
           {
             id: 1,
             name: "ماست",
@@ -1653,16 +1654,8 @@ function trackers(state = initState4, action) {
         id: null,
         name: "",
         active: 1,
-        social: {
-          twitter: 0,
-          instagram: 0,
-          instagramUsers: [],
-          twitterUsers: []
-        },
-        retrieved_posts: 0,
         date: "12 خرداد 98",
         time: "16:43",
-        selectedProject: null,
         isDaySelected: false,
         selectedDay: {
           from: null,
@@ -1671,9 +1664,7 @@ function trackers(state = initState4, action) {
         location: {
           isLocationEnable: false,
           center: [51.4124, 35.7325]
-        },
-        keywords: [],
-        hashtags: []
+        }
       };
       // console.log(addTrafficAnalysis);
       return {
@@ -1725,6 +1716,78 @@ function trackers(state = initState4, action) {
       return {
         ...state,
         trafficAnalysis: new_trafficAnalysis
+      };
+    // projects
+    case projectsConstants.EDITABLE_PROJECT:
+      var editableProject = {};
+      state.projects.map(t => {
+        if (t.id == action.id) {
+          editableProject = t;
+        }
+      });
+      return {
+        ...state,
+        editableProject
+      };
+    case projectsConstants.GO_TO_ADD_PROJECT:
+      var addProject = {
+        id: null,
+        name: "",
+        date: "12 خرداد 1398",
+        time: "16:43",
+        trackers: [],
+        selectedTrackers: []
+      };
+      // console.log(addProject);
+      return {
+        ...state,
+        addProject
+      };
+    case projectsConstants.CHANGE_ADD_PROJECT:
+      return {
+        ...state,
+        addProject: action.data
+      };
+    case projectsConstants.CREATE_PROJECT:
+      var last_id = state.projects[state.projects.length - 1].id;
+      var addProject = state.addProject;
+      addProject.id = last_id + 1;
+      console.log("create_tracker");
+      return {
+        ...state,
+        projects: [...state.projects, addProject]
+      };
+    case projectsConstants.DELETE_PROJECT:
+      var removed_list = [];
+      // console.log(action.tracker);
+      state.projects.map((item, index) => {
+        if (item.id != action.project.id) {
+          removed_list.push(item);
+        }
+      });
+      return {
+        ...state,
+        projects: removed_list
+      };
+    case projectsConstants.CHANGE_EDITABLE_PROJECT:
+      return {
+        ...state,
+        editableProject: action.data
+      };
+    case projectsConstants.EDIT_PROJECT:
+      var editableProject = state.editableProject;
+      var projects = state.projects;
+      var new_project = [];
+      projects.map((item, index) => {
+        if (item.id != editableProject.id) {
+          new_project.push(item);
+        } else {
+          new_project.push(editableProject);
+        }
+      });
+      return {
+        ...state,
+        projects: new_project
       };
     default:
       return state;

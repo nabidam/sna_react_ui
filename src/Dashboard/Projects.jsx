@@ -13,11 +13,16 @@ import {
   Collapse
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { DashboardActions, AnalysisActions } from "../_actions";
+import {
+  DashboardActions,
+  AnalysisActions,
+  ProjectsActions
+} from "../_actions";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { history } from "../_helpers";
 
 const styles = theme => ({
   wrapper: {
@@ -364,7 +369,7 @@ const styles = theme => ({
       opacity: 0.7
     }
   },
-  query: {
+  tracker: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -402,6 +407,18 @@ class Projects extends React.Component {
     });
   };
 
+  handleClickAddProject = () => {
+    this.props.goToAddProject();
+    this.props.selectPage("projects/add");
+    history.push("/dashboard/projects/add");
+  };
+
+  handleClickEdit = id => {
+    this.props.editableProject(id);
+    this.props.selectPage("projects/edit");
+    history.push("/dashboard/projects/edit");
+  };
+
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -430,7 +447,11 @@ class Projects extends React.Component {
                   <Typography variant="h1" className={classes.title}>
                     پروژه‌ها
                   </Typography>
-                  <Button color="primary" className={classes.newProjectBtn}>
+                  <Button
+                    color="primary"
+                    className={classes.newProjectBtn}
+                    onClick={() => this.handleClickAddProject()}
+                  >
                     ساخت پروژه جدید
                   </Button>
                 </div>
@@ -482,7 +503,7 @@ class Projects extends React.Component {
                                 {item.name}
                               </Typography>
                               <span className={classes.projectBadge}>
-                                {item.queries.length} ردیاب
+                                {item.selectedTrackers.length} ردیاب
                               </span>
                             </div>
                             <div className={classes.textMute}>
@@ -523,6 +544,7 @@ class Projects extends React.Component {
                             <Typography
                               variant="body1"
                               className={classes.edit}
+                              onClick={() => this.handleClickEdit(item.id)}
                             >
                               ویرایش
                             </Typography>
@@ -534,63 +556,64 @@ class Projects extends React.Component {
                           unmountOnExit
                         >
                           <List component="div" disablePadding>
-                            {item.queries.map((q, i) => {
-                              return (
-                                <ListItem className={classes.query} key={i}>
-                                  <div className={classes.projectInformation}>
-                                    <div className={classes.projectTitle}>
-                                      <Typography
-                                        variant="h1"
-                                        className={classes.projectName}
-                                      >
-                                        {q.name}
-                                      </Typography>
-                                      <div className={classes.socialIcons}>
-                                        <i
-                                          className={classNames(
-                                            classes.instagram,
-                                            "fab fa-instagram fa-lg"
-                                          )}
-                                        ></i>
-                                        <i
-                                          className={classNames(
-                                            classes.twitter,
-                                            "fab fa-twitter fa-lg"
-                                          )}
-                                        ></i>
+                            {this.props.trackers.map((q, i) => {
+                              if (item.selectedTrackers.indexOf(q.id) != -1)
+                                return (
+                                  <ListItem className={classes.tracker} key={i}>
+                                    <div className={classes.projectInformation}>
+                                      <div className={classes.projectTitle}>
+                                        <Typography
+                                          variant="h1"
+                                          className={classes.projectName}
+                                        >
+                                          {q.name}
+                                        </Typography>
+                                        <div className={classes.socialIcons}>
+                                          <i
+                                            className={classNames(
+                                              classes.instagram,
+                                              "fab fa-instagram fa-lg"
+                                            )}
+                                          ></i>
+                                          <i
+                                            className={classNames(
+                                              classes.twitter,
+                                              "fab fa-twitter fa-lg"
+                                            )}
+                                          ></i>
+                                        </div>
+                                      </div>
+                                      <div className={classes.textMute}>
+                                        ساخته شده در {q.date}, ساعت {q.time}
+                                        <Divider
+                                          className={classes.statsDivider}
+                                        />
+                                        پست‌های ردیابی شده: {q.retrieved_posts}
                                       </div>
                                     </div>
-                                    <div className={classes.textMute}>
-                                      ساخته شده در {q.date}, ساعت {q.time}
-                                      <Divider
-                                        className={classes.statsDivider}
-                                      />
-                                      پست‌های ردیابی شده: {q.retrieved_posts}
+                                    <div className={classes.projectsListAction}>
+                                      {q.active == 1 ? (
+                                        <Button className={classes.pauseBtn}>
+                                          <PauseIcon
+                                            className={classes.activeIcon}
+                                          />
+                                        </Button>
+                                      ) : (
+                                        <Button className={classes.playBtn}>
+                                          <PlayArrowIcon
+                                            className={classes.activeIcon}
+                                          />
+                                        </Button>
+                                      )}
+                                      <Typography
+                                        variant="body1"
+                                        className={classes.edit}
+                                      >
+                                        ویرایش
+                                      </Typography>
                                     </div>
-                                  </div>
-                                  <div className={classes.projectsListAction}>
-                                    {q.active == 1 ? (
-                                      <Button className={classes.pauseBtn}>
-                                        <PauseIcon
-                                          className={classes.activeIcon}
-                                        />
-                                      </Button>
-                                    ) : (
-                                      <Button className={classes.playBtn}>
-                                        <PlayArrowIcon
-                                          className={classes.activeIcon}
-                                        />
-                                      </Button>
-                                    )}
-                                    <Typography
-                                      variant="body1"
-                                      className={classes.edit}
-                                    >
-                                      ویرایش
-                                    </Typography>
-                                  </div>
-                                </ListItem>
-                              );
+                                  </ListItem>
+                                );
                             })}
                           </List>
                         </Collapse>
@@ -626,12 +649,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeSelectedTracker: id =>
-      dispatch(DashboardActions.changeSelectedTracker(id)),
-    selectAnalysisType: type =>
-      dispatch(DashboardActions.selectAnalysisType(type)),
-    changeAnalysisStatus: trafficAnalysis =>
-      dispatch(DashboardActions.changeAnalysisStatus(trafficAnalysis))
+    selectPage: page => dispatch(DashboardActions.selectPage(page)),
+    editableProject: id => dispatch(ProjectsActions.editableProject(id)),
+    goToAddProject: () => dispatch(ProjectsActions.goToAddProject())
   };
 };
 
