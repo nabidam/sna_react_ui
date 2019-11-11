@@ -267,10 +267,11 @@ class Dashboard extends React.Component {
 
   goToTrackers = () => {
     this.props.selectPage("trackers");
-    history.push("dashboard/trackers");
+    history.push("/dashboard/trackers");
   };
 
   componentDidMount = () => {
+    console.log(history);
     var c = 0;
     this.props.myBag.map((item, index) => {
       if (item.selected) {
@@ -293,16 +294,20 @@ class Dashboard extends React.Component {
     console.log("dashboard render");
     console.log(localStorage.getItem("user"));
     console.log(this.props);
+
+    var header = "";
+    if (
+      history.location.pathname == "/dashboard" ||
+      this.state.mainHeaderPages.indexOf(this.props.selectedPage) != -1
+    ) {
+      header = <SecondHeader />;
+    }
     return (
       <div className={classes.root}>
         <CssBaseline />
         {/*this.props.selectedPage == "" ? <Header /> : <SecondHeader />*/}
         {console.log(this.props.selectedPage)}
-        {this.state.mainHeaderPages.indexOf(this.props.selectedPage) == -1 ? (
-          ""
-        ) : (
-          <SecondHeader />
-        )}
+        {header}
         {/* <SecondHeader /> */}
         {/* <PrivateRoute exact path="/dashboard/tracker" component={SecondHeader} />
           <PrivateRoute  exact path="/" component={Header} />*/}
@@ -364,7 +369,7 @@ class Dashboard extends React.Component {
         /> */}
         {this.state.mainHeaderPages.indexOf(this.props.selectedPage) == -1 ? (
           <PrivateRoute exact path="/dashboard" component={Trackers}>
-            {() => this.goToTrackers()}
+            {/* {() => this.goToTrackers()} */}
           </PrivateRoute>
         ) : (
           ""
