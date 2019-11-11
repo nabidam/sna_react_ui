@@ -59,6 +59,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import Boarding from "../Dashboard/Boarding";
 
 import { history } from "../_helpers";
 
@@ -264,6 +265,11 @@ class Dashboard extends React.Component {
     });
   };
 
+  goToTrackers = () => {
+    this.props.selectPage("trackers");
+    history.push("dashboard/trackers");
+  };
+
   componentDidMount = () => {
     var c = 0;
     this.props.myBag.map((item, index) => {
@@ -276,6 +282,9 @@ class Dashboard extends React.Component {
         allBagItemsChecked: true
       });
     }
+
+    // this.props.selectPage("trackers");
+    // history.push("dashboard/trackers");
   };
 
   render() {
@@ -298,6 +307,8 @@ class Dashboard extends React.Component {
         {/* <PrivateRoute exact path="/dashboard/tracker" component={SecondHeader} />
           <PrivateRoute  exact path="/" component={Header} />*/}
         {/* <Header /> */}
+
+        <PrivateRoute exact path="/boarding" component={Boarding} />
 
         <PrivateRoute
           exact
@@ -351,6 +362,13 @@ class Dashboard extends React.Component {
           path="/dashboard/add-tracker"
           component={AddTracker}
         /> */}
+        {this.state.mainHeaderPages.indexOf(this.props.selectedPage) == -1 ? (
+          <PrivateRoute exact path="/dashboard" component={Trackers}>
+            {() => this.goToTrackers()}
+          </PrivateRoute>
+        ) : (
+          ""
+        )}
         {this.props.selectedTrackerDashboardItem == null ? (
           <PrivateRoute exact path="/dashboard/trackers" component={Trackers} />
         ) : (
@@ -409,90 +427,96 @@ class Dashboard extends React.Component {
         />
         <PrivateRoute exact path="/dashboard/trends" component={Trends} />
         <PrivateRoute exact path="/" component={MainDashboard} />
-
-        <Fab
-          className={classes.fab}
-          onClick={event => this.handlePopoverClick(event)}
-        >
-          <CallToActionIcon />
-          <div className={classes.badge}>4</div>
-        </Fab>
-        <Popover
-          open={this.state.isPopoverOpen}
-          onClose={() => this.handleClosePopover()}
-          anchorEl={this.state.popoverAnchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center"
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "left"
-          }}
-          classes={{
-            paper: classes.popover
-          }}
-        >
-          <div className={classes.popoverHeader}>
-            <Typography
-              variant="body2"
-              onClick={() => this.handleCheckAllBagItems()}
-              className={classes.checkAllBtn}
+        {this.state.mainHeaderPages.indexOf(this.props.selectedPage) == -1 ? (
+          ""
+        ) : (
+          <div>
+            <Fab
+              className={classes.fab}
+              onClick={event => this.handlePopoverClick(event)}
             >
-              {this.state.allBagItemsChecked ? "حذف همه" : "انتخاب همه"}
-            </Typography>
-            <Typography
-              variant="body2"
-              style={{ fontSize: 12, fontWeight: "bold" }}
+              <CallToActionIcon />
+              <div className={classes.badge}>4</div>
+            </Fab>
+            <Popover
+              open={this.state.isPopoverOpen}
+              onClose={() => this.handleClosePopover()}
+              anchorEl={this.state.popoverAnchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center"
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "left"
+              }}
+              classes={{
+                paper: classes.popover
+              }}
             >
-              خورجین من
-            </Typography>
-            <IconButton onClick={() => this.handleClosePopover()}>
-              <CloseIcon className={classes.closeIcon} />
-            </IconButton>
-          </div>
-          <List component="nav" className={classes.popoverList}>
-            {this.props.myBag.map((item, index) => {
-              return (
-                <ListItem
-                  className={classNames(classes.popoverListItem)}
-                  key={index}
-                  button
+              <div className={classes.popoverHeader}>
+                <Typography
+                  variant="body2"
+                  onClick={() => this.handleCheckAllBagItems()}
+                  className={classes.checkAllBtn}
                 >
-                  <Checkbox
-                    value={item.name}
-                    checked={item.selected}
-                    color="primary"
-                    className={classes.popoverCheckbox}
-                    onChange={() => this.handleClickBagItem(item)}
-                  />
-                  <Typography
-                    variant="body2"
-                    className={classes.popoverListItemText}
-                  >
-                    {item.name}
-                  </Typography>
-                </ListItem>
-              );
-            })}
-          </List>
-          <div className={classes.popoverActions}>
-            <Button
-              color="primary"
-              className={classes.newTrackerBtn}
-              onClick={() => this.handleClickAddTrackers()}
-            >
-              ساخت ردیاب
-            </Button>
-            <Button
-              color="primary"
-              className={classes.newAnalysisBtn}
-              onClick={() => this.handleClickAddAnalysis()}
-            >
-              ساخت تحلیل
-            </Button>
+                  {this.state.allBagItemsChecked ? "حذف همه" : "انتخاب همه"}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  style={{ fontSize: 12, fontWeight: "bold" }}
+                >
+                  خورجین من
+                </Typography>
+                <IconButton onClick={() => this.handleClosePopover()}>
+                  <CloseIcon className={classes.closeIcon} />
+                </IconButton>
+              </div>
+              <List component="nav" className={classes.popoverList}>
+                {this.props.myBag.map((item, index) => {
+                  return (
+                    <ListItem
+                      className={classNames(classes.popoverListItem)}
+                      key={index}
+                      button
+                    >
+                      <Checkbox
+                        value={item.name}
+                        checked={item.selected}
+                        color="primary"
+                        className={classes.popoverCheckbox}
+                        onChange={() => this.handleClickBagItem(item)}
+                      />
+                      <Typography
+                        variant="body2"
+                        className={classes.popoverListItemText}
+                      >
+                        {item.name}
+                      </Typography>
+                    </ListItem>
+                  );
+                })}
+              </List>
+              <div className={classes.popoverActions}>
+                <Button
+                  color="primary"
+                  className={classes.newTrackerBtn}
+                  onClick={() => this.handleClickAddTrackers()}
+                >
+                  ساخت ردیاب
+                </Button>
+                <Button
+                  color="primary"
+                  className={classes.newAnalysisBtn}
+                  onClick={() => this.handleClickAddAnalysis()}
+                >
+                  ساخت تحلیل
+                </Button>
+              </div>
+            </Popover>
           </div>
-        </Popover>
+        )}
+
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",
@@ -546,7 +570,7 @@ const mapStateToProps = state => {
   return {
     isSnackbarOpen: changeSnackbarStatus.isSnackbarOpen,
     snackbarMessage: changeSnackbarStatus.snackbarMessage,
-    selectedPage: trackers.selectedPage,
+    selectedPage: selectedTrackerDashboardItem.selectedPage,
     selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
     myBag: selectedTrackerDashboardItem.myBag
   };

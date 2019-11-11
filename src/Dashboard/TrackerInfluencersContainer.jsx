@@ -9,7 +9,10 @@ import {
   Paper,
   Divider,
   Button,
-  Popover
+  Popover,
+  List,
+  ListItem,
+  ListItemText
 } from "@material-ui/core";
 import { linearGradient } from "recharts";
 import { connect } from "react-redux";
@@ -38,6 +41,12 @@ import {
 } from "react-sigma";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Calendar } from "react-modern-calendar-datepicker";
+import ReactEcharts from "echarts-for-react";
+import echarts from "echarts";
+import lesMiserablesData from "../_data/les-miserables.gexf";
+import gexf from "gexf";
+import InfluencersGraph from "./InfluencersGraph";
+echarts.dataTool = require("echarts/extension/dataTool");
 
 const months = [
   "",
@@ -1197,16 +1206,67 @@ class TrackerInfluencersContainer extends React.Component {
     };
   };
 
-  componentDidMount = () => {
-    this.setState({
-      callbacks: {
-        getWordTooltip: word =>
-          `The word "${word.text}" appears ${word.value} times.`,
-        onWordClick: this.getCallback("onWordClick"),
-        onWordMouseOut: this.getCallback("onWordMouseOut"),
-        onWordMouseOver: this.getCallback("onWordMouseOver")
-      }
+  componentWillMount = () => {
+    // this.setState({
+    //   callbacks: {
+    //     getWordTooltip: word =>
+    //       `The word "${word.text}" appears ${word.value} times.`,
+    //     onWordClick: this.getCallback("onWordClick"),
+    //     onWordMouseOut: this.getCallback("onWordMouseOut"),
+    //     onWordMouseOver: this.getCallback("onWordMouseOver")
+    //   }
+    // });
+    // axios({
+    //   method: "get",
+    //   url:
+    //     "https://echarts.apache.org/examples/data/asset/data/les-miserables.gexf",
+    //   responseType: "json"
+    // }).then(function(response) {
+    //   console.log(response);
+    // });
+    // Converting a string to a DOM object
+    var gexf_dom = new DOMParser().parseFromString(
+      lesMiserablesData,
+      "application/xml"
+    );
+    // console.log(gexf_dom);
+    // Parsing the gexf
+    // var graph = gexf.parse(gexf_dom);
+    // var graph = gexf.fetch(
+    //   "https://echarts.apache.org/examples/data/asset/data/les-miserables.gexf"
+    // );
+    var graph = echarts.dataTool.gexf.parse(lesMiserablesData);
+    // console.log(graph);
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+      categories[i] = {
+        name: "" + i
+      };
+    }
+    graph.nodes.forEach(function(node) {
+      node.itemStyle = null;
+      node.value = node.symbolSize;
+      node.symbolSize /= 1.5;
+      node.label = {
+        normal: {
+          show: node.symbolSize > 30
+        }
+      };
+      node.category = node.attributes.modularity_class;
     });
+    this.setState({
+      graph,
+      graphCategories: categories
+    });
+    // this.setState({
+    //   callbacks: {
+    //     getWordTooltip: word =>
+    //       `The word "${word.text}" appears ${word.value} times.`,
+    //     onWordClick: this.getCallback("onWordClick"),
+    //     onWordMouseOut: this.getCallback("onWordMouseOut"),
+    //     onWordMouseOver: this.getCallback("onWordMouseOver")
+    //   }
+    // });
   };
 
   handleWordClick = (word, event) => {
@@ -1314,21 +1374,21 @@ class TrackerInfluencersContainer extends React.Component {
   };
 
   getOption = () => ({
-    title: {
-      text: "Les Miserables",
-      subtext: "Default layout",
-      top: "bottom",
-      left: "right"
-    },
+    // title: {
+    //   text: "Les Miserables",
+    //   subtext: "Default layout",
+    //   top: "bottom",
+    //   left: "right"
+    // },
     tooltip: {},
-    legend: [
-      {
-        // selectedMode: 'single',
-        data: this.statete.graphCategories.map(function(a) {
-          return a.name;
-        })
-      }
-    ],
+    // legend: [
+    //   {
+    //     // selectedMode: 'single',
+    //     data: this.state.graphCategories.map(function(a) {
+    //       return a.name;
+    //     })
+    //   }
+    // ],
     animationDuration: 1500,
     animationEasingUpdate: "quinticInOut",
     series: [
@@ -1349,10 +1409,10 @@ class TrackerInfluencersContainer extends React.Component {
             shadowColor: "rgba(0, 0, 0, 0.3)"
           }
         },
-        label: {
-          position: "right",
-          formatter: "{b}"
-        },
+        // label: {
+        //   position: "right",
+        //   formatter: "{b}"
+        // },
         lineStyle: {
           color: "source",
           curveness: 0.3
@@ -1518,7 +1578,7 @@ class TrackerInfluencersContainer extends React.Component {
         </Container>
         <Container className={classes.chartContainer}>
           <Grid container className={classes.root} spacing={2}>
-            <Grid item md={12} sm={12} xs={12}>
+            <Grid item md={8} sm={12} xs={12}>
               <Paper
                 className={classNames(
                   classes.chartPaper,
@@ -1539,6 +1599,90 @@ class TrackerInfluencersContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
+                <InfluencersGraph
+                  graph={this.state.graph}
+                  graphCategories={this.state.graphCategories}
+                />
+              </Paper>
+            </Grid>
+            <Grid item md={4} sm={12} xs={12}>
+              <Paper
+                className={classNames(
+                  classes.relatedsPaper,
+                  classes.chartPaper
+                )}
+              >
+                <div className={classes.paperHeader}>
+                  <Typography variant="h6" className={classes.headerText}>
+                    لفظ‌های مرتبط
+                  </Typography>
+                  <div className={classes.paperHeaderGuideIcon}>
+                    <BootstrapTooltip
+                      placement="top"
+                      title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
+                    >
+                      <i className="far fa-lightbulb fa-lg" />
+                    </BootstrapTooltip>
+                  </div>
+                </div>
+                <Divider variant="fullWidth" className={classes.dividerM} />
+                <div className={classes.fieldsContent}>
+                  <List component="div" disablePadding className={classes.tabs}>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        "" +
+                          (this.state.selectedTab == "keyWords"
+                            ? classes.selectedTab
+                            : "")
+                      )}
+                      onClick={() => this.handleSelectTab("keyWords")}
+                    >
+                      <ListItemText
+                        primary="کلمات کلیدی"
+                        className={classNames(classes.textCenter)}
+                      />
+                    </ListItem>
+                    <ListItem
+                      className={classNames(
+                        classes.listItem,
+                        "" +
+                          (this.state.selectedTab == "hashtags"
+                            ? classes.selectedTab
+                            : "")
+                      )}
+                      onClick={() => this.handleSelectTab("hashtags")}
+                    >
+                      <ListItemText
+                        primary="هشتگ‌ها"
+                        className={classNames(classes.textCenter)}
+                      />
+                    </ListItem>
+                  </List>
+                  <List
+                    component="div"
+                    disablePadding
+                    className={classes.relateds}
+                  >
+                    {this.props.keywords.map((item, index) => {
+                      return (
+                        <ListItem className={classes.listItem} key={index}>
+                          <ListItemText
+                            primary={item.text}
+                            className={classNames(classes.textRight)}
+                          />
+                          <ListItemText
+                            primary={item.value}
+                            className={classNames(
+                              classes.textMute,
+                              classes.textLeft
+                            )}
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </div>
               </Paper>
             </Grid>
           </Grid>

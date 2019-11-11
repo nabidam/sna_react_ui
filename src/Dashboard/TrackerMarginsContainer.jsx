@@ -27,6 +27,11 @@ import ViewModuleOutlinedIcon from "@material-ui/icons/ViewModuleOutlined";
 import ListPosts from "./ListPosts";
 import GridPosts from "./GridPosts";
 import CheckIcon from "@material-ui/icons/Check";
+import ReactEcharts from "echarts-for-react";
+import echarts from "echarts";
+import lesMiserablesData from "../_data/les-miserables.gexf";
+import gexf from "gexf";
+import InfluencersGraph from "./InfluencersGraph";
 
 import {
   Sigma,
@@ -45,6 +50,7 @@ import {
 } from "react-sigma";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Calendar } from "react-modern-calendar-datepicker";
+echarts.dataTool = require("echarts/extension/dataTool");
 
 const months = [
   "",
@@ -1337,6 +1343,36 @@ class TrackerMarginsContainer extends React.Component {
     });
   };
 
+  componentWillMount = () => {
+    // Converting a string to a DOM object
+    var gexf_dom = new DOMParser().parseFromString(
+      lesMiserablesData,
+      "application/xml"
+    );
+    var graph = echarts.dataTool.gexf.parse(lesMiserablesData);
+    // console.log(graph);
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+      categories[i] = {
+        name: "" + i
+      };
+    }
+    graph.nodes.forEach(function(node) {
+      node.itemStyle = null;
+      node.value = node.symbolSize;
+      node.symbolSize /= 1.5;
+      node.label = {
+        normal: {
+          show: node.symbolSize > 30
+        }
+      };
+      node.category = node.attributes.modularity_class;
+    });
+    this.setState({
+      graph,
+      graphCategories: categories
+    });
+  };
   //   componentDidMount = () => {
   //     console.log(
   //       moment()
@@ -1485,9 +1521,13 @@ class TrackerMarginsContainer extends React.Component {
                   </div>
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
-                <Sigma>
+                {/* <Sigma>
                   <LoadGEXF path="../_data/les-miserables.gexf"></LoadGEXF>
-                </Sigma>
+                </Sigma> */}
+                <InfluencersGraph
+                  graph={this.state.graph}
+                  graphCategories={this.state.graphCategories}
+                />
               </Paper>
             </Grid>
             <Grid item md={4} sm={12} xs={12}>

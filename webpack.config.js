@@ -26,24 +26,59 @@ module.exports = {
         })
       },
       {
+        // test: /\.(png|jp(e*)g|svg)$/,
+        //   use: [{
+        //       loader: 'url-loader',
+        //       options: {
+        //           limit: 8000, // Convert images < 8kb to base64 strings
+        //           name: 'images/[hash]-[name].[ext]'
+        //       }
+        //   }]
         test: /\.(png|jpg|gif)$/,
         exclude: /node_modules/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[name].[ext]"
-            // outputPath: "images"
-            // publicPath: "assets"
+        // use: {
+        //   // loader: "file-loader"
+        //   // options: {
+        //   //   name: "[name].[ext]",
+        //   //   outputPath: "images",
+        //   //   publicPath: "assets"
+        //   // }
+        // }
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 8000, // Convert images < 8kb to base64 strings
+              name: "_images/[name].[ext]"
+            }
           }
-        }
+        ]
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000"
+        test: /\.(woff|woff2|eot|ttf|svg)$/,
+        // loader: "url-loader?limit=100000"
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 100000, // Convert images < 8kb to base64 strings
+              name: "_fonts/[name].[ext]"
+            }
+          }
+        ]
       },
       {
         test: /\.(xml|gexf)$/i,
-        use: "raw-loader"
+        // use: "raw-loader"
+        use: [
+          {
+            loader: "raw-loader"
+            // options: {
+            //   limit: 100000000000000 // Convert images < 8kb to base64 strings
+            //   // name: "_data/[name].[ext]"
+            // }
+          }
+        ]
       }
     ]
   },

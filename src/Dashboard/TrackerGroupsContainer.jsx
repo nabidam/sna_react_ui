@@ -559,7 +559,7 @@ const styles = theme => ({
   },
 
   table: {
-    width: 605
+    width: "100%"
   },
   tableHeader: {
     fontSize: 12,
@@ -677,7 +677,7 @@ const styles = theme => ({
     height: 420
   },
   tableCellLowPadding: {
-    padding: 6
+    padding: "10px 0px"
   },
   selectedGroup: {
     backgroundColor: "#dbddff",
@@ -1378,7 +1378,7 @@ class TrackerGroupsContainer extends React.Component {
               <Paper className={classes.chartPaper}>
                 <div className={classes.paperHeader}>
                   <Typography variant="h6" className={classes.headerText}>
-                    عبارات خاص
+                    دسته‌بندی‌ها
                   </Typography>
                   <div className={classes.paperHeaderGuideIcon}>
                     <BootstrapTooltip
@@ -1391,8 +1391,8 @@ class TrackerGroupsContainer extends React.Component {
                 </div>
                 <Divider variant="fullWidth" className={classes.dividerM} />
                 <Grid container className={classes.root}>
-                  <Grid item md={8} sm={12} xs={12}>
-                    <Table className={classes.table} stickyHeader>
+                  <Grid item md={12} sm={12} xs={12}>
+                    <Table className={classes.table}>
                       <TableHead>
                         <TableRow>
                           <TableCell
@@ -1401,7 +1401,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "20%" }}
+                            // style={{ width: 10 }}
                           >
                             نام دسته
                           </TableCell>
@@ -1411,7 +1411,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             پست‌ها
                           </TableCell>
@@ -1421,7 +1421,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             مجموع لایک
                           </TableCell>
@@ -1431,7 +1431,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             متوسط لایک
                           </TableCell>
@@ -1441,7 +1441,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             مجموع کامنت
                           </TableCell>
@@ -1451,7 +1451,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             متوسط کامنت
                           </TableCell>
@@ -1461,7 +1461,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             حساب‌های مؤثر
                           </TableCell>
@@ -1471,7 +1471,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             حس متن
                           </TableCell>
@@ -1481,7 +1481,7 @@ class TrackerGroupsContainer extends React.Component {
                               classes.tableCellLowPadding,
                               classes.tableHeader
                             )}
-                            style={{ width: "10%" }}
+                            // style={{ width: 10 }}
                           >
                             حس کامنت
                           </TableCell>
@@ -1503,11 +1503,11 @@ class TrackerGroupsContainer extends React.Component {
                             onClick={id => this.props.selectGroup(row.id)}
                           >
                             <TableCell
-                              style={{ width: "20%" }}
                               className={classNames(
                                 classes.tableCellLowPadding,
                                 classes.flex
                               )}
+                              // style={{ width: 10 }}
                               // padding="none"
                               align="right"
                             >
@@ -1515,7 +1515,6 @@ class TrackerGroupsContainer extends React.Component {
                             </TableCell>
                             <TableCell
                               align="center"
-                              style={{ width: "10%" }}
                               className={classNames(
                                 classes.tableCellLowPadding,
                                 this.state.rowHover != row.id &&
@@ -1523,12 +1522,12 @@ class TrackerGroupsContainer extends React.Component {
                                   ? classes.textMute
                                   : ""
                               )}
+                              // style={{ width: 10 }}
                             >
                               {row.posts}
                             </TableCell>
                             <TableCell
                               align="center"
-                              style={{ width: "10%" }}
                               className={classNames(
                                 classes.tableCellLowPadding,
                                 this.state.rowHover != row.id &&
@@ -1536,12 +1535,12 @@ class TrackerGroupsContainer extends React.Component {
                                   ? classes.textMute
                                   : ""
                               )}
+                              // style={{ width: 10 }}
                             >
                               {row.overall_likes}
                             </TableCell>
                             <TableCell
                               align="center"
-                              style={{ width: "10%" }}
                               className={classNames(
                                 classes.tableCellLowPadding,
                                 this.state.rowHover != row.id &&
@@ -1549,12 +1548,12 @@ class TrackerGroupsContainer extends React.Component {
                                   ? classes.textMute
                                   : ""
                               )}
+                              // style={{ width: 10 }}
                             >
                               {row.average_likes}
                             </TableCell>
                             <TableCell
                               align="center"
-                              style={{ width: "10%" }}
                               className={classNames(
                                 classes.tableCellLowPadding,
                                 this.state.rowHover != row.id &&
@@ -1562,12 +1561,12 @@ class TrackerGroupsContainer extends React.Component {
                                   ? classes.textMute
                                   : ""
                               )}
+                              // style={{ width: 10 }}
                             >
                               {row.overall_comments}
                             </TableCell>
                             <TableCell
                               align="center"
-                              style={{ width: "10%" }}
                               className={classNames(
                                 classes.tableCellLowPadding,
                                 this.state.rowHover != row.id &&
@@ -1575,12 +1574,12 @@ class TrackerGroupsContainer extends React.Component {
                                   ? classes.textMute
                                   : ""
                               )}
+                              // style={{ width: 10 }}
                             >
                               {row.average_comments}
                             </TableCell>
                             <TableCell
                               align="center"
-                              style={{ width: "10%" }}
                               className={classNames(
                                 classes.tableCellLowPadding,
                                 this.state.rowHover != row.id &&
@@ -1588,14 +1587,18 @@ class TrackerGroupsContainer extends React.Component {
                                   ? classes.textMute
                                   : ""
                               )}
+                              // style={{ width: 10 }}
                             >
                               {row.effective_accounts}
                             </TableCell>
-                            <TableCell align="center" style={{ width: "10%" }}>
+                            <TableCell
+                              align="center"
+                              className={classes.tableCellLowPadding}
+                              // style={{ width: 10 }}
+                            >
                               {row.content_emotion == -1 ? (
                                 <div
                                   className={classNames(
-                                    classes.tableCellLowPadding,
                                     this.props.selectedEmotion == "negative"
                                       ? classes.selectedNegativeEmotion
                                       : classes.negativeEmotion
@@ -1604,7 +1607,6 @@ class TrackerGroupsContainer extends React.Component {
                               ) : (
                                 <div
                                   className={classNames(
-                                    classes.tableCellLowPadding,
                                     this.props.selectedEmotion == "positive"
                                       ? classes.selectedPositiveEmotion
                                       : classes.positiveEmotion
@@ -1612,11 +1614,14 @@ class TrackerGroupsContainer extends React.Component {
                                 ></div>
                               )}
                             </TableCell>
-                            <TableCell align="center" style={{ width: "10%" }}>
+                            <TableCell
+                              align="center"
+                              className={classes.tableCellLowPadding}
+                              // style={{ width: 10 }}
+                            >
                               {row.comment_emotion == -1 ? (
                                 <div
                                   className={classNames(
-                                    classes.tableCellLowPadding,
                                     this.props.selectedEmotion == "negative"
                                       ? classes.selectedNegativeEmotion
                                       : classes.negativeEmotion
@@ -1625,7 +1630,6 @@ class TrackerGroupsContainer extends React.Component {
                               ) : (
                                 <div
                                   className={classNames(
-                                    classes.tableCellLowPadding,
                                     this.props.selectedEmotion == "positive"
                                       ? classes.selectedPositiveEmotion
                                       : classes.positiveEmotion

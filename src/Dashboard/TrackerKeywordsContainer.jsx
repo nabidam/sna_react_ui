@@ -1508,7 +1508,7 @@ class TrackerKeywordsContainer extends React.Component {
                       placement="top"
                       title="موضوعات مرتبط با ردیاب انتخابی که نشان دهنده تاثیرپذیری یک متن تستی برای نمایش این قابلیت است و باید توضیحات هر سکشن در این قسمت نمایش داده شود."
                     >
-                      <i className="far fa-lightbulb fa-lg"></i>
+                      <i className="far fa-lightbulb fa-lg" />
                     </BootstrapTooltip>
                   </div>
                 </div>
@@ -1519,7 +1519,7 @@ class TrackerKeywordsContainer extends React.Component {
                       className={classNames(
                         classes.listItem,
                         "" +
-                          (this.props.selectedTab == "keyWords"
+                          (this.state.selectedTab == "keyWords"
                             ? classes.selectedTab
                             : "")
                       )}
@@ -1534,7 +1534,7 @@ class TrackerKeywordsContainer extends React.Component {
                       className={classNames(
                         classes.listItem,
                         "" +
-                          (this.props.selectedTab == "hashtags"
+                          (this.state.selectedTab == "hashtags"
                             ? classes.selectedTab
                             : "")
                       )}

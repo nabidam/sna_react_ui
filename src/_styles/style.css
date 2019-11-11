@@ -274,3 +274,8 @@ body {
   position: relative;
   top: 0;
 }
+
+/* *** */
+.MuiTableCell-root:last-child {
+  padding-right: 0px !important;
+}

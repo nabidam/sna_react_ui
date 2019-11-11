@@ -7,6 +7,7 @@ import {
 } from "react-simple-maps";
 import { scaleLinear } from "d3-scale";
 import { Tooltip, actions } from "redux-tooltip";
+import worldData from "../_data/world-50m-with-population.json";
 
 const wrapperStyles = {
   width: "100%",
@@ -53,7 +54,7 @@ class WorldMap extends Component {
           }}
         >
           <ZoomableGroup center={[0, 20]}>
-            <Geographies geography={"../_data/world-50m-with-population.json"}>
+            <Geographies geography={worldData}>
               {(geographies, projection) =>
                 geographies.map((geography, i) => (
                   <Geography

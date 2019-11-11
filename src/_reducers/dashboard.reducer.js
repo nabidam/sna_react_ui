@@ -206,7 +206,7 @@ const initState4 = {
   selectedTracker: 3,
   selectedTrackersType: 1,
   selectedEmotion: "",
-  selectedPage: "trackers",
+  selectedPage: "",
   selectedGroup: 0,
   selectedKeyword: "",
   selectedAnalysisType: 1,

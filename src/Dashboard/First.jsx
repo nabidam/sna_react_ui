@@ -1,9 +1,10 @@
 import React from "react";
-import {withStyles} from "@material-ui/core/styles";
-import {green} from "@material-ui/core/colors";
+import { withStyles } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
 import WordsCloud from "./WordsCloud";
-import {PrivateRoute} from "../_components";
-import {Dashboard} from './Dashboard'
+import { PrivateRoute } from "../_components";
+import { Dashboard } from "./Dashboard";
+import Boarding from "./Boarding";
 
 const styles = theme => ({
   root: {
@@ -34,21 +35,21 @@ class First extends React.Component {
     super(props);
   }
 
-
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
-    console.log("user")
-    console.log(localStorage.getItem('user'))
-    console.log(this.props)
+    console.log("user");
+    console.log(localStorage.getItem("user"));
+    console.log(this.props);
     return (
-        <div className={classes.root}>
-          <PrivateRoute path="/" component={Dashboard} />
-          <PrivateRoute path="/cloud" component={WordsCloud} />
-        </div>
+      <div className={classes.root}>
+        {/* <PrivateRoute exact path="/boarding" component={Boarding} /> */}
+        <PrivateRoute path="/" component={Dashboard} />
+        <PrivateRoute path="/cloud" component={WordsCloud} />
+      </div>
     );
   }
 }
 
-const FirstPage = (withStyles(styles, {withTheme: true})(First));
-export {FirstPage as First};
+const FirstPage = withStyles(styles, { withTheme: true })(First);
+export { FirstPage as First };
