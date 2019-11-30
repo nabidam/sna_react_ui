@@ -271,7 +271,7 @@ class Dashboard extends React.Component {
   };
 
   componentDidMount = () => {
-    console.log(history);
+    // console.log(history);
     var c = 0;
     this.props.myBag.map((item, index) => {
       if (item.selected) {
@@ -283,8 +283,12 @@ class Dashboard extends React.Component {
         allBagItemsChecked: true
       });
     }
-
-    // this.props.selectPage("trackers");
+    if (
+      history.location.pathname == "/dashboard" ||
+      this.state.mainHeaderPages.indexOf(this.props.selectedPage) != -1
+    ) {
+      this.props.selectPage("trackers");
+    }
     // history.push("dashboard/trackers");
   };
 
