@@ -801,9 +801,7 @@ const mapStateToProps = state => {
   const { trackers } = state;
   return {
     trackers: trackers.trackers,
-    selectedTracker: trackers.trackers.filter(
-      t => t.id === trackers.selectedTracker
-    )[0],
+    selectedTracker: trackers.selectedTracker,
     selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
     posts: trackers.posts
   };

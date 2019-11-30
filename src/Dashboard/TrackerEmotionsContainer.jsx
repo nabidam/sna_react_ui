@@ -787,6 +787,11 @@ const styles = theme => ({
       background: "#4a90e2",
       borderRadius: "50%"
     }
+  },
+
+  topNavbarSelectedTracker: {
+    color: "#08080d",
+    fontSize: 32
   }
 });
 

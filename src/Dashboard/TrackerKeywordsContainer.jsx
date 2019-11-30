@@ -1367,7 +1367,7 @@ class TrackerKeywordsContainer extends React.Component {
                     className={classes.topNavbarSelectedTracker}
                   >
                     {this.props.trackers.map((item, index) => {
-                      return item.id == this.props.selectedTracker.id
+                      return item.id == this.props.selectedTracker
                         ? item.name
                         : "";
                     })}

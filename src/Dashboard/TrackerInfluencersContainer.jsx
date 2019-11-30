@@ -721,6 +721,11 @@ const styles = theme => ({
     "&:hover": {
       opacity: 0.7
     }
+  },
+
+  topNavbarSelectedTracker: {
+    color: "#08080d",
+    fontSize: 32
   }
 });
 
