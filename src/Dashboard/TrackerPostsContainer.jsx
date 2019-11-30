@@ -598,6 +598,8 @@ class TrackerPostsContainer extends React.Component {
       selectedDay: day,
       isDaySelected: true
     });
+
+    this.props.changeTrackersDate(day);
   };
 
   render() {
@@ -679,15 +681,15 @@ class TrackerPostsContainer extends React.Component {
                   >
                     {this.state.isDaySelected == false
                       ? "انتخاب بازه زمانی"
-                      : this.state.selectedDay.from.day +
+                      : this.props.trackersDate.from.day +
                         " " +
-                        months[this.state.selectedDay.from.month] +
+                        months[this.props.trackersDate.from.month] +
                         " " +
                         " - " +
-                        (this.state.selectedDay.to
-                          ? this.state.selectedDay.to.day +
+                        (this.props.trackersDate.to
+                          ? this.props.trackersDate.to.day +
                             " " +
-                            months[this.state.selectedDay.to.month] +
+                            months[this.props.trackersDate.to.month] +
                             " "
                           : "")}
                     <div className={classes.selectDateRangeIcon}>
@@ -711,7 +713,7 @@ class TrackerPostsContainer extends React.Component {
                     }}
                   >
                     <Calendar
-                      value={this.state.selectedDay}
+                      value={this.props.trackersDate}
                       onChange={day => this.handleSelectedDay(day)}
                       shouldHighlightWeekends
                       isPersian
@@ -803,7 +805,8 @@ const mapStateToProps = state => {
     trackers: trackers.trackers,
     selectedTracker: trackers.selectedTracker,
     selectedTrackerDashboardItem: trackers.selectedTrackerDashboardItem,
-    posts: trackers.posts
+    posts: trackers.posts,
+    trackersDate: trackers.trackersDate
   };
 };
 
@@ -811,7 +814,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSelectedTracker: (id, name) => {
       dispatch(DashboardActions.changeSelectedTracker(id, name));
-    }
+    },
+    changeTrackersDate: date =>
+      dispatch(DashboardActions.changeTrackersDate(date))
   };
 };
 

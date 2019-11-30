@@ -28,7 +28,9 @@ export const DashboardActions = {
   changeBagItemStatus,
   checkAllBagItemStatus,
   changeGlobalVar,
-  changeComeFrom
+  changeComeFrom,
+
+  changeTrackersDate
 };
 
 export const TrackersActions = {
@@ -206,6 +208,13 @@ function changeComeFrom(comeFrom) {
   return {
     type: DashboardConstants.CHANGE_COME_FROM,
     comeFrom
+  };
+}
+
+function changeTrackersDate(date) {
+  return {
+    type: DashboardConstants.CHANGE_TRACKERS_DATE,
+    date
   };
 }
 

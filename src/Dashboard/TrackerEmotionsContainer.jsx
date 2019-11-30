@@ -1404,6 +1404,8 @@ class TrackerEmotionsContainer extends React.Component {
       selectedDay: day,
       isDaySelected: true
     });
+
+    this.props.changeTrackersDate(day);
   };
 
   //   componentDidMount = () => {
@@ -1491,15 +1493,15 @@ class TrackerEmotionsContainer extends React.Component {
                   >
                     {this.state.isDaySelected == false
                       ? "انتخاب بازه زمانی"
-                      : this.state.selectedDay.from.day +
+                      : this.props.trackersDate.from.day +
                         " " +
-                        months[this.state.selectedDay.from.month] +
+                        months[this.props.trackersDate.from.month] +
                         " " +
                         " - " +
-                        (this.state.selectedDay.to
-                          ? this.state.selectedDay.to.day +
+                        (this.props.trackersDate.to
+                          ? this.props.trackersDate.to.day +
                             " " +
-                            months[this.state.selectedDay.to.month] +
+                            months[this.props.trackersDate.to.month] +
                             " "
                           : "")}
                     <div className={classes.selectDateRangeIcon}>
@@ -1523,7 +1525,7 @@ class TrackerEmotionsContainer extends React.Component {
                     }}
                   >
                     <Calendar
-                      value={this.state.selectedDay}
+                      value={this.props.trackersDate}
                       onChange={day => this.handleSelectedDay(day)}
                       shouldHighlightWeekends
                       isPersian
@@ -1801,7 +1803,8 @@ const mapStateToProps = state => {
     selectedTracker: trackers.selectedTracker,
     posts: trackers.posts,
     keywords: trackers.keywords,
-    selectedEmotion: trackers.selectedEmotion
+    selectedEmotion: trackers.selectedEmotion,
+    trackersDate: trackers.trackersDate
   };
 };
 
@@ -1812,7 +1815,9 @@ const mapDispatchToProps = dispatch => {
     },
     selectEmotion: emotion => {
       dispatch(DashboardActions.selectEmotion(emotion));
-    }
+    },
+    changeTrackersDate: date =>
+      dispatch(DashboardActions.changeTrackersDate(date))
   };
 };
 

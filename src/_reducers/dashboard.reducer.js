@@ -214,6 +214,18 @@ const initState4 = {
   addTracker: null,
   editableTrafficAnalysis: null,
   addTrafficAnalysis: null,
+  trackersDate: {
+    from: {
+      year: 1398,
+      month: 8,
+      day: 1
+    },
+    to: {
+      year: 1398,
+      month: 8,
+      day: 24
+    }
+  },
   trafficAnalysis: [
     {
       id: 1,
@@ -1844,6 +1856,12 @@ function trackers(state = initState4, action) {
       return {
         ...state,
         projects: new_project
+      };
+    // trackersDate
+    case DashboardConstants.CHANGE_TRACKERS_DATE:
+      return {
+        ...state,
+        trackersDate: action.date
       };
     default:
       return state;
