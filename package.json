@@ -46,7 +46,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "redux-tooltip": "^0.8.0",
-    "xlsx": "^0.14.5"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "dev": "webpack-dev-server --mode development --watch",
